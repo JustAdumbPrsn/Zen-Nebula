@@ -63,8 +63,12 @@
       .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked]):hover
         .tab-icon-overlay {
         margin: 0px !important;
-        transition: opacity 0.1s ease-out, transform 0.1s ease-out !important;
+        transition: opacity 0.25s ease-out, transform 0.25s ease-out !important;
         transform: translate(6.9px, -6.9px) scale(0.69) !important;
+      }
+
+      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked]) .tab-icon-overlay {
+        transition: opacity 0.25s ease-in, transform 0.25s ease-in !important;
       }
     }
   
