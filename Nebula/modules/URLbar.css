@@ -34,7 +34,6 @@
   
   /* Blur background when url bar opens */
   #browser:has(#urlbar[open]) .browserContainer {
-    pointer-events: none;
     filter: blur(2rem) brightness(70%) saturate(180%) !important;
     backdrop-filter: blur(2rem) contrast(90%) brightness(30%) !important;
     opacity: 0.85 !important;
