@@ -1,11 +1,11 @@
 @import "modules/Animations(tabs).css";
+@import "modules/BetterPiP.css";
 @import "modules/Essentials.css";
 @import "modules/General-UI.css";
 @import "modules/Pinned-extensions.css";
 @import "modules/Sidebar.css";
 @import "modules/Sound-icon.css";
+@import "modules/Tabstyles.css";
 @import "modules/Toolbar.css";
 @import "modules/Topbar-buttons.css";
 @import "modules/URLbar.css";
-@import "modules/Tabstyles.css";
-@import "modules/BetterPiP.css";
