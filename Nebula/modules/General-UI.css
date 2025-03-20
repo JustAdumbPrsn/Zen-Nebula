@@ -14,3 +14,8 @@ browser[transparent='true'] {
 #identity-icon-label[value="Extension (Bonjourr · Minimalist Startpage)"] {
     display: none !important;
 }
+
+/* Removes the background of the icon extension box in the url bar */
+#identity-icon-box {
+  background: none !important;
+}
