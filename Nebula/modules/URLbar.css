@@ -106,3 +106,9 @@
     0% { background-position: 0% 50%; }
     100% { background-position: -300% 50%; } /* Move smoothly across */
   }
+
+  /* Centered URL bar Text*/
+#urlbar .urlbar-input,
+.urlbar-input-container{
+  text-align: center !important; 
+}
