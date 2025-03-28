@@ -3,10 +3,6 @@
   --attention-dot-color: transparent !important;
 }
 
-/* make websites rounded */
-#tabbrowser-tabpanels {
-    clip-path: inset(0 round 10px);
-}
 
 browser[transparent='true'] {
     background: rgba(0,0,0,0) !important;
