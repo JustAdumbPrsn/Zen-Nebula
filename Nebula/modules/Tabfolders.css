@@ -8,7 +8,7 @@ tab-group:not([split-view-group]) {
   flex-direction: column !important;
   @media not (-moz-bool-pref: "zen.view.sidebar-expanded") {
     width: var(--tab-min-width) !important;
-    margin-left: 5px !important;
+    margin: calc(var(--zen-element-separation) / 2) auto !important;
   }
 
   @media (-moz-bool-pref: "tab.groups.background") {
