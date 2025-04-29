@@ -112,13 +112,48 @@ zen-nebula = {
 
 </details>
 
-###
+## 🚀 Installation Guide (Windows, MacOS, and manual Linux installation)
 
-<h2 align="left">1. Installing CSS (Windows, MacOS, and manual Linux installation)</h2>
+Follow these steps to install and apply the **Nebula** theme on Zen Browser:
 
-###
+1. 📁 **Create the Chrome Folder**
+   If you haven't already, follow the [Zen Live Editing Guide](https://docs.zen-browser.app/guides/live-editing) to create your `chrome` folder.
 
-<p align="left">• If you have not already, follow the Zen Live Editing guide to first create your chrome folder: https://docs.zen-browser.app/guides/live-editing<br><br>• Download the chrome ZIP file from latest Release version and paste the Nebula folder inside the chrome folder and open your userChrome.css and add the line ➡️@import "Nebula/Nebula.css";⬅️ and then open your userContent.css (or make one) and add the line ➡️@import "Nebula/Nebula-content.css";⬅️ OR if you dont want to add this line to your userChrome & userContent.css then take the userChrome.css and userContent.css file provided in the ZIP file and directly paste that one into your chrome folder.<br><br>• Restart the browser to see if the UI has changed.<br><br>• Go to about:config in Zen and search for "browser.tabs.allow_transparent_browser". If the option is visible, set it to "true". If not, click the "+" icon and set it to "boolean".<br><br>• Install the wallpapers.zip from the latest release (optional) (optional)</p>
+2. 📦 **Download the Theme**
+   - Download the `chrome.zip` file from the [latest release](https://github.com/your-repo/releases).
+   - Extract it and paste the `Nebula` folder inside your `chrome` directory.
+
+3. 🧩 **Apply the Theme**
+   You have two options:
+
+   **Option A** – *Manual Import*
+   - Open your `userChrome.css` and add:
+     ```css
+     @import "Nebula/Nebula.css";
+     ```
+   - Open (or create) `userContent.css` and add:
+     ```css
+     @import "Nebula/Nebula-content.css";
+     ```
+
+   **Option B** – *Use Provided Files*
+   - Use the `userChrome.css` and `userContent.css` files provided in the ZIP and paste them directly into your `chrome` folder.
+
+4. 🔄 **Restart the Browser**
+   Reopen Zen to apply the UI changes.
+
+5. ⚙️ **Enable Transparent Tabs (Optional)**
+   - Go to `about:config` in Zen.
+   - Search for `browser.tabs.allow_transparent_browser`.
+   - If visible, set it to `true`.
+
+6. 🖼️ **Install Wallpapers (Optional)**
+   - Download `wallpapers.zip` from the [latest release](https://github.com/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/releases/latest).
+   - Extract and use them as desired.
+
+---
+
+Enjoy your new Zen experience with **Nebula**! ✨
 
 ###
 
@@ -168,23 +203,8 @@ zen-nebula = {
 
 <p align="left">• Go to "https://addons.mozilla.org/en-US/firefox/addon/bonjourr-startpage/" and install this extension.<br><br>• The new tab must be replaced by this now. On the bottom right, you will see a settings button for new tab. Change the settings to these:</p>
 
-###
-
-<div align="center">
-  <img height="300" src="https://github.com/user-attachments/assets/e7e27035-6e2b-4006-abf7-091a103536f9"  />
-</div>
-
-###
-
-<div align="center">
-  <img height="300" src="https://github.com/user-attachments/assets/d8fb107f-1247-4a3e-8026-619311e2dee5"  />
-</div>
-
-###
-
-<div align="center">
-  <img height="300" src="https://github.com/user-attachments/assets/724abcd8-a9f0-4d76-a054-3d76e3c7db60"  />
-</div>
+| ![image](https://github.com/user-attachments/assets/e7e27035-6e2b-4006-abf7-091a103536f9) | ![image](https://github.com/user-attachments/assets/d8fb107f-1247-4a3e-8026-619311e2dee5) | ![image](https://github.com/user-attachments/assets/724abcd8-a9f0-4d76-a054-3d76e3c7db60) |
+|-|-|-|
 
 ###
 
@@ -233,30 +253,31 @@ p, h1, h2, h3 {
 <img height="400" src="https://github.com/user-attachments/assets/8121a9a4-e8ed-4c4e-8ed0-92bd775438bb" />
 </div>
 
-###
+### 6. Add the extension [Zen Internet by Sameerasw](https://addons.mozilla.org/en-US/firefox/addon/zen-internet/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search) (Optional)
 
-<h3 align="left">6. Add the extension Zen Internet by Sameerasw (Optional)</h3>
-
-###
-
-<p align="left">• this extension makes web pages transparent<br>https://addons.mozilla.org/en-US/firefox/addon/zen-internet/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search</p>
+> This extension makes web pages transparent
 
 ###
 
 <h2 align="left">Re-distribution info:</h2>
 
-###
-
 <p align="left">You are totally free to make forks of this or put this in your chrome file and create or modify it according to yourself. It is suggested to credit me if you use my theme. Thanks for using Nebula 🫶🏻</p>
 
+
+## 🙌 Credits
+
+Here are some awesome projects that inspired or contributed to this project:
+
+- 🔗 [Lacuna by Tanay-Kar](https://github.com/Tanay-Kar/Lacuna)
+- 🌐 [Natsumi Browser by greeeen-dev](https://github.com/greeeen-dev/natsumi-browser)
+- 🧠 [My Internet by sameerasw](https://github.com/sameerasw/my-internet)
+- 🍍 [Pineapple Fried by TheBigWazz](https://github.com/TheBigWazz/Pineapple-Fried)
+- 🧩 [Advanced Tab Groups by TFFC-Anoms12](https://github.com/TFFC-Anoms12/Advanced-Tab-Groups)
+
+---
+If I missed anyone, kindly let me know! 😊
+
 ###
 
-<h2 align="left">Credits:</h2>
-
-###
-
-<h5 align="left">• https://github.com/Tanay-Kar/Lacuna<br><br>• https://github.com/greeeen-dev/natsumi-browser<br><br>• https://github.com/sameerasw/my-internet<br><br>• https://github.com/TheBigWazz/Pineapple-Fried<br><br>• https://github.com/TFFC-Anoms12/Advanced-Tab-Groups<br><br>------------------------------------------<br>Kindly let me know if i missed some :))</h5>
-
-###
-
-<h5 align="left"> NOTE: There might be some issues with this theme, please report them to me if you experience something unusual, i will try to fix/clarify it. Also this mod has only been tested by me on a windows 11 computer so if Linux and MacOS versions are not working properly then i can't really do anything about it :( </h5>
+> [!NOTE]
+> There might be some issues with this theme, please report them to me if you experience something unusual, i will try to fix/clarify it. Also this mod has only been tested by me on a windows 11 computer so if Linux and MacOS versions are not working properly then i can't really do anything about it :(
