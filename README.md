@@ -53,11 +53,14 @@
 **Quick note:** If you want a video tutorial for the installation process then it is there on a youtube video someone made about it: https://www.youtube.com/watch?v=ysXRr6GAsNc&t=9s
 
 ### 🧊 Nix Installation
+
+>[!WARNING]
+> This installation method is for **Linux/MacOs users Only** using [Nix](https://nixos.org/) and [home-manager](https://github.com/nix-community/home-manager).
+> If you're using `Windows`, read the normal installation process.
+
 <details>
 <summary>‼️ Click here for Nix installation process</summary>
-> ⚠️ **Note for Windows and macOS users:**  
-> This installation method is for **Linux users** using [Nix](https://nixos.org/) and **home-manager**.  
-> If you're using **Windows** or **macOS**, read the normal installation process.
+
 
 This repo includes a **Nix flake** that provides a `home-manager` module to install **Nebula** for **Zen Browser** declaratively.
 
