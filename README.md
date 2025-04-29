@@ -52,6 +52,60 @@
 ###
 **Quick note:** If you want a video tutorial for the installation process then it is there on a youtube video someone made about it: https://www.youtube.com/watch?v=ysXRr6GAsNc&t=9s
 
+### Nix
+
+This repo includes a Nix flake that exposes a home-manager module that installs Nebula for your Zen-browser declaratively.
+
+To enable the module, add the repo as a flake input, import the module, and enable `zen-nebula`.
+
+<details><summary>Install using your home-manager module defined within your `nixosConfigurations`:</summary>
+
+```nix
+
+  # flake.nix
+
+  {
+
+      inputs = {
+         # ---Snip---
+         home-manager = {
+           url = "github:nix-community/home-manager";
+           inputs.nixpkgs.follows = "nixpkgs";
+         };
+
+         zen-nebula.url = "github:JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser";
+         # ---Snip---
+      }
+
+      outputs = {nixpkgs, home-manager, ...} @ inputs: {
+          nixosConfigurations.HOSTNAME = nixpkgs.lib.nixosSystem {
+            specialArgs = { inherit inputs; };
+            modules = [
+            home-manager.nixosModules.home-manager
+              {
+               # Must pass in inputs so we can access the module
+                home-manager.extraSpecialArgs = {
+                  inherit inputs;
+                };
+              }
+           ];
+        };
+     }
+  }
+```
+```nix
+
+# home.nix
+
+imports = [ inputs.zen-nebula.homeModules.default ];
+
+zen-nebula = {
+    enable = true;
+    profile = "<firefox profile name here>";
+};
+```
+</details>
+
 ###
 <h3 align="left">1. Installing CSS</h3>
 
@@ -73,7 +127,7 @@
 
 ###
 
-<p align="left">• To get real backdrop filter transparency (note: that this method provides a better blur effect than the transparent zen extension by sameerasw), go to "https://github.com/MicaForEveryone/MicaForEveryone" and install the app.<br><br>• Click the "+ Add new Rule" at the bottom left and "Add process rule" for "zen".<br><br>• NOTE: If you have "Show Accent color on title bars and window borders" enabled in windows 11 settings, please disable it for transparency to work" 
+<p align="left">• To get real backdrop filter transparency (note: that this method provides a better blur effect than the transparent zen extension by sameerasw), go to "https://github.com/MicaForEveryone/MicaForEveryone" and install the app.<br><br>• Click the "+ Add new Rule" at the bottom left and "Add process rule" for "zen".<br><br>• NOTE: If you have "Show Accent color on title bars and window borders" enabled in windows 11 settings, please disable it for transparency to work"
 </p>
 <img width="900" src="https://github.com/user-attachments/assets/e867a04e-a8ba-4795-bada-e22ca92fc657"  />
 
@@ -158,7 +212,7 @@ p, h1, h2, h3 {
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
 }
 #background {background-image: none !important; background-color: transparent !important;}
-   .tabbing {background-color: transparent !important;} 
+   .tabbing {background-color: transparent !important;}
     body {background-color: transparent !important;}
 ```
 ###
