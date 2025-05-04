@@ -72,6 +72,25 @@ https://github.com/user-attachments/assets/df38c8ff-97e7-4e3f-baa4-9baef2b745bb
 
 https://github.com/user-attachments/assets/4c9b27cf-9186-4b7b-a7bc-2d4dab003bc4
 
+#### 🔁 Tab Loading Animations
+
+- **Style 1: [Default]** – Adds a nice blur animation
+
+https://github.com/user-attachments/assets/6caa209d-c8db-45f5-879d-309fdaf1a676
+
+- **Style 2:** – Adds a more bounce blur animation
+
+https://github.com/user-attachments/assets/2b10a95d-4d91-41d4-abfc-37a6c221a353
+
+- **Style 3:** – Adds a lighter blur animation
+
+https://github.com/user-attachments/assets/9693b8f5-095f-479e-b186-cc956482b4cd
+
+- **Style 4:** – Makes website colorless instead of blur
+
+https://github.com/user-attachments/assets/f6a6c61c-cd3d-4c73-a3af-13e8892aca15
+
+
 
 
 
