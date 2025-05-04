@@ -57,8 +57,24 @@
 #### 🎞️ Tab Switch Animations
 
 - **Style 1: [Default]** – Adds a nice zoom animation  
-    
+
 https://github.com/user-attachments/assets/b8602175-89f9-479c-8bc8-a21ba116553e
+
+- **Style 2:** – Adds a bouncy animation with unblur effect
+
+https://github.com/user-attachments/assets/a56c2166-d287-4051-b851-c1965d1889f3
+
+- **Style 3:** – Adds a scale animation with unblur effect
+
+https://github.com/user-attachments/assets/df38c8ff-97e7-4e3f-baa4-9baef2b745bb
+
+- **Style 4:** – Adds a smooth crossfade
+
+https://github.com/user-attachments/assets/4c9b27cf-9186-4b7b-a7bc-2d4dab003bc4
+
+
+
+
 
 </details>
 
