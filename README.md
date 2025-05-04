@@ -49,14 +49,19 @@
 
 <h2 align="left">🌙 Features:</h2>
 
-<details> <summary><strong>📽️Animations!</strong></summary>
+<details> <summary><strong>📽️ Animations!</strong></summary>
 
->✨ Nebula adds tons of new animations with customizable styles to Zen Browser which can be changed by editing `nebula-config.css` file inside the Nebula folder
+> ✨ Nebula adds tons of new animations with customizable styles to Zen Browser, which can be changed by editing the `nebula-config.css` file inside the Nebula folder.
 
-<h3>• 🎞️ Tab switch animations</h3>
-    1. Style 1: Adds
+
+#### 🎞️ Tab Switch Animations
+
+- **Style 1: [Default]** – Adds a nice zoom animation  
+    
+https://github.com/user-attachments/assets/b8602175-89f9-479c-8bc8-a21ba116553e
 
 </details>
+
 
 <h2 align="left">☄️ Installation:</h2>
 
