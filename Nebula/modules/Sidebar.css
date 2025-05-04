@@ -61,7 +61,7 @@ body:has([zen-compact-mode="true"]) #titlebar {
   transition: left 0.2s cubic-bezier(0.175, 0.585, 0.32, 1.1), opacity 0.2s ease, filter 0.2s ease !important;
 }
 
-body:has([zen-compact-mode="true"] [zen-user-show=""], [zen-compact-mode="true"] [zen-has-hover="true"]) #browser::after {
+body:has([zen-compact-mode="true"] [zen-user-show=""], [zen-compact-mode="true"] #navigator-toolbox[zen-has-hover="true"]) #browser::after {
   opacity: 1 !important;
   left: var(--zen-element-separation) !important;
 }
