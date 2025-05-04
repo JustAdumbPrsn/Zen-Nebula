@@ -47,6 +47,20 @@
 
 ###
 
+<h2 align="left">🌙 Features:</h2>
+
+<details> <summary><strong>🌌 Floating URL Bar Animation</strong></summary>
+
+Nebula transforms the URL bar into a floating, centered interface with smooth, Apple-style animations and blur effects.
+
+    Expands from icon to full width with a subtle bounce.
+
+    Background blur and elevation create a modern floating effect.
+
+    Responsive behavior for different window sizes.
+
+</details>
+
 <h2 align="left">☄️ Installation:</h2>
 
 ###
