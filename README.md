@@ -49,15 +49,12 @@
 
 <h2 align="left">🌙 Features:</h2>
 
-<details> <summary><strong>🌌 Floating URL Bar Animation</strong></summary>
+<details> <summary><strong>📽️Animations!</strong></summary>
 
-Nebula transforms the URL bar into a floating, centered interface with smooth, Apple-style animations and blur effects.
+>✨ Nebula adds tons of new animations with customizable styles to Zen Browser which can be changed by editing `nebula-config.css` file inside the Nebula folder
 
-    Expands from icon to full width with a subtle bounce.
-
-    Background blur and elevation create a modern floating effect.
-
-    Responsive behavior for different window sizes.
+<h3>• 🎞️ Tab switch animations</h3>
+    1. Style 1: Adds
 
 </details>
 
