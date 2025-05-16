@@ -12,6 +12,7 @@ RESET="\033[0m"
 BASE_DIR="$HOME/.var/app/app.zen_browser.zen/.zen"
 PROFILE_DIR=$(find "$BASE_DIR" -maxdepth 1 -type d -name '*Default (release)' | head -1)
 CHROME_DIR="$PROFILE_DIR/chrome"
+NEBULA_DIR="$CHROME_DIR/Nebula"
 LATEST_RELEASE=$(curl -s "https://api.github.com/repos/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/releases/latest" | jq -r '.tag_name')
 
 # Detect the default package manager
@@ -22,7 +23,7 @@ detect_package_manager() {
             return
         fi
     done
-    echo "unsupported"  # No package manager found
+    echo "unsupported"
 }
 
 # Check for pre-requisites
@@ -33,13 +34,12 @@ check_prerequisites() {
     done
 
     if [[ ${#MISSING_TOOLS[@]} -eq 0 ]]; then
-        return 0  # All tools exist, continue
+        return 0
     fi
 
     echo -e "${RED}⚠ Missing required tools: ${CYAN}${MISSING_TOOLS[*]}${RESET}"
     echo -e "${YELLOW}You need to install these manually before running the script.${RESET}"
 
-    # Auto-detect the default package manager
     PKG_MANAGER=$(detect_package_manager)
 
     if [[ "$PKG_MANAGER" = "unsupported" ]]; then
@@ -51,7 +51,7 @@ check_prerequisites() {
     read -r USER_CHOICE
 
     case "${USER_CHOICE,,}" in
-        y) 
+        y)
             echo -e "${CYAN}🔹 Installing missing tools...${RESET}"
             sudo "$PKG_MANAGER" install -y ${MISSING_TOOLS[*]} >/dev/null 2>&1 && echo -e "${GREEN}✔ Installation complete!${RESET}"
             ;;
@@ -65,19 +65,20 @@ check_prerequisites() {
 # Check for required tools before proceeding
 check_prerequisites
 
-# Do not run the script if the default profile is not found
+# Do not run if profile directory is not found
 if [[ -z "$PROFILE_DIR" ]]; then
     echo -e "${RED}❌ Profile folder not found! Exiting...${RESET}"
     exit 1
 fi
 
-# Ensure Chrome directory exists
+# Ensure chrome folder exists
 mkdir -p "$CHROME_DIR"
 
 echo -e "${BLUE}===================================="
 echo -e " 🚀 ${CYAN}Updating Nebula-A-Minimal-Theme-for-Zen-Browser${RESET}"
 echo -e "${BLUE}===================================="
 
+# Optional full chrome folder backup
 echo -ne "${YELLOW}Backup current setup before updating? (Y/n): ${RESET}"
 read -r BACKUP_CHOICE
 
@@ -86,10 +87,11 @@ case "${BACKUP_CHOICE,,}" in
     *)
         BACKUP_PATH="$PROFILE_DIR/Chrome-Folder-Backup-$(date +%Y-%m-%d_%H-%M-%S).tar.gz"
         tar -czf "$BACKUP_PATH" -C "$CHROME_DIR" .
-        echo -e "${GREEN}✔ Backup created at: ${CYAN}$BACKUP_PATH${RESET}"
+        echo -e "${GREEN}✔ Full backup created at: ${CYAN}$BACKUP_PATH${RESET}"
         ;;
 esac
 
+# Function for showing progress
 progress() {
     echo -ne "${CYAN}→ $1...${RESET}"
     sleep 0.8
@@ -109,8 +111,22 @@ curl -s -L -o "$CHROME_DIR/Nebula.zip" "https://github.com/JustAdumbPrsn/Nebula-
 progress "Extracting ${YELLOW}Nebula files${RESET}"
 unzip -qq "$CHROME_DIR/Nebula.zip" -d "$CHROME_DIR"
 
+# Ask user if they want to back up the old Nebula folder
+if [ -d "$NEBULA_DIR" ]; then
+    echo -ne "${YELLOW}Backup old Nebula folder before replacing it? (Y/n): ${RESET}"
+    read -r BACKUP_NEBULA
+    case "${BACKUP_NEBULA,,}" in
+        n) echo -e "${RED}⚠ Skipping Nebula folder backup.${RESET}" ;;
+        *)
+            BACKUP_NEBULA_DIR="$CHROME_DIR/Nebula-Backup-$(date +%Y-%m-%d_%H-%M-%S)"
+            cp -r "$NEBULA_DIR" "$BACKUP_NEBULA_DIR"
+            echo -e "${GREEN}✔ Nebula folder backed up to: ${CYAN}$BACKUP_NEBULA_DIR${RESET}"
+            ;;
+    esac
+fi
+
 progress "Cleaning up old version"
-rm -rf "$CHROME_DIR/Nebula/"
+rm -rf "$NEBULA_DIR"
 mv "$CHROME_DIR/Nebula-A-Minimal-Theme-for-Zen-Browser-main/Nebula/" "$CHROME_DIR"
 rm -rf "$CHROME_DIR/Nebula-A-Minimal-Theme-for-Zen-Browser-main/" "$CHROME_DIR/Nebula.zip"
 
