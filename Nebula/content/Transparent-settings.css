@@ -9,7 +9,7 @@
   --zen-settings-secondary-background: transparent !important;
 }
 
-groupbox{
+groupbox:not(#sineInstallationGroup:popover-open){
 /*   background: var(--zen-colors-tertiary) !important; */
   background: var(--zen-colors-border-contrast) !important;
   border: none
