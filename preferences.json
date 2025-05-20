@@ -1,0 +1,101 @@
+[
+    {
+        "type": "text",
+        "label": "**Tab Animations**"
+    },
+    {
+        "type": "separator",
+        "label": "Tab Switch"
+    },
+    {
+        "type": "dropdown",
+        "property": "nebula-tab-switch-animation",
+        "label": "Tab switch animation.",
+        "defaultValue": 1,
+        "placeholder": false,
+        "options": [
+            {
+                "label": "No Animation",
+                "value": 0
+            },
+            {
+                "label": "Default",
+                "value": 1
+            },
+            {
+                "label": "Slightly Bouncy",
+                "value": 3
+            },
+            {
+                "label": "More Bouncy",
+                "value": 2
+            },
+            {
+                "label": "Crossfade, no blur",
+                "value": 4
+            }
+        ]
+    },
+    {
+        "type": "dropdown",
+        "property": "nebula-tab-loading-animation",
+        "label": "Tab loading animation.",
+        "defaultValue": 1,
+        "placeholder": false,
+        "options": [
+            {
+                "label": "No Animation",
+                "value": 0
+            },
+            {
+                "label": "Default",
+                "value": 1
+            },
+            {
+                "label": "Lighter",
+                "value": 3
+            },
+            {
+                "label": "Heavier",
+                "value": 2
+            },
+            {
+                "label": "Grayscale, no blur",
+                "value": 4
+            },
+            {
+                "label": "Blur and grayscale",
+                "value": 5
+            }
+        ]
+    },
+    {
+        "type": "separator",
+        "label": "Glow Animations"
+    },
+    {
+        "type": "dropdown",
+        "property": "nebula-glow-gradient",
+        "label": "Hover glow animation.",
+        "defaultValue": 1,
+        "placeholder": false,
+        "options": [
+            {
+                "label": "No Animation",
+                "value": 0
+            },
+            {
+                "label": "Default",
+                "value": 1
+            },
+            {
+                "label": "Monochrome",
+                "value": 2
+            },
+            {
+                "label": "RGB",
+                "value": 3
+            }
+        ]
+    }
+]
