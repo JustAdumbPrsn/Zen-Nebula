@@ -1,6 +1,9 @@
 {
   "id": "zen-nebula",
+  "homepage": "https://github.com/JustADumbPrsn/Zen-Nebula",
+  "author": "JustADumbPrsn",
   "name": "Nebula",
+  "description": "A minimal theme made for Zen Browser.",
   "version": "2.7",
   "createdAt": "2025-05-20",
   "updatedAt": "2025-05-20",
@@ -10,5 +13,10 @@
   },
   "preferences": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/preferences.json",
   "readme": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/README.md",
-  "image": "https://github.com/user-attachments/assets/e09859a4-ad66-483e-be67-b25d11d54298"
+  "image": "https://github.com/user-attachments/assets/e09859a4-ad66-483e-be67-b25d11d54298",
+  "tags": [
+    "content",
+    "chrome",
+    "minimal"
+  ]
 }
