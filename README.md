@@ -272,15 +272,6 @@ p {
 ```
 ###
 
-<h3 align="left">5.  Using pinned extensions</h3>
-
-###
-
-<p align="left">• First pin an extension normally, it should be somewhere in the top bar like default zen<br><br>• Now, right click on the sidebar and go to customize toolbar mode, from there drag the extension from the top bar to above essentials (or you can say below the URLbar) it would look a bit weird but press save changes and it should look perfect<br><br>• In my personal opinion, place the bonjourr extension above essentials so you can easily open a new tab by clicking it</p>
-<div align="center">
-<img height="400" src="https://github.com/user-attachments/assets/8121a9a4-e8ed-4c4e-8ed0-92bd775438bb" />
-</div>
-
 ### 6. Add the extension [Zen Internet by Sameerasw](https://addons.mozilla.org/en-US/firefox/addon/zen-internet/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search) (Optional)
 
 > This extension makes web pages transparent
