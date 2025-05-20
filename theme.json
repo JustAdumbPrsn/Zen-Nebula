@@ -1,0 +1,14 @@
+{
+  "id": "zen-nebula",
+  "name": "Nebula",
+  "version": "2.7",
+  "createdAt": "2025-05-20",
+  "updatedAt": "2025-05-20",
+  "style": {
+    "chrome": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/userChrome.css",
+    "content": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/userContent.css"
+  },
+  "preferences": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/preferences.json",
+  "readme": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/README.md",
+  "image": "https://github.com/user-attachments/assets/e09859a4-ad66-483e-be67-b25d11d54298"
+}
