@@ -1,6 +1,6 @@
 {
   "id": "zen-nebula",
-  "homepage": "https://github.com/CosmoCreeper/Zen-Nebula",
+  "homepage": "https://github.com/JustADumbPrsn/Zen-Nebula",
   "author": "JustADumbPrsn",
   "name": "Nebula",
   "description": "A minimal theme made for Zen Browser.",
@@ -11,7 +11,7 @@
     "chrome": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/userChrome.css",
     "content": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/userContent.css"
   },
-  "preferences": "https://raw.githubusercontent.com/CosmoCreeper/Zen-Nebula/main/preferences.json",
+  "preferences": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/preferences.json",
   "readme": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/README.md",
   "image": "https://github.com/user-attachments/assets/e09859a4-ad66-483e-be67-b25d11d54298",
   "tags": [
