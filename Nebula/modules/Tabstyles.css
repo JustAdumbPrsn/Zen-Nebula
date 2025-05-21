@@ -100,30 +100,38 @@ tab[label$='.pdf'] img.tab-icon-image {
 /* ------------------- Pinned and Non-Pinned Tabs Styling ------------------- */
 
 /* Base style for pinned tabs */
-.tabbrowser-tab[pinned] .tab-background {
-    background-color: light-dark(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2)) !important;
-    box-shadow: 0 0px 8px light-dark(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0)) !important;
-    border-radius: var(--nebula-border-radius) !important;
-    position: relative !important;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
+tab.tabbrowser-tab[pinned], tab.tabbrowser-tab[pinned]:not([zen-essential="true"]) {
+    .tab-stack .tab-background {
+        background-color: light-dark(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2)) !important;
+        box-shadow: 0 0px 8px light-dark(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0)) !important;
+        border-radius: var(--nebula-border-radius) !important;
+        position: relative !important;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
+    }
 }
 
 /* Hover effect */
-.tabbrowser-tab[pinned]:hover .tab-background {
-    background-color: var(--nebula-color-hover) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.055), rgba(0, 0, 0, 0.55)) !important;
+tab.tabbrowser-tab[pinned], tab.tabbrowser-tab[pinned]:not([zen-essential="true"]) {
+    .tab-stack .tab-background {
+        background-color: var(--nebula-color-hover) !important;
+        box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.055), rgba(0, 0, 0, 0.55)) !important;
+    }
 }
 
 /* Selected tab */
-.tabbrowser-tab[pinned][selected="true"] .tab-background,
-.tabbrowser-tab[pinned][visuallyselected="true"] .tab-background {
-    background-color: var(--nebula-color-selected) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.055), rgba(0, 0, 0, 0.55)) !important;
+tab.tabbrowser-tab[pinned][selected="true"], tab.tabbrowser-tab[pinned]:not([zen-essential="true"])[selected="true"],
+tab.tabbrowser-tab[pinned][visuallyselected="true"], tab.tabbrowser-tab[pinned]:not([zen-essential="true"])[visuallyselected="true"] {
+    .tab-stack .tab-background {
+        background-color: var(--nebula-color-selected) !important;
+        box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.055), rgba(0, 0, 0, 0.55)) !important;
+    }
 }
 
 @media (-moz-pref("nebula-pinned-tabs-bg")) {
-    .tabbrowser-tab[pinned] .tab-background {
-        background-color: light-dark(rgba(255,255,255,0), rgba(0,0,0,0)) !important;
+    tab.tabbrowser-tab[pinned], tab.tabbrowser-tab[pinned]:not([zen-essential="true"]) {
+        .tab-stack .tab-background {
+            background-color: light-dark(rgba(255,255,255,0), rgba(0,0,0,0)) !important;
+        }
     }
 }
 
