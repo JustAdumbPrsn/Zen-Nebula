@@ -177,6 +177,11 @@
     },
     {
         "type": "checkbox",
+        "property": "nebula-marginless-compact-mod",
+        "label": "Enables Marginless Compact mod."
+    },
+    {
+        "type": "checkbox",
         "property": "nebula-compact-mode-sidebar-bg",
         "label": "Enables background for compact sidebar when sites are transparent."
     },
