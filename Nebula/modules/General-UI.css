@@ -74,9 +74,14 @@ hbox.browserSidebarContainer,
           }
 
           @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
-              #zen-appcontent-navbar-container {
-                  visibility: collapse !important;
-              }
+            #zen-appcontent-wrapper {
+                position: relative;
+            }
+
+            #zen-appcontent-navbar-wrapper {
+                position: absolute;
+                width: 100% !important;
+            }
           }
       }
   }
