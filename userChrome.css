@@ -2,3 +2,12 @@
 @import "Nebula/Nebula.css";
 
 /* Add additional CSS below */
+:root[customizing] #TabsToolbar-customization-target {
+visibility: visible !important;
+}
+
+.zen-workspace-pinned-tabs-section {
+display: flex !important;
+flex-direction: column;
+gap: 4px;
+}
