@@ -13,7 +13,7 @@ BASE_DIR="$HOME/.var/app/app.zen_browser.zen/.zen"
 PROFILE_DIR=$(find "$BASE_DIR" -maxdepth 1 -type d -name '*Default (release)' | head -1)
 CHROME_DIR="$PROFILE_DIR/chrome"
 NEBULA_DIR="$CHROME_DIR/Nebula"
-LATEST_RELEASE=$(curl -s "https://api.github.com/repos/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/releases/latest" | jq -r '.tag_name')
+LATEST_RELEASE=$(curl -s "https://api.github.com/repos/JustAdumbPrsn/Zen-Nebula/releases/latest" | jq -r '.tag_name')
 
 # Detect the default package manager
 detect_package_manager() {
@@ -75,7 +75,7 @@ fi
 mkdir -p "$CHROME_DIR"
 
 echo -e "${BLUE}===================================="
-echo -e " 🚀 ${CYAN}Updating Nebula-A-Minimal-Theme-for-Zen-Browser${RESET}"
+echo -e " 🚀 ${CYAN}Updating Zen-Nebula${RESET}"
 echo -e "${BLUE}===================================="
 
 # Optional full chrome folder backup
@@ -100,13 +100,13 @@ progress() {
 }
 
 progress "Downloading ${YELLOW}userChrome.css${RESET}"
-curl -s -o "$CHROME_DIR/userChrome.css" "https://raw.githubusercontent.com/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/main/userChrome.css"
+curl -s -o "$CHROME_DIR/userChrome.css" "https://raw.githubusercontent.com/JustAdumbPrsn/Zen-Nebula/main/userChrome.css"
 
 progress "Downloading ${YELLOW}userContent.css${RESET}"
-curl -s -o "$CHROME_DIR/userContent.css" "https://raw.githubusercontent.com/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/main/userContent.css"
+curl -s -o "$CHROME_DIR/userContent.css" "https://raw.githubusercontent.com/JustAdumbPrsn/Zen-Nebula/main/userContent.css"
 
 progress "Fetching latest Nebula theme"
-curl -s -L -o "$CHROME_DIR/Nebula.zip" "https://github.com/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/archive/refs/heads/main.zip"
+curl -s -L -o "$CHROME_DIR/Nebula.zip" "https://github.com/JustAdumbPrsn/Zen-Nebula/archive/refs/heads/main.zip"
 
 progress "Extracting ${YELLOW}Nebula files${RESET}"
 unzip -qq "$CHROME_DIR/Nebula.zip" -d "$CHROME_DIR"
@@ -127,8 +127,8 @@ fi
 
 progress "Cleaning up old version"
 rm -rf "$NEBULA_DIR"
-mv "$CHROME_DIR/Nebula-A-Minimal-Theme-for-Zen-Browser-main/Nebula/" "$CHROME_DIR"
-rm -rf "$CHROME_DIR/Nebula-A-Minimal-Theme-for-Zen-Browser-main/" "$CHROME_DIR/Nebula.zip"
+mv "$CHROME_DIR/Zen-Nebula-main/Nebula/" "$CHROME_DIR"
+rm -rf "$CHROME_DIR/Zen-Nebula-main/" "$CHROME_DIR/Nebula.zip"
 
 echo -e "${BLUE}===================================="
 echo -e "${GREEN}✔ Nebula updated to build ${YELLOW}$LATEST_RELEASE${RESET}"
