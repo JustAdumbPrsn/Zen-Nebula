@@ -2,7 +2,7 @@
 setlocal
 
 :: Set download URL and file paths
-set DOWNLOAD_URL=https://github.com/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/releases/latest/download/chrome.zip
+set DOWNLOAD_URL=https://github.com/JustAdumbPrsn/Zen-Nebula/releases/latest/download/chrome.zip
 set ZIP_PATH=%TEMP%\nebula_update.zip
 set EXTRACT_PATH=%TEMP%\nebula_update
 set DEST_PATH=%~dp0
