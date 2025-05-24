@@ -55,8 +55,8 @@ without searching through the code directly */
     /* 2. If you want NoGaps mod (ONLY for single toolbar mode):
         Go to about:config and add a "boolean" "nebula-nogaps-mod" and set it to true */
 
-    /* 3. If you want marginless compact mod:
-        Go to about:config and add a "boolean" "nebula-marginless-compact-mod" and set it to true */
+    /* 3. If you want NoGaps only in compact mode:
+        Go to about:config and add a "boolean" "nebula-nogaps-compact-mod" and set it to true */
 
     /* 4. If you want background for compact sidebar when websites are transparent:
         Go to about:config and add a "boolean" "nebula-compact-mode-sidebar-bg" and set it to true */

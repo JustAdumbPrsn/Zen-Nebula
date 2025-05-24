@@ -177,7 +177,7 @@
     },
     {
         "type": "checkbox",
-        "property": "nebula-marginless-compact-mod",
+        "property": "nebula-nogaps-compact-mod",
         "label": "Enables Marginless Compact mod."
     },
     {

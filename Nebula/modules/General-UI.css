@@ -56,9 +56,9 @@ hbox.browserSidebarContainer,
   }
 }
 
-/* ----------------- MARGINLESS COMPACT MOD ----------------- */
+/* ----------------- NOGAPS COMPACT MOD ----------------- */
 
-@media (-moz-bool-pref: "nebula-marginless-compact-mod") {
+@media (-moz-bool-pref: "nebula-nogaps-compact-mod") {
   :root[zen-compact-mode="true"]:not([customizing]) {
       #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
           margin: 0 !important;
