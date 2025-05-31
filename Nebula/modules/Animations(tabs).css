@@ -160,8 +160,8 @@
   }
 }
 
-@media (-moz-pref("nebula-tab-switch-animation", 0)):not([zen-split="true"]) {
-  #tabbrowser-tabpanels > hbox:not(:has(.zen-glance-background)) {
+@media (-moz-pref("nebula-tab-switch-animation", 0)) {
+  #tabbrowser-tabpanels > hbox:not(:has(.zen-glance-background)):not([zen-split="true"]) {
     &:is([zen-split]),
     &:not(.zen-glance-background):not([zen-split]) {
       transition: none !important;
@@ -171,7 +171,7 @@
     }
   }
 
-  #tabbrowser-tabpanels > hbox.deck-selected:not(:has(.zen-glance-background)) {
+  #tabbrowser-tabpanels > hbox.deck-selected:not(:has(.zen-glance-background)):not([zen-split="true"]) {
     &:not(.zen-glance-background) {
       scale: 1 !important;
       opacity: 1 !important;

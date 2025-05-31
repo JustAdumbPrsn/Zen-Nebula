@@ -1,5 +1,39 @@
 /* ------------ BETTER PDF VIEWER ----------- */
+:root {
+  --pdf-js-pseudobg-bg: #dedede;
+  @media (prefers-color-scheme: dark) {
+    --pdf-js-pseudobg-bg: #2e2e2e;
+  }
+}
 
+#mainContainer::before {
+  content: '' !important;
+  position: absolute !important;
+  background: var(--pdf-js-pseudobg-bg) !important;
+  top: 5px !important;
+  left: 50% !important;
+  transform: translate(-50%, 0);
+  width: calc(100% - 10px) !important;
+  max-width: min(var(--natsumi-pdfjs-topbar-max-width), calc(100% - 10px)) !important;
+  border-radius: 10px;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  height: calc(var(--toolbar-height)) !important;
+  z-index: -10000 !important;
+}
+
+.sidebarOpen::before {
+  content: '';
+  background: var(--pdf-js-pseudobg-bg) !important;
+  position: absolute !important;
+  height: calc(100% - 62px) !important;
+  left: 5px !important;
+  top: auto !important;
+  bottom: 5px !important;
+  border-radius: 10px !important;
+  width: var(--sidebar-width) !important;
+
+}
 /* ---- Config ----- */
 
 /*

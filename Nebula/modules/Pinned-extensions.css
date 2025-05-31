@@ -9,9 +9,8 @@
   flex-direction: column;
 } 
 
-/* gap between urlbar and pinned extensions */
-#nav-bar {
-  margin-bottom: 8px !important; /* Adjust gap size as needed */
+:root[zen-single-toolbar="true"] #nav-bar {
+  margin-bottom: 8px !important; /* Adjust gap between urlbar and extensions */
 }
 
 /* Pinned extensions */
@@ -74,6 +73,7 @@
     .toolbarbutton-text {
       display: none !important;
     }
+    
   }
 
   >toolbarbutton:not([id="tabs-newtab-button"]),
@@ -93,11 +93,11 @@
     box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.95),rgba(0, 0, 0, 0.95)) !important; 
   }
 }
+
 /* -------- Hover animation gradient (matching tab style) -------- */
 .unified-extensions-item {
   position: relative !important;
   border-radius: calc(var(--nebula-border-radius) + 1px) !important;
-  overflow: hidden;
 }
 
 .unified-extensions-item::before {

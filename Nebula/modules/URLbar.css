@@ -20,9 +20,10 @@
     position: relative;
 }
 
-#urlbar:not([open]) {
+:root[zen-single-toolbar="true"] #urlbar:not([open]) {
   height: 40px !important;
 }
+
 
 #identity-icon-box {
   background: none !important;

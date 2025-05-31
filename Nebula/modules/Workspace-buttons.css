@@ -10,6 +10,7 @@
 .zen-current-workspace-indicator:hover::before {
   background-color: var(--nebula-color) !important;
   box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.55)) !important;
+  z-index: -1 !important;
 }
 
 /* Common animations */
