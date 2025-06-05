@@ -24,7 +24,6 @@
 	list-style-image: url("close.svg") !important;
 }
 
-
 #sidebar-button {
 	list-style-image: url("sidebars-right.svg") !important;
 }
@@ -34,91 +33,32 @@
 	list-style-image: url("sidebars.svg") !important;
 }
 
-#downloads-button,
-#downloads-indicator-anchor,
-#appMenu-downloads-button,
-#appMenu-library-downloads-button {
-	list-style-image: url("downloads.svg") !important;
-}
-#appMenu-translate-button {
-	list-style-image: url("translations.svg") !important;
-}
-#appMenu-zoom-controls {
-	list-style-image: url("plus.svg") !important;
-}
-#appMenu-passwords-button,
-#password-notification-icon,
-#PopupAutoComplete
-	> richlistbox
-	> richlistitem[originaltype="generatedPassword"]
-	> .two-line-wrapper
-	> .ac-site-icon,
-#PopupAutoComplete
-	> richlistbox
-	> richlistitem[originaltype="loginWithOrigin"]
-	> .two-line-wrapper
-	> .ac-site-icon,
-#PopupAutoComplete
-	> richlistbox
-	> richlistitem[originaltype="login"]
-	> .ac-site-icon {
-	list-style-image: url("passwords.svg") !important;
-}
 
-#nav-bar-overflow-button {
-	list-style-image: url("chevron.svg") !important;
-}
 
-#PanelUI-menu-button,
-#appMenu-more-button2 {
-	list-style-image: url("menu.svg") !important;
-}
 
-#appMenu-help-button2 {
-	list-style-image: url("help.svg") !important;
-}
-#appMenu-quit-button2 {
-    list-style-image: url("close.svg") !important;
-}
-#appMenu-report-broken-site-button {
-    list-style-image: url("report.svg") !important;
-}
 #new-tab-button {
 	list-style-image: url("new-tab.svg") !important;
 }
 
 #sync-button,
-.urlbarView-row[source="tabs"]
-	> .urlbarView-row-inner
-	> .urlbarView-no-wrap
-	> .urlbarView-favicon,
+.urlbarView-row[source="tabs"] > .urlbarView-row-inner > .urlbarView-no-wrap > .urlbarView-favicon,
 #urlbar-engine-one-off-item-tabs {
 	list-style-image: url("tab.svg") !important;
 }
 
 #history-panelmenu,
-.urlbarView-row[source="history"]
-	> .urlbarView-row-inner
-	> .urlbarView-no-wrap
-	> .urlbarView-favicon,
+.urlbarView-row[source="history"] > .urlbarView-row-inner > .urlbarView-no-wrap > .urlbarView-favicon,
 #urlbar-engine-one-off-item-history,
-#appMenu-history-button,
-#appMenu-library-history-button,
 #sidebar-switcher-history,
-#sidebar-box[sidebarcommand="viewHistorySidebar"]
-	> #sidebar-header
-	> #sidebar-switcher-target
-	> #sidebar-icon {
+#sidebar-box[sidebarcommand="viewHistorySidebar"] > #sidebar-header > #sidebar-switcher-target > #sidebar-icon {
 	list-style-image: url("history.svg") !important;
 }
 
-#save-page-button,
-#appMenu-save-file-button2 {
+#save-page-button {
 	list-style-image: url("save.svg") !important;
 }
 
-#print-button,
-#appMenu-print-button2 {
+#print-button {
 	list-style-image: url("print.svg") !important;
 }
 
@@ -126,8 +66,7 @@
 	list-style-image: url("search-glass.svg") !important;
 }
 
-#find-button,
-#appMenu-find-button2 {
+#find-button {
 	list-style-image: url("search-page.svg") !important;
 }
 
@@ -135,21 +74,15 @@
 	list-style-image: url("open.svg") !important;
 }
 
-#add-ons-button,
-#appMenu-extensions-themes-button,
-#unified-extensions-button {
-	list-style-image: url("extension.svg") !important;
-}
 
-#zoom-out-button,
-#appMenu-zoomReduce-button2 {
+
+#zoom-out-button {
 	list-style-image: url("zoom-out.svg") !important;
 }
 
 #zoom-in-button,
 #tabs-newtab-button,
-#TabsToolbar #new-tab-button,
-#appMenu-zoomEnlarge-button2 {
+#TabsToolbar #new-tab-button {
 	list-style-image: url("plus.svg") !important;
 }
 
@@ -173,21 +106,18 @@
 	list-style-image: url("screenshot.svg") !important;
 }
 
-#preferences-button,
+
 .search-setting-button > .button-box > .button-icon,
-#appMenu-settings-button,
 .unified-extensions-item-open-menu.subviewbutton {
 	list-style-image: url("settings.svg") !important;
 }
+
 #spell-check-enabled {
 	list-style-image: url("spell-check.svg") !important;
 }
+
 #panic-button {
 	list-style-image: url("forget.svg") !important;
-}
-
-#appMenu-new-private-window-button2 {
-	list-style-image: url("private-window.svg") !important;
 }
 
 #privatebrowsing-button {
@@ -207,41 +137,29 @@
 	list-style-image: url("developer.svg") !important;
 }
 
-#new-window-button,
-#appMenu-new-window-button2 {
+#new-window-button {
 	list-style-image: url("window.svg") !important;
 }
 
 #restore-button,
-#fullscreen-button,
-#appMenu-fullscreen-button2 {
+#fullscreen-button {
 	list-style-image: url("fullscreen.svg") !important;
 }
 
 #restore-button[checked],
-#fullscreen-button[checked],
-#appMenu-fullscreen-button2[checked] {
+#fullscreen-button[checked] {
 	list-style-image: url("fullscreen-exit.svg") !important;
 }
 
 #bookmarks-menu-button,
-#appMenu-bookmarks-button,
 #sidebar-switcher-bookmarks,
-#appMenu-library-bookmarks-button,
-#sidebar-box[sidebarcommand="viewBookmarksSidebar"]
-	> #sidebar-header
-	> #sidebar-switcher-target
-	> #sidebar-icon {
+#sidebar-box[sidebarcommand="viewBookmarksSidebar"] > #sidebar-header > #sidebar-switcher-target > #sidebar-icon {
 	list-style-image: url("bookmark-star-on-tray.svg") !important;
 }
 
-#home-button {
-	list-style-image: url("home.svg") !important;
-}
 
-#library-button {
-	list-style-image: url("library.svg") !important;
-}
+
+
 
 /* identity icons */
 #identity-icon {
@@ -256,17 +174,11 @@
 	list-style-image: url("page-portrait.svg") !important;
 }
 
-#urlbar:not(.searchButton)
-	> #urlbar-input-container
-	> #identity-box[pageproxystate="invalid"]
-	#identity-icon {
+#urlbar:not(.searchButton) > #urlbar-input-container > #identity-box[pageproxystate="invalid"] #identity-icon {
 	list-style-image: url("search-glass.svg") !important;
 }
 
-#urlbar[actiontype="extension"]
-	> #urlbar-input-container
-	> #identity-box
-	#identity-icon,
+#urlbar[actiontype="extension"] > #urlbar-input-container > #identity-box #identity-icon,
 #identity-box[pageproxystate="valid"].extensionPage #identity-icon {
 	list-style-image: url("extension.svg") !important;
 }
@@ -276,10 +188,7 @@
 	list-style-image: url("security.svg") !important;
 }
 
-#urlbar-input-container[pageproxystate="valid"]
-	> #tracking-protection-icon-container
-	> #tracking-protection-icon-box
-	> #tracking-protection-icon {
+#urlbar-input-container[pageproxystate="valid"] > #tracking-protection-icon-container > #tracking-protection-icon-box > #tracking-protection-icon {
 	list-style-image: url("tracking-protection.svg") !important;
 }
 
@@ -307,26 +216,18 @@
 }
 
 #identity-popup[ciphers="weak"] .identity-popup-security-connection,
-#identity-popup[mixedcontent~="passive-loaded"][isbroken]
-	.identity-popup-security-connection,
-#identity-popup[connection="secure-cert-user-overridden"]
-	.identity-popup-security-connection,
-#identity-popup[connection="cert-error-page"]
-	.identity-popup-security-connection {
+#identity-popup[mixedcontent~="passive-loaded"][isbroken] .identity-popup-security-connection,
+#identity-popup[connection="secure-cert-user-overridden"] .identity-popup-security-connection,
+#identity-popup[connection="cert-error-page"] .identity-popup-security-connection {
 	list-style-image: url("security-warning.svg") !important;
 }
 
-#identity-popup[connection="net-error-page"]
-	.identity-popup-security-connection {
+#identity-popup[connection="net-error-page"] .identity-popup-security-connection {
 	list-style-image: url("info.svg") !important;
 }
 
 #identity-popup[connection="extension"] .identity-popup-security-connection {
 	list-style-image: url("extension.svg") !important;
-}
-
-#appMenu-new-tab-button2 {
-	list-style-image: url("new-tab-image.svg") !important;
 }
 
 .findbar-find-previous {
@@ -354,8 +255,7 @@
 	list-style-image: url("arrow-left.svg") !important;
 }
 
-#overflowMenu-customize-button,
-#appmenu-moreTools-button {
+#overflowMenu-customize-button {
 	list-style-image: url("customize.svg") !important;
 }
 
@@ -373,33 +273,26 @@
 	list-style-image: url("bookmark.svg") !important;
 }
 
-#sidebar-box[sidebarcommand="viewTabsSidebar"]
-	> #sidebar-header
-	> #sidebar-switcher-target
-	> #sidebar-icon,
+#sidebar-box[sidebarcommand="viewTabsSidebar"] > #sidebar-header > #sidebar-switcher-target > #sidebar-icon,
 #sidebar-switcher-tabs {
 	list-style-image: url("send-to-device.svg") !important;
 }
 
 /* tab icons */
 .tab-icon-image[src="chrome://branding/content/icon32.png"],
-.tab-icon-image[src="chrome://browser/skin/privatebrowsing/favicon.svg"]
-{
+.tab-icon-image[src="chrome://browser/skin/privatebrowsing/favicon.svg"] {
 	content: url("new-tab-image.svg") !important;
 }
 
-.tab-icon-image[src="chrome://global/skin/icons/settings.svg"]
-{
+.tab-icon-image[src="chrome://global/skin/icons/settings.svg"] {
 	content: url("settings.svg") !important;
 }
 
-.tab-icon-image[src="chrome://mozapps/skin/extensions/extension.svg"]
-{
+.tab-icon-image[src="chrome://mozapps/skin/extensions/extension.svg"] {
 	content: url("extension.svg") !important;
 }
 
-.tab-icon-image[src="chrome://browser/skin/customize.svg"]
-{
+.tab-icon-image[src="chrome://browser/skin/customize.svg"] {
 	content: url("customize.svg") !important;
 }
 
@@ -521,18 +414,11 @@
 }
 
 /* reload/stop animation */
-#stop-reload-button[animate]
-	> #reload-button[displaystop]
-	+ #stop-button
-	> .toolbarbutton-animatable-box
-	> .toolbarbutton-animatable-image {
+#stop-reload-button[animate] > #reload-button[displaystop] + #stop-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
 	background-image: url("reload-to-stop.svg") !important;
 }
 
-#stop-reload-button[animate]
-	> #reload-button
-	> .toolbarbutton-animatable-box
-	> .toolbarbutton-animatable-image {
+#stop-reload-button[animate] > #reload-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
 	background-image: url("stop-to-reload.svg") !important;
 }
 
@@ -557,26 +443,8 @@ menupopup > menuitem:is([checked="true"], [selected="true"]) .menu-iconic-icon {
 	list-style-image: url("media-loop.svg") !important;
 }
 
-:not(:not(menubar) > menu, #ContentSelectDropdown)
-	> menupopup
-	> menuitem:not(
-		.menuitem-iconic,
-		[type="checkbox"],
-		[type="radio"],
-		.in-menulist,
-		.in-menulist menuitem,
-		.unified-nav-current
-	),
-:not(:not(menubar) > menu, #ContentSelectDropdown)
-	> menupopup
-	> menu:not(
-		.menu-iconic,
-		[type="checkbox"],
-		[type="radio"],
-		.in-menulist,
-		.in-menulist menu,
-		.unified-nav-current
-	),
+:not(:not(menubar) > menu, #ContentSelectDropdown) > menupopup > menuitem:not(.menuitem-iconic, [type="checkbox"], [type="radio"], .in-menulist, .in-menulist menuitem, .unified-nav-current),
+:not(:not(menubar) > menu, #ContentSelectDropdown) > menupopup > menu:not(.menu-iconic, [type="checkbox"], [type="radio"], .in-menulist, .in-menulist menu, .unified-nav-current),
 #toggle_toolbar-menubar,
 #PanelUI-history toolbarbutton,
 #unified-extensions-context-menu menuitem {
@@ -590,10 +458,9 @@ menupopup > menuitem:is([checked="true"], [selected="true"]) .menu-iconic-icon {
 
 menu > .menu-iconic-text,
 menuitem > .menu-iconic-text {
-	padding-inline-start: var(
-		--fp-contextmenu-menuicon-margin-inline
-	) !important;
+	padding-inline-start: var(--fp-contextmenu-menuicon-margin-inline) !important;
 }
+
 #context-savepage {
 	--menu-image: url("save.svg");
 }
@@ -612,9 +479,10 @@ menuitem > .menu-iconic-text {
 	--menu-image: url("edit-undo.svg");
 }
 
-#context_unloadTab{
+#context_unloadTab {
 	--menu-image: url("unloadTab.svg");
 }
+
 #toggle_toolbar-menubar {
 	--menu-image: url("menu-bar.svg");
 }
@@ -636,20 +504,25 @@ menuitem > .menu-iconic-text {
 #placesContext_paste_group {
 	--menu-image: url("edit-paste.svg");
 }
+
 .textbox-contextmenu menuitem.searchbar-paste-and-search {
 	--menu-image: url("edit-paste.svg");
 }
+
 .textbox-contextmenu menuitem.searchbar-clear-history {
-    --menu-image: url("edit-delete.svg");
+	--menu-image: url("edit-delete.svg");
 }
+
 #context-cut,
 .textbox-contextmenu menuitem[cmd*="cut"],
 #placesContext_cut {
 	--menu-image: url("edit-cut.svg");
 }
+
 #placesContext_sortBy\:name {
-    --menu-image: url("sort.svg");
+	--menu-image: url("sort.svg");
 }
+
 #context-delete,
 .customize-context-removeExtension,
 .unified-extensions-context-menu-remove-extension,
@@ -693,18 +566,23 @@ menuitem[id="placesContext_deleteHost"] {
 #context-searchselect {
 	--menu-image: url("search-glass.svg");
 }
+
 #context-searchselect-private {
     --menu-image: url("search-glass.svg");
 }
+
 #context-translate-selection {
     --menu-image: url("translations.svg");
 }
+
 #context-viewimage {
 	--menu-image: url("image-open.svg");
 }
+
 #context-viewimageinfo {
 	--menu-image: url("info.svg");
 }
+
 #context-saveimage,
 #context-video-saveimage {
 	--menu-image: url("image-save.svg");
@@ -733,6 +611,7 @@ menuitem[id="placesContext_deleteHost"] {
 #context-pdfjs-copy {
 	--menu-image: url("link.svg");
 }
+
 #context-openlinkincurrent {
 	--menu-image: url("ext-link.svg");
 }
@@ -784,95 +663,18 @@ menuitem[id="placesContext_openBookmarkContainer:tabs"] {
 }
 
 #context_moveTabToGroup,
-#context_moveTabToNewGroup{
+#context_moveTabToNewGroup {
 	--menu-image: url("moveTabToGroup.svg");
 }
-	
-#context_ungroupTab{
+
+#context_ungroupTab {
 	--menu-image: url("ungroupTab.svg");
 }
 
-#context-openlinkinusercontext-menu,
-menu[id="placesContext_open:newcontainertab"],
-menu[id="placesContext_openContainer:tabs"] {
-	--menu-image: url("container-tab.svg");
-}
-
-#context-openlink,
-menuitem[id="placesContext_open:newwindow"] {
-	--menu-image: url("window.svg");
-}
-
-#context-openlinkprivate,
-menuitem[id="placesContext_open:newprivatewindow"] {
-	--menu-image: url("private-window.svg");
-}
-
-#context-savelink {
-	--menu-image: url("downloads.svg");
-}
-
-#spell-add-to-dictionary {
-	--menu-image: url("add-to-dictionary.svg");
-}
-
-#manage-saved-logins {
-	--menu-image: url("passwords.svg");
-}
-
-#context-media-play,
-#context_playTab,
-#context_playSelectedTabs {
-	--menu-image: url("media-play.svg");
-}
-
-#context-media-pause {
-	--menu-image: url("media-pause.svg");
-}
-
-#context-media-mute,
-#context_toggleMuteTab,
-#context_toggleMuteSelectedTabs {
-	--menu-image: url("media-mute.svg");
-}
-
-#context-media-unmute,
-#context_toggleMuteTab[muted],
-#context_toggleMuteSelectedTabs[muted] {
-	--menu-image: url("media-unmute.svg");
-}
-
-#context-media-playbackrate {
-	--menu-image: url("media-speed.svg");
-}
-
-#context-video-fullscreen {
-	--menu-image: url("fullscreen.svg");
-}
-
-#context-leave-dom-fullscreen,
-menuitem[contexttype="fullscreen"][label*="Exit"] {
-	--menu-image: url("fullscreen-exit.svg");
-}
-
-#context-media-hidecontrols,
-#context-media-showcontrols {
-	--menu-image: url("permissions.svg");
-}
-
-#context_pinTab,
-#context_pinSelectedTabs,
-.customize-context-moveToPanel {
-  --menu-image: url("pin.svg"); 
-}
-
-#context_unpinTab,
-#context_unpinSelectedTabs {
-  --menu-image: url("unpin.svg"); 
-}
 .customize-context-removeFromToolbar {
 	--menu-image: url("unpin.svg");
 }
+
 #context_duplicateTab,
 #context_duplicateTabs {
 	--menu-image: url("duplicate-tab.svg");
@@ -900,24 +702,15 @@ menuitem[id="placesContext_showAllBookmarks"],
 .unified-extensions-context-menu-manage-extension {
 	--menu-image: url("manage.svg");
 }
+
 #BMB_viewBookmarksSidebar {
 	--menu-image: url("sidebars.svg");
 }
+
 #BMB_searchBookmarks {
 	--menu-image: url("search-page.svg");
 }
-#appMenuRecentlyClosedTabs {
-	--menu-image: url("container-tab.svg");
-}
-#appMenuClearRecentHistory {
-	--menu-image: url("edit-delete.svg");
-}
-#appMenuRecentlyClosedWindows {
-	--menu-image: url("window.svg");
-}
-#appMenuSearchHistory {
-	--menu-image: url("search-glass.svg");
-}
+
 #PanelUI-historyMore {
 	--menu-image: url("manage.svg");
 }
@@ -949,9 +742,11 @@ menuitem[id="placesContext_new:separator"] {
 #context_closeDuplicateTabs {
 	--menu-image: url("close.svg");
 }
+
 #context_closeTabOptions {
 	--menu-image: url("close-all.svg");
 }
+
 .customize-context-reportExtension,
 .unified-extensions-context-menu-report-extension {
 	--menu-image: url("report.svg");
@@ -995,95 +790,79 @@ menuitem[id="placesContext_new:separator"] {
 	--fp-enabled: 1;
 }
 
-#appMenu-libraryView .panel-header > h1 > span::before {
-	--header-image: url("library.svg");
-	--fp-enabled: 1;
-}
-
 #unified-extensions-panel .panel-header > h1 > span::before {
 	--header-image: url("extension.svg");
 	--fp-enabled: 1;
 }
+
 .unified-extensions-context-menu-pin-to-toolbar {
 	--menu-image: url("pin.svg");
 }
+
 .unified-extensions-context-menu-move-widget-down {
 	--menu-image: url("arrow-down.svg");
 }
+
 .unified-extensions-context-menu-move-widget-up {
 	--menu-image: url("arrow-up.svg");
 }
-.unified-extensions-item
-	.webextension-browser-action.subviewbutton
-	> .toolbarbutton-badge-stack
-	> .toolbarbutton-icon {
+
+.unified-extensions-item.webextension-browser-action.subviewbutton > .toolbarbutton-badge-stack > .toolbarbutton-icon {
 	height: 24px !important;
 	width: 24px !important;
 }
 
-:not(:not(menubar) > menu, #ContentSelectDropdown)
-	> menupopup
-	> menuitem:not(
-		.menuitem-iconic,
-		[type="checkbox"],
-		[type="radio"],
-		.in-menulist,
-		.in-menulist menuitem,
-		.unified-nav-current
-	),
-:not(:not(menubar) > menu, #ContentSelectDropdown)
-	> menupopup
-	> menu:not(
-		.menu-iconic,
-		[type="checkbox"],
-		[type="radio"],
-		.in-menulist,
-		.in-menulist menu,
-		.unified-nav-current
-	),
+:not(:not(menubar) > menu, #ContentSelectDropdown) > menupopup > menuitem:not(.menuitem-iconic, [type="checkbox"], [type="radio"], .in-menulist, .in-menulist menuitem, .unified-nav-current),
+:not(:not(menubar) > menu, #ContentSelectDropdown) > menupopup > menu:not(.menu-iconic, [type="checkbox"], [type="radio"], .in-menulist, .in-menulist menu, .unified-nav-current),
 :not(:not(menubar) > menu, #ContentSelectDropdown) > menupopup > menucaption {
 	padding-inline-start: calc(
-		var(--fp-contextmenu-menuitem-padding-inline) + 16px +
-			var(--fp-contextmenu-menuicon-margin-inline)
+		var(--fp-contextmenu-menuitem-padding-inline) 
+		+ 16px                                 
+		+ var(--fp-contextmenu-menuicon-margin-inline)
 	) !important;
 }
-/* Special icon for Zen*/
-#zen-toolbar-context-tabs-right{
+
+/* Special icon for Zen */
+#zen-toolbar-context-tabs-right {
 	--menu-image: url("zen-toolbar-context-tabs-right.svg");
 }
 
-#context_zen-add-essential{
+#context_zen-add-essential {
 	--menu-image: url("essential-add.svg");
-
 }
 
-#context_zen-remove-essential{
+#context_zen-remove-essential {
 	--menu-image: url("essential-remove.svg");
 }
 
-#context-zen-change-workspace-tab{
+#context-zen-change-workspace-tab {
 	--menu-image: url("move-tab.svg");
 }
+
 #context_zenSplitTabs,
-#context-zenSplitLink{
+#context-zenSplitLink {
 	--menu-image: url("split.svg");
 }
-#zenToolbarThemePicker{
+
+#zenToolbarThemePicker {
 	--menu-image: url("customize.svg");
 }
-#zen-context-menu-compact-mode{
+
+#zen-context-menu-compact-mode {
 	--menu-image: url("compact-mode.svg");
 }
+
 #placesContext_paste,
-#context-paste-no-formatting{
+#context-paste-no-formatting {
 	--menu-image: url("edit-paste.svg");
 }
+
 #context_zen-reset-pinned-tab,
-#context_zen-replace-pinned-url-with-current{
+#context_zen-replace-pinned-url-with-current {
 	--menu-image: url("reload.svg");
 }
-/* Shift the text to the right to make room for the custom icon.*/
 
+/* Shift the text to the right to make room for the custom icon. */
 :root {
   --fp-contextmenu-menuicon-margin-inline: 12px;
   --fp-contextmenu-menuitem-padding-inline: 10px;
@@ -1106,10 +885,135 @@ menuitem > .menu-iconic-text,
 }
 
 /* This is used to temporarily solve the problem where the "historical" icons that Zen has not yet removed overlap with the added custom icons. */
-#appMenuRecentlyClosedTabs,
-#appMenuRecentlyClosedWindows,
-#appMenuSearchHistory,
-#appMenuClearRecentHistory,
-#PanelUI-historyMore{
+#PanelUI-historyMore {
 	--menu-image: none;
+}
+
+/* Any selectors containing "#appMenu" are wrapped in the following media query.
+   When the pref only-Context-Menu-Icons is true, these rules do NOT apply.
+   By default (pref=false), they apply normally. */
+@media not -moz-pref("only-Context-Menu-Icons") {
+	#appMenu-downloads-button,
+	#appMenu-library-downloads-button {
+		list-style-image: url("downloads.svg") !important;
+	}
+
+	#appMenu-translate-button {
+		list-style-image: url("translations.svg") !important;
+	}
+
+	#appMenu-zoom-controls {
+		list-style-image: url("plus.svg") !important;
+	}
+
+	#appMenu-passwords-button {
+		list-style-image: url("passwords.svg") !important;
+	}
+
+	#PanelUI-menu-button,
+	#appMenu-more-button2 {
+		list-style-image: url("menu.svg") !important;
+	}
+
+	#appMenu-help-button2 {
+		list-style-image: url("help.svg") !important;
+	}
+
+	#appMenu-quit-button2 {
+		list-style-image: url("close.svg") !important;
+	}
+
+	#appMenu-report-broken-site-button {
+		list-style-image: url("report.svg") !important;
+	}
+
+	#appMenu-new-private-window-button2 {
+		list-style-image: url("private-window.svg") !important;
+	}
+
+	#appMenu-new-window-button2 {
+		list-style-image: url("window.svg") !important;
+	}
+
+	#appMenu-fullscreen-button2 {
+		list-style-image: url("fullscreen.svg") !important;
+	}
+
+	#appMenu-fullscreen-button2[checked] {
+		list-style-image: url("fullscreen-exit.svg") !important;
+	}
+
+	#appMenu-bookmarks-button,
+	#appMenu-library-bookmarks-button {
+		list-style-image: url("bookmark-star-on-tray.svg") !important;
+	}
+
+	#appMenu-save-file-button2 {
+		list-style-image: url("save.svg") !important;
+	}
+
+	#appMenu-print-button2 {
+		list-style-image: url("print.svg") !important;
+	}
+
+	#appMenu-find-button2 {
+		list-style-image: url("search-page.svg") !important;
+	}
+
+	#appMenu-extensions-themes-button {
+		list-style-image: url("extension.svg") !important;
+	}
+
+	#appMenu-zoomReduce-button2 {
+		list-style-image: url("zoom-out.svg") !important;
+	}
+
+	#appMenu-zoomEnlarge-button2 {
+		list-style-image: url("plus.svg") !important;
+	}
+
+	#appMenu-settings-button {
+		list-style-image: url("settings.svg") !important;
+	}
+
+	#appMenu-history-button,
+	#appMenu-library-history-button {
+		list-style-image: url("history.svg") !important;
+	}
+
+	#appMenu-new-tab-button2 {
+		list-style-image: url("new-tab-image.svg") !important;
+	}
+
+	#appMenu-searchHistory {
+		--menu-image: url("search-glass.svg");
+	}
+
+	#appMenuRecentlyClosedTabs,
+	#appMenuRecentlyClosedWindows,
+	#appMenuSearchHistory,
+	#appMenuClearRecentHistory {
+		--menu-image: none;
+	}
+	#downloads-indicator-anchor {
+	list-style-image: url("downloads.svg") !important;
+	}
+	#downloads-button {
+	list-style-image: url("downloads.svg") !important;
+	}
+
+	#preferences-button {
+	list-style-image: url("settings.svg") !important;
+	}
+
+	#library-button {
+	list-style-image: url("library.svg") !important;
+	}
+	#home-button {
+	list-style-image: url("home.svg") !important;
+	}
+	#add-ons-button,
+	#unified-extensions-button {
+	list-style-image: url("extension.svg") !important;
+	}
 }
