@@ -269,6 +269,9 @@ p {
 #background {background-image: none !important; background-color: transparent !important;}
    .tabbing {background-color: transparent !important;} 
     body {background-color: transparent !important;}
+#background-wrapper {
+    opacity: 0 !important;
+}
 ```
 ###
 
