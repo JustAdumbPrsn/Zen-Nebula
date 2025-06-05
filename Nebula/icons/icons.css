@@ -120,6 +120,10 @@
 	list-style-image: url("screenshot.svg") !important;
 }
 
+.search-setting-button > .button-box > .button-icon,
+.unified-extensions-item-open-menu.subviewbutton {
+	list-style-image: url("settings.svg") !important;
+}
 
 #spell-check-enabled {
 	list-style-image: url("spell-check.svg") !important;
@@ -1060,6 +1064,10 @@ menuitem[id="placesContext_new:separator"] {
 		list-style-image: url("window.svg") !important;
 	}
 
+	#appMenu-new-private-window-button2 {
+		list-style-image: url("private-window.svg") !important;
+	}
+	
 	#appMenu-fullscreen-button2 {
 		list-style-image: url("fullscreen.svg") !important;
 	}
@@ -1099,8 +1107,7 @@ menuitem[id="placesContext_new:separator"] {
 	}
 
 	#preferences-button,
-	.search-setting-button > .button-box > .button-icon,
-	.unified-extensions-item-open-menu.subviewbutton {
+	#appMenu-settings-button {
 		list-style-image: url("settings.svg") !important;
 	}
 
