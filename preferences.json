@@ -195,4 +195,11 @@
         "property": "nebula-remove-workspace-indicator",
         "label": "Removes the workspace indicator."
     }
+    {
+        "type": "checkbox",
+        "property": "only-Context-Menu-Icons",
+        "label": "only Context Menu Icons.",
+        "defaultValue": false
+
+    }
 ]
