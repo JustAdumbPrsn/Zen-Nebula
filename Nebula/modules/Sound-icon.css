@@ -61,14 +61,14 @@ span[part="button"].button-background {
       }
     }
   
-    @media not (-moz-pref("zen.view.sidebar-expanded")) {
-      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked]):hover
+
+      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked])
         img {
         opacity: 1 !important;
         transition: opacity 0.1s ease-out !important;
       }
   
-      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked]):hover
+      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked])
         .tab-icon-overlay {
         margin: 0px !important;
         transition: opacity 0.25s ease-out, transform 0.25s ease-out !important;
@@ -78,7 +78,7 @@ span[part="button"].button-background {
       .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked]) .tab-icon-overlay {
         transition: opacity 0.25s ease-in, transform 0.25s ease-in !important;
       }
-    }
+    
   
     #zen-essentials-container {
       .tab-icon-overlay:is([soundplaying], [muted], [activemedia-blocked]) {
