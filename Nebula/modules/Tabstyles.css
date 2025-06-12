@@ -1,4 +1,9 @@
 /* ------------------- Pinned Tab Reset Button ------------------- */
+/* Style for multi-selected tabs, same as selected tabs */
+.tabbrowser-tab[multiselected="true"] .tab-background {
+  background-color: var(--nebula-color-selected) !important;
+  box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.55)) !important;
+}
 
 .tab-reset-pin-button {
     border-top-left-radius: var(--nebula-border-radius) !important;
@@ -16,7 +21,7 @@ tab[label$='.pdf'] img.tab-icon-image {
 }
 
 /* ------------------- Container and Tab Context Styling ------------------- */
-
+/*
 .tab-context-line {
     display: none !important;
 }
@@ -46,7 +51,7 @@ tab[label$='.pdf'] img.tab-icon-image {
     filter: blur(0px) !important;
     animation: container-glow 5s infinite linear;
 }
-
+*/
 /* ------------------- Close and Reset Button Styling ------------------- */
 
 .tabbrowser-tab .tab-background::before {
@@ -102,7 +107,7 @@ tab[label$='.pdf'] img.tab-icon-image {
 /* Base style for pinned tabs */
 .tabbrowser-tab[pinned] .tab-background {
     background-color: light-dark(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2)) !important;
-    box-shadow: 0 0px 8px light-dark(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0)) !important;
+    box-shadow: 0 0px 3px transparent !important;
     border-radius: var(--nebula-border-radius) !important;
     position: relative !important;
     transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
@@ -128,7 +133,7 @@ tab[label$='.pdf'] img.tab-icon-image {
 }
 
 .tabbrowser-tab:not([pinned]) .tab-background {
-  box-shadow: 0 0px 8px transparent !important;
+  box-shadow: 0 0px 3px transparent !important;
   border-radius: var(--nebula-border-radius) !important;
   position: relative !important;
   transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
@@ -143,6 +148,129 @@ tab[label$='.pdf'] img.tab-icon-image {
 .tabbrowser-tab:not([pinned])[visuallyselected="true"] .tab-background {
   background-color: var(--nebula-color-selected) !important;
   box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.55)) !important;
+}
+
+/* --- glow to active tab --- */
+/*
+.tabbrowser-tab:not(.zen-essentials-container .tabbrowser-tab)[selected="true"] .tab-background::after,
+.tabbrowser-tab:not(.zen-essentials-container .tabbrowser-tab)[visuallyselected="true"] .tab-background::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160%;
+  height: 120%;
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.35),
+      transparent 20px
+    ),
+    radial-gradient(
+      ellipse at bottom center,
+      color-mix(in srgb, var(--zen-primary-color) 20%, transparent) 0%,
+      transparent 70%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Fade out on hover */
+.tabbrowser-tab:not(.zen-essentials-container .tabbrowser-tab)[selected="true"]:hover .tab-background::after,
+.tabbrowser-tab:not(.zen-essentials-container .tabbrowser-tab)[visuallyselected="true"]:hover .tab-background::after {
+  opacity: 0 !important;
+}
+*/
+
+/* --- add nebula background and also glow animation to tab which is ctrl+clicked --- */
+.tabbrowser-tab[multiselected="true"] .tab-background {
+  position: relative !important;
+  background-color: var(--nebula-color-selected) !important;
+  box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.55)) !important;
+  overflow: visible !important;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.tabbrowser-tab[multiselected="true"] .tab-background::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  transform: scale(0.9) translateZ(0);
+  filter: blur(15px);
+  opacity: 0 !important;
+  transition: all 0.3s ease-in-out !important;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--zen-primary-color) 10%, black),
+    var(--zen-primary-color),
+    color-mix(in srgb, var(--zen-primary-color) 25%, white),
+    var(--zen-primary-color),
+    light-dark(#fffd, #000d),
+    light-dark(#fffd, #000d),
+    var(--zen-primary-color),
+    color-mix(in srgb, var(--zen-primary-color) 50%, white),
+    color-mix(in srgb, var(--zen-primary-color) 25%, white),
+    var(--zen-primary-color),
+    color-mix(in srgb, var(--zen-primary-color) 25%, black),
+    light-dark(#fffd, #000d),
+    color-mix(in srgb, var(--zen-primary-color) 10%, black),
+    light-dark(#fffd, #000d),
+    color-mix(in srgb, var(--zen-primary-color) 75%, black),
+    color-mix(in srgb, var(--zen-primary-color) 50%, black),
+    color-mix(in srgb, var(--zen-primary-color) 25%, black),
+    color-mix(in srgb, var(--zen-primary-color) 10%, black),
+    light-dark(#fffd, #000d)
+  );
+  background-size: 200% 400%;
+  pointer-events: none;
+}
+
+.tabbrowser-tab[multiselected="true"] .tab-background::after,
+.tabbrowser-tab[multiselected="true"][selected="true"] .tab-background::after {
+  opacity: 0.2 !important;
+  animation: animateGlow 5s cubic-bezier(0.1, 0.7, 0.5, 0.1) infinite;
+  height: 150%;
+}
+
+@keyframes animateGlow {
+  0% {
+    background-position: 0% 20%;
+  }
+  100% {
+    background-position: 200% 20%;
+  }
+}
+
+/* --- make newtab button styled --- */
+#tabs-newtab-button.toolbarbutton-1 {
+  position: relative;
+  background: transparent !important;
+  border: none;
+  box-shadow: 0 0px 3px transparent !important;
+}
+
+#tabs-newtab-button.toolbarbutton-1::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0; */
+  box-shadow: 0 0px 3px transparent !important;
+  border-radius: var(--nebula-border-radius) !important;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
+  pointer-events: none;
+  z-index: -1; /* keep behind button content */
+  background-color: transparent;
+}
+
+#tabs-newtab-button.toolbarbutton-1:hover::before {
+  background-color: var(--nebula-color-hover) !important;
+  box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.055), rgba(0, 0, 0, 0.55)) !important;
 }
 
 /* -------------------- Split view outline -------------------------- */

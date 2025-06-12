@@ -18,25 +18,25 @@
 }
 
 #navigator-toolbox:not([animate='true']) #titlebar::before {
-  border-radius: 11px !important;
-  background: transparent !important;
   content: '';
   position: absolute;
   pointer-events: none;
   z-index: -1;
+  border-radius: 11px !important;
+  background: transparent !important;
 }
 
 #navigator-toolbox:not([animate='true']) #titlebar::after {
   content: '';
   position: absolute;
-  background: transparent !important;
   pointer-events: none;
   z-index: 0;
+  background: transparent !important;
   opacity: var(--zen-grainy-background-opacity, 0);
   mix-blend-mode: overlay;
 }
 
-/* Base blurred transparent background for compact sidebar */
+/* Compact sidebar styling */
 body:has([zen-compact-mode="true"]) #titlebar {
   top: calc(var(--zen-element-separation) / 1.4) !important;
   left: calc(var(--zen-element-separation) / 0.999) !important;
@@ -49,72 +49,103 @@ body:has([zen-compact-mode="true"]) #titlebar {
   margin: calc(var(--zen-element-separation) / 2) 0 !important;
 }
 
+/* Sidebar on right */
+:root[zen-right-side="true"] body:has([zen-compact-mode="true"]) #titlebar {
+  left: auto !important;
+  right: calc(var(--zen-element-separation) / 0.999) !important;
+}
+
 /* -------------------------- COMPACT SIDEBAR PSEUDO BACKGROUND -------------------------- */
-@media (-moz-pref("nebula-compact-mode-sidebar-bg")) {
-    
-    /* Background blur + layout config */
-    body:has([zen-compact-mode="true"]) #titlebar {
-        top: calc(var(--zen-element-separation) / 1.4) !important;
-        left: calc(var(--zen-element-separation) / 0.999) !important;
-        background: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)) !important;
-        backdrop-filter: blur(32px) saturate(140%) !important;
 
-        width: calc(var(--nebula-sidebar-width) - 0px) !important;
-        min-width: calc(var(--nebula-sidebar-width) - 8px) !important;
-        border-radius: 11px !important;
-        scale: 1 !important;
-        padding: 8px !important;
-        height: calc(100% - (var(--zen-element-separation) * 2.4)) !important;
-        margin: calc(var(--zen-element-separation) / 2) 0 !important;
+/* Sidebar container styling */
+body:has([zen-compact-mode="true"]) #titlebar {
+  top: calc(var(--zen-element-separation) / 1.4) !important;
+  left: calc(var(--zen-element-separation) / 0.999) !important;
+  background: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)) !important;
+  backdrop-filter: blur(32px) saturate(140%) !important;
 
-        transition: left 0.2s cubic-bezier(0.175, 0.585, 0.32, 1.1), right 0.2s cubic-bezier(0.175, 0.585, 0.32, 1.1) !important;
-    }
+  width: calc(var(--nebula-sidebar-width)) !important;
+  min-width: calc(var(--nebula-sidebar-width)) !important;
+  height: calc(100% - (var(--zen-element-separation) * 1.3)) !important;
 
-    /* Sidebar on right */
-    :root[zen-right-side="true"] body:has([zen-compact-mode="true"]) #titlebar {
-        left: auto !important;
-        right: calc(var(--zen-element-separation) / 0.999) !important;
-    }
+  padding: 8px !important;
+  margin: 0 !important;
 
-    /* Pseudo background overlay for the sidebar */
-    body:has([zen-compact-mode="true"]) #browser::after {
-        opacity: 0 !important;
-        left: 0px !important;
-        width: calc(var(--nebula-sidebar-width) - 3px) !important;
-        min-width: calc(var(--nebula-sidebar-width) - 4px) !important;
-        border-radius: 10px !important;
-        margin-right: 0 !important;
-        margin-left: calc(var(--zen-element-separation) / 1.5) !important;
-        margin-top: calc(var(--zen-element-separation) / 0.85) !important;
-        margin-bottom: calc(var(--zen-element-separation) / 2) !important;
-        height: calc(100% - (var(--zen-element-separation) * 3.2)) !important;
-        top: calc(var(--zen-element-separation) / 2) !important;
-        background-color: light-dark(rgba(200, 200, 200, 1), rgba(40, 40, 40, 1)) !important;
-        content: "" !important; 
-        position: absolute !important; 
-        z-index: 0;
-        transition: left 0.2s, right 0.2s, opacity 0s ease, filter 0.2s ease !important;
-    }
+  border-radius: 11px !important;
+  scale: 1 !important;
 
-    /* Right-side pseudo background */
-    :root[zen-right-side="true"] body:has([zen-compact-mode="true"]) #browser::after {
-        left: auto !important;
-        right: 0px !important;
-        margin-left: 0 !important;
-        margin-right: calc(var(--zen-element-separation) / 1.5) !important;
-    }
+  transition:
+    left 0.2s cubic-bezier(0.175, 0.585, 0.32, 1.1),
+    right 0.2s cubic-bezier(0.175, 0.585, 0.32, 1.1) !important;
+}
 
-    /* Show pseudo background when active/hovered */
-    body:has([zen-compact-mode="true"] [zen-user-show=""], [zen-compact-mode="true"] #navigator-toolbox[zen-has-hover="true"]) #browser::after {
-        opacity: 1 !important;
-        left: var(--zen-element-separation) !important;
-    }
+/* Sidebar on right */
+:root[zen-right-side="true"] body:has([zen-compact-mode="true"]) #titlebar {
+  left: auto !important;
+  right: calc(var(--zen-element-separation) / 0.999) !important;
+}
 
-    :root[zen-right-side="true"] body:has([zen-compact-mode="true"] [zen-user-show=""], [zen-compact-mode="true"] #navigator-toolbox[zen-has-hover="true"]) #browser::after {
-        left: auto !important;
-        right: var(--zen-element-separation) !important;
-    }
-    
+/* Pseudo background overlay */
+body:has([zen-compact-mode="true"]) #browser::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 0;
+
+  top: calc(var(--zen-element-separation) / 0.942) !important;
+  left: calc(var(--zen-element-separation) / 0.75) !important;
+
+  width: calc(var(--nebula-sidebar-width)) !important;
+  height: calc(100% - (var(--zen-element-separation) * 2.2)) !important;
+
+  border-radius: 11px !important;
+  background-color: light-dark(rgba(200, 200, 200, 1), rgba(40, 40, 40, 1)) !important;
+  backdrop-filter: blur(32px) saturate(140%) !important;
+
+  opacity: 0 !important;
+  transition:
+    left 0.2s,
+    right 0.2s,
+    opacity 0.2s ease,
+    filter 0.2s ease !important;
+}
+
+/* Right-side pseudo background alignment */
+:root[zen-right-side="true"] body:has([zen-compact-mode="true"]) #browser::after {
+  left: auto !important;
+  right: calc(var(--zen-element-separation) / 0.999) !important;
+}
+
+/* Show pseudo background when active/hovered */
+body:has([zen-compact-mode="true"] [zen-user-show=""],
+         [zen-compact-mode="true"] #navigator-toolbox[zen-has-hover="true"]) #browser::after {
+  opacity: 1 !important;
+}
+
+:root[zen-right-side="true"] body:has([zen-compact-mode="true"] [zen-user-show=""],
+                                      [zen-compact-mode="true"] #navigator-toolbox[zen-has-hover="true"]) #browser::after {
+  opacity: 1 !important;
+}
+
+/* config to remove pseudo bg */
+@media (-moz-pref("nebula-compact-mode-no-sidebar-bg")) {
+  body:has([zen-compact-mode="true"]) #browser::after {
+    content: none !important; /* removes the pseudo element */
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: none !important;
+  }
+}
+
+/* for collapsed toolbar */
+:root:not([zen-sidebar-expanded="true"]) #titlebar {
+  width: 65px !important;
+  min-width: 65px !important;
+}
+
+:root:not([zen-sidebar-expanded="true"]) #browser::after {
+  width: 65px !important;
 }
 
 /* ------------------------- GENERAL SIDEBAR -------------------------- */
@@ -124,6 +155,7 @@ scrollbox {
   scrollbar-width: none !important;
 }
 
+/*
 #zen-tabs-wrapper {
     mask-image: linear-gradient(to bottom, black 90%, rgba(0, 0, 0, 0.4) 97%, transparent 100%) !important;
     -webkit-mask-image: linear-gradient(to bottom, black 90%, rgba(0, 0, 0, 0.7) 97%, transparent 100%) !important;
@@ -132,6 +164,7 @@ scrollbox {
     overflow-y: auto !important;
     transition: mask-image 0.3s ease, -webkit-mask-image 0.3s ease;
 }
+*/
 
 /* Hide the overflow background gradient */
 .workspace-arrowscrollbox[overflowing] {
@@ -293,134 +326,21 @@ findbar toolbarbutton:active {
     display: none !important;
 }
 
-/* General Context Menu Layout */
-#tabContextMenu {
-    width: 280px !important;
-}
-
-menuseparator {
-    &:first-of-type {
-        display: none !important;
-    }
-
-    &::before {
-        opacity: 0.3;
-    }
-}
-
 /* Force First Separator Visible for Grouping */
 #tabContextMenu:has(#context_reloadTab:not([hidden])):has(:is(#context_zen-add-essential,
 #context_zen-remove-essential):not([hidden])):has(:is(#context_pinTab, #context_unpinTab, #context_bookmarkTab):not([hidden])) {
     :nth-child(1 of menuseparator) {
-        display: flex !important;
-        visibility: visible !important;
-        order: -1 !important;
+
     }
 
     #context_reloadTab,
     :is(#context_zen-add-essential, #context_zen-remove-essential),
     :is(#context_pinTab, #context_unpinTab),
     #context_bookmarkTab {
-        order: -999 !important;
-        width: 25% !important;
-        --height: 42px;
-        height: var(--height) !important;
-
-        position: relative;
-        overflow: hidden;
 
         background-position: center !important;
         border-radius: 12px !important;
         transition: box-shadow 0.4s ease-in-out;
 
-        .menu-text {
-            display: none !important;
-        }
-    }
-
-    /* Positioning Each Button */
-    #context_reloadTab {
-        margin-left: 0 !important;
-    }
-
-    :is(#context_pinTab, #context_unpinTab) {
-        margin-left: 25% !important;
-        margin-top: calc(0px - var(--height)) !important;
-    }
-
-    #context_zen-remove-essential {
-        margin-left: 37.5% !important;
-        margin-top: calc(0px - var(--height)) !important;
-    }
-
-    #context_zen-add-essential {
-        margin-left: 50% !important;
-        margin-top: calc(0px - var(--height)) !important;
-    }
-
-    #context_bookmarkTab {
-        margin-left: 75% !important;
-        margin-top: calc(0px - var(--height)) !important;
     }
 }
-
-/* -------------------------- Gradient Animation Base -------------------------- */
-#context_reloadTab::before,
-:is(#context_zen-add-essential, #context_zen-remove-essential)::before,
-:is(#context_pinTab, #context_unpinTab)::before,
-#context_bookmarkTab::before {
-    content: "";
-    position: absolute;
-    inset: 2px;
-    border-radius: 12px !important;
-    clip-path: inset(-1 round 12px);
-    pointer-events: none;
-
-    background: linear-gradient(
-        45deg,
-        color-mix(in srgb, var(--zen-primary-color) 5%, black),
-        color-mix(in srgb, var(--zen-primary-color) 20%, black),
-        color-mix(in srgb, var(--zen-primary-color) 50%, black),
-        color-mix(in srgb, var(--zen-primary-color) 90%, black),
-        color-mix(in srgb, var(--zen-primary-color) 50%, black),
-        color-mix(in srgb, var(--zen-primary-color) 15%, black)
-    );
-
-    background-size: 400% 400%;
-    filter: blur(10px) brightness(1);
-    opacity: 0;
-    transition: opacity 0.4s ease-in-out;
-}
-
-/* Hover Activates Gradient Effect */
-#context_reloadTab:hover::before,
-:is(#context_zen-add-essential, #context_zen-remove-essential):hover::before,
-:is(#context_pinTab, #context_unpinTab):hover::before,
-#context_bookmarkTab:hover::before {
-    opacity: 0.5;
-    animation-play-state: running;
-}
-
-@keyframes tab-hover-gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* OPTIONAL BACKGROUND (Commented Out) */
-/*
-menupopup {
-    --panel-border-radius: 15px !important;
-    --panel-background: linear-gradient(
-        155deg,
-        color-mix(in srgb, var(--zen-primary-color) 25%, light-dark(white, rgba(20,20,20,1))) 0%,
-        light-dark(white, rgba(20,20,20,1)) 40%
-    ) !important;
-}
-*/
