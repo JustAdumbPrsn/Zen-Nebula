@@ -344,11 +344,10 @@ tab-group[split-view-group="true"]:not(:active) {
     );
     background-size: 200% 200%;
     border-radius: var(--nebula-border-radius) !important;
-    clip-path: inset(0 round var(--nebula-border-radius));
     animation: tab-hover-gradient 3.5s linear infinite;
     animation-play-state: paused;
     opacity: 0;
-    filter: blur(10px) brightness(1) contrast(120%);
+    -moz-filter: blur(10px) brightness(1) contrast(120%);
     transition: opacity 0.4s ease-in-out;
     pointer-events: none;
 }
