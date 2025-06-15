@@ -23,20 +23,28 @@
 
   /* Base Styling (Style 1 - Default) */
   #zen-workspaces-button {
+  /* --- FIX APPLIED (v2) --- */
+    /* Makes the container fit the width of the content (the buttons). */
+    display: inline-flex !important;
+    /* Prevents line breaks to enable horizontal scrolling. */
+    flex-wrap: nowrap !important;
+    /* Sets a maximum width before enabling scrolling. */
+    max-width: 280px; 
+    /* Enables horizontal scrolling when content overflows. */
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    /* Hides the scroll bar, but maintains the scroll functionality. */
+    scrollbar-width: none !important;
+    
     container-type: initial !important;
     padding: 3px !important;
     border-radius: calc(var(--nebula-border-radius) - 2px) !important;
     background-color: light-dark(rgba(255,255,255,0.1), rgba(0,0,0,0.2)) !important;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
     transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
-
-    max-width: 280px; 
-
-    overflow-x: auto !important;
-
-    scrollbar-width: none !important;
   }
 
+  /* Hides the scrollbar in WebKit-based browsers */
   #zen-workspaces-button::-webkit-scrollbar {
     display: none;
   }
@@ -48,7 +56,8 @@
 
   /* Default subview button styling */
   #zen-workspaces-button .subviewbutton {
- 
+    /* --- FIX APPLIED (v2) --- */
+    /* Prevents flexible buttons from shrinking. */
     flex-shrink: 0 !important;
 
     border-radius: calc(var(--nebula-border-radius) - 4.5px) !important;
@@ -78,15 +87,15 @@
     opacity: 1 !important;
   }
 
+/* --- FIX APPLIED (v2) --- */
+/* Consistent single click state. */
   #zen-workspaces-button .subviewbutton:active {
     background-color: var(--toolbarbutton-active-background) !important;
     filter: grayscale(0%) !important;
-    transform: scale(0.85) !important;
+    transform: scale(0.9) !important; /* Just one transformation on click */
   }
 
-  #zen-workspaces-button .subviewbutton:active:hover {
-    transform: scale(0.9) !important;
-  }
+/* :active:hover rule removed to avoid "double click" effect. */
 
   #zen-workspaces-button .subviewbutton[active] {
     background-color: light-dark(rgba(255,255,255,0.12), rgba(255,255,255,0.07)) !important;
@@ -98,27 +107,50 @@
     animation: emojiPulse 0.5s ease-out;
   }
 
-  /* Style 0 (Minimal Style) */
-  @media (-moz-int-pref: nebula-workspace-style: 0) {
+  /* Style 0 (Minimal Style) & Style 2 (Advanced Style) */
+  @media (-moz-pref("nebula-workspace-style", 0)), (-moz-pref("nebula-workspace-style", 2)) {
     /* Container styling */
     #zen-workspaces-button {
-      height: 30px !important;
+      height: auto !important; /* Automatic height to allow line breaks */
       padding: 3px !important;
       position: relative !important;
       z-index: 1;
       border-radius: calc(var(--nebula-border-radius) - 2px) !important;
-      background-color: transparent !important;
-      box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
       transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
-      
+
+      /* --- FIX APPLIED (v2) --- */
+      /* Restores visibility for the zoom effect to work. */
+      overflow: visible !important;
+      /* Allows buttons to wrap to the next line if they don't fit. */
+      flex-wrap: wrap !important;
+      /* Remove the maximum width to allow the container to grow. */
+      max-width: none !important;
+    }
+    
+/* Specific background colors for each style */
+    @media (-moz-pref("nebula-workspace-style", 0)) {
+        #zen-workspaces-button {
+            background-color: transparent !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
+        }
+        #zen-workspaces-button:hover {
+            box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
+            background-color: transparent !important;
+        }
+    }
+    @media (-moz-pref("nebula-workspace-style", 2)) {
+        #zen-workspaces-button {
+            background-color: light-dark(rgba(255,255,255,0.1), rgba(0,0,0,0.2)) !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
+        }
+        #zen-workspaces-button:hover {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.5) !important;
+            background-color: light-dark(rgba(255,255,255,0.25), rgba(0,0,0,0.35)) !important;
+        }
     }
 
-    #zen-workspaces-button:hover {
-      box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
-      background-color: transparent !important;
-    }
 
-    /* Style 0 button styling - resets and custom styles */
+    /* Button styling for Styles 0 & 2 */
     #zen-workspaces-button .subviewbutton {
       /* Reset defaults */
       border-radius: unset !important;
@@ -158,12 +190,8 @@
 
     #zen-workspaces-button .subviewbutton:active {
       background-color: transparent !important;
-      transform: scale(1) !important;
+      transform: scale(1.1) !important; /* Adjusted for a more subtle click */
       filter: grayscale(var(--nebula-workspace-grayscale, 100%)) !important;
-    }
-
-    #zen-workspaces-button .subviewbutton:active:hover {
-      transform: scale(1) !important;
     }
 
     #zen-workspaces-button .subviewbutton[active] {
@@ -205,122 +233,6 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
-
-    #zen-workspaces-button .subviewbutton:hover::before,
-    #zen-workspaces-button .subviewbutton[active]::before {
-      opacity: 0;
-    }
-  }
-
-  /* Style 2 (Advanced Style) */
-  @media (-moz-int-pref: nebula-workspace-style: 2) {
-    /* Container styling */
-    #zen-workspaces-button {
-      height: 30px !important;
-      width: auto !important;
-      padding: 3px !important;
-      position: relative !important;
-      z-index: 1;
-      border-radius: calc(var(--nebula-border-radius) - 2px) !important;
-      background-color: light-dark(rgba(255,255,255,0.1), rgba(0,0,0,0.2)) !important;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
-      transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
-
-    }
-
-    #zen-workspaces-button:hover {
-      box-shadow: 0 2px 12px rgba(0,0,0,0.5) !important;
-      background-color: light-dark(rgba(255,255,255,0.25), rgba(0,0,0,0.35)) !important;
-    }
-
-    /* Style 2 button styling - resets and custom styles */
-    #zen-workspaces-button .subviewbutton {
-      /* Reset defaults */
-      border-radius: unset !important;
-      font-size: unset !important;
-      opacity: unset !important;
-      background-color: transparent !important;
-      box-shadow: none !important;
-      animation: none !important;
-      --toolbarbutton-hover-background: unset !important;
-
-      /* Custom styling */
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      height: 40px !important;
-      border-radius: 12px !important;
-      font-size: 1.25em !important;
-      transform: scale(1) !important;
-      transform-origin: bottom center !important;
-      transition: 
-        transform 0.25s ease, 
-        filter 0.3s ease, 
-        opacity 0.3s ease-out, 
-        color 0.3s ease-out !important;
-      color: transparent !important; /* Hide emoji text by default */
-    }
-
-    /* Hover states */
-    #zen-workspaces-button .subviewbutton:hover {
-      transform: scale(1.4) !important;
-      filter: grayscale(0%) !important;
-      opacity: 1 !important;
-      z-index: 3 !important;
-      font-size: 1.35em !important;
-      color: inherit !important;
-    }
-
-    #zen-workspaces-button .subviewbutton:active {
-      background-color: transparent !important;
-      transform: scale(1) !important;
-      filter: grayscale(var(--nebula-workspace-grayscale, 100%)) !important;
-    }
-
-    #zen-workspaces-button .subviewbutton:active:hover {
-      transform: scale(1) !important;
-    }
-
-    #zen-workspaces-button .subviewbutton[active] {
-      background-color: transparent !important;
-      box-shadow: none !important;
-      overflow: unset !important;
-      position: static !important;
-      animation: none !important;
-      filter: grayscale(0%) !important;
-      opacity: 1 !important;
-      color: inherit !important;
-    }
-
-    /* Sibling hover effects */
-    #zen-workspaces-button .subviewbutton:hover + .subviewbutton,
-    #zen-workspaces-button .subviewbutton:has(+ .subviewbutton:hover) {
-      transform: scale(1.15) !important;
-      z-index: 2 !important;
-      opacity: 0.9 !important;
-    }
-
-    #zen-workspaces-button .subviewbutton:hover + .subviewbutton + .subviewbutton,
-    #zen-workspaces-button .subviewbutton:has(+ .subviewbutton + .subviewbutton:hover) {
-      transform: scale(1) !important;
-      z-index: 1 !important;
-      opacity: 0.85 !important;
-    }
-
-    /* Indicator dot */
-    #zen-workspaces-button .subviewbutton::before {
-      content: "•";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -56.5%);
-      font-size: 2em;
-      color: light-dark(white, rgba(255,255,255,0.35));
-      opacity: 1;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
 
     #zen-workspaces-button .subviewbutton:hover::before,
     #zen-workspaces-button .subviewbutton[active]::before {
@@ -331,7 +243,7 @@
   /* ------------------------------ Configuration Options ------------------------------ */
 
   /* Option to remove workspace name */
-  @media (-moz-bool-pref: "nebula-remove-workspace-indicator") {
+  @media (-moz-pref("nebula-remove-workspace-indicator")) {
     
   .zen-current-workspace-indicator {
     display: none !important;
