@@ -30,16 +30,13 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
     transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
 
-    /* --- CORREÇÃO APLICADA --- */
-    /* Define uma largura máxima. Você pode ajustar este valor como preferir. */
     max-width: 280px; 
-    /* Habilita a rolagem horizontal quando o conteúdo transborda. */
+
     overflow-x: auto !important;
-    /* Oculta a barra de rolagem, mas mantém a funcionalidade de scroll. */
+
     scrollbar-width: none !important;
   }
 
-  /* Oculta a barra de rolagem em navegadores baseados em WebKit (boa prática) */
   #zen-workspaces-button::-webkit-scrollbar {
     display: none;
   }
@@ -51,8 +48,7 @@
 
   /* Default subview button styling */
   #zen-workspaces-button .subviewbutton {
-    /* --- CORREÇÃO APLICADA --- */
-    /* Impede que os botões flexíveis encolham. Esta é a chave da solução. */
+ 
     flex-shrink: 0 !important;
 
     border-radius: calc(var(--nebula-border-radius) - 4.5px) !important;
@@ -115,9 +111,6 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
       transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
       
-      /* --- CORREÇÃO APLICADA --- */
-      /* A propriedade 'overflow: visible' foi removida para permitir a rolagem. */
-      /* As propriedades de rolagem da regra base já se aplicam aqui. */
     }
 
     #zen-workspaces-button:hover {
@@ -233,9 +226,6 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
       transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
 
-      /* --- CORREÇÃO APLICADA --- */
-      /* A propriedade 'overflow: visible' foi removida para permitir a rolagem. */
-      /* As propriedades de rolagem da regra base já se aplicam aqui. */
     }
 
     #zen-workspaces-button:hover {
