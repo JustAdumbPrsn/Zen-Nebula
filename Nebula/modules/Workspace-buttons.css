@@ -1,330 +1,323 @@
-/* ------------------------------ Workspace Button Styles ------------------------------ */
+@-moz-document url-prefix("chrome:") {
+  /* ------------------------------ Workspace Button Styles ------------------------------ */
 
-/* make workspace indicator have nebula theme background on hover */
-.zen-current-workspace-indicator::before {
-  box-shadow: 0 0px 8px transparent !important;
-  border-radius: var(--nebula-border-radius) !important;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
-}
-
-.zen-current-workspace-indicator:hover::before {
-  background-color: var(--nebula-color) !important;
-  box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.55)) !important;
-  z-index: -1 !important;
-}
-
-/* Common animations */
-@keyframes emojiPulse {
-  0% { transform: scale(0.85); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-}
-
-/* Base Styling (Style 1 - Default) */
-#zen-workspaces-button {
-  container-type: initial !important;
-  width: auto !important;
-  padding: 3px !important;
-  border-radius: calc(var(--nebula-border-radius) - 2px) !important;
-  background-color: light-dark(rgba(255,255,255,0.1), rgba(0,0,0,0.2)) !important;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
-  transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
-}
-
-#zen-workspaces-button:hover {
-  background-color: light-dark(rgba(255,255,255,0.25), rgba(0,0,0,0.35)) !important;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.5) !important;
-}
-
-/* Default subview button styling */
-#zen-workspaces-button .subviewbutton {
-  border-radius: calc(var(--nebula-border-radius) - 4.5px) !important;
-  font-size: 16px !important;
-  opacity: 0.75 !important;
-  filter: grayscale(var(--nebula-workspace-grayscale, 100%)) !important;
-  transition:
-    background-color 0.2s ease,
-    filter 0.3s ease,
-    opacity 0.3s ease-out,
-    transform 0.2s ease !important;
-  --toolbarbutton-hover-background: color-mix(
-    in srgb,
-    var(--zen-branding-bg-reverse) 10%,
-    transparent 90%
-  ) !important;
-}
-
-#zen-workspaces-button .subviewbutton:hover {
-  background-color: light-dark(rgba(255,255,255,0), rgba(100,100,100,0)) !important;
-  filter: grayscale(0%) !important;
-  opacity: 0.9 !important;
-}
-
-#zen-workspaces-button .subviewbutton:hover > img,
-#zen-workspaces-button .subviewbutton:hover > svg {
-  opacity: 1 !important;
-}
-
-#zen-workspaces-button .subviewbutton:active {
-  background-color: var(--toolbarbutton-active-background) !important;
-  filter: grayscale(0%) !important;
-  transform: scale(0.85) !important;
-}
-
-#zen-workspaces-button .subviewbutton:active:hover {
-  transform: scale(0.9) !important;
-}
-
-#zen-workspaces-button .subviewbutton[active] {
-  background-color: light-dark(rgba(255,255,255,0.12), rgba(255,255,255,0.07)) !important;
-  box-shadow: 0 0 4px rgba(0,0,0,0.2) !important;
-  overflow: hidden !important;
-  position: relative;
-  filter: grayscale(0%) !important;
-  opacity: 1 !important;
-  animation: emojiPulse 0.5s ease-out;
-}
-
-/* Style 0 (Minimal Style) */
-@media (-moz-pref("nebula-workspace-style", 0)) {
-  /* Container styling */
-  #zen-workspaces-button {
-    height: 30px !important;
-    padding: 3px !important;
-    position: relative !important;
-    overflow: visible !important;
-    z-index: 1;
-    border-radius: calc(var(--nebula-border-radius) - 2px) !important;
-    background-color: transparent !important;
-    box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
-    transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
+  /* make workspace indicator have nebula theme background on hover */
+  .zen-current-workspace-indicator::before {
+    box-shadow: 0 0px 8px transparent !important;
+    border-radius: var(--nebula-border-radius) !important;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
   }
 
-  #zen-workspaces-button:hover {
-    box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
-    background-color: transparent !important;
+  .zen-current-workspace-indicator:hover::before {
+    background-color: var(--nebula-color) !important;
+    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.55)) !important;
+    z-index: -1 !important;
   }
 
-  /* Style 0 button styling - resets and custom styles */
-  #zen-workspaces-button .subviewbutton {
-    /* Reset defaults */
-    border-radius: unset !important;
-    font-size: unset !important;
-    opacity: unset !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    animation: none !important;
-    --toolbarbutton-hover-background: unset !important;
+  /* Common animations */
+  @keyframes emojiPulse {
+    0% { transform: scale(0.85); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
 
-    /* Custom styling */
+  /* Base Styling (Style 1 - Default) */
+  /* Base Styling (Style 1 - Default) com scroll horizontal responsivo */
+  /* Aplicar scroll horizontal apenas quando NÃO estiver usando estilos 0 ou 2 */
+  #zen-workspaces-button:not([style*="nebula-workspace-style: 0"]):not([style*="nebula-workspace-style: 2"]) {
+    /* --- CORREÇÃO APLICADA (v8) --- */
+    /* Largura responsiva com limite rígido para forçar scroll */
+    width: min(fit-content, 280px) !important;
+    min-width: auto !important;
+    max-width: 280px !important;
+    
     display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 40px !important;
-    border-radius: 12px !important;
-    font-size: 1.25em !important;
-    transform: scale(1) !important;
-    transform-origin: bottom center !important;
-    transition: 
-      transform 0.25s ease, 
-      filter 0.3s ease, 
-      opacity 0.3s ease-out, 
-      color 0.3s ease-out !important;
-    color: transparent !important; /* Hide emoji text by default */
-  }
-
-  /* Hover states */
-  #zen-workspaces-button .subviewbutton:hover {
-    transform: scale(1.4) !important;
-    filter: grayscale(0%) !important;
-    opacity: 1 !important;
-    z-index: 3 !important;
-    font-size: 1.35em !important;
-    color: inherit !important;
-  }
-
-  #zen-workspaces-button .subviewbutton:active {
-    background-color: transparent !important;
-    transform: scale(1) !important;
-    filter: grayscale(var(--nebula-workspace-grayscale, 100%)) !important;
-  }
-
-  #zen-workspaces-button .subviewbutton:active:hover {
-    transform: scale(1) !important;
-  }
-
-  #zen-workspaces-button .subviewbutton[active] {
-    background-color: transparent !important;
-    box-shadow: none !important;
-    overflow: unset !important;
-    position: static !important;
-    animation: none !important;
-    filter: grayscale(0%) !important;
-    opacity: 1 !important;
-    color: inherit !important;
-  }
-
-  /* Sibling hover effects */
-  #zen-workspaces-button .subviewbutton:hover + .subviewbutton,
-  #zen-workspaces-button .subviewbutton:has(+ .subviewbutton:hover) {
-    transform: scale(1.15) !important;
-    z-index: 2 !important;
-    opacity: 0.9 !important;
-  }
-
-  #zen-workspaces-button .subviewbutton:hover + .subviewbutton + .subviewbutton,
-  #zen-workspaces-button .subviewbutton:has(+ .subviewbutton + .subviewbutton:hover) {
-    transform: scale(1) !important;
-    z-index: 1 !important;
-    opacity: 0.85 !important;
-  }
-
-  /* Indicator dot */
-  #zen-workspaces-button .subviewbutton::before {
-    content: "•";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -56.5%);
-    font-size: 2em;
-    color: light-dark(white, rgba(255,255,255,0.35));
-    opacity: 1;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  #zen-workspaces-button .subviewbutton:hover::before,
-  #zen-workspaces-button .subviewbutton[active]::before {
-    opacity: 0;
-  }
-}
-
-/* Style 2 (Advanced Style) */
-@media (-moz-pref("nebula-workspace-style", 2)) {
-  /* Container styling */
-  #zen-workspaces-button {
-    height: 30px !important;
-    width: auto !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+    
+    /* Habilita scroll suave com a bolinha do mouse */
+    scroll-behavior: smooth !important;
+    /* Permite scroll horizontal quando há overflow */
+    overscroll-behavior-x: contain !important;
+    
+    container-type: initial !important;
     padding: 3px !important;
-    position: relative !important;
-    overflow: visible !important;
-    z-index: 1;
     border-radius: calc(var(--nebula-border-radius) - 2px) !important;
     background-color: light-dark(rgba(255,255,255,0.1), rgba(0,0,0,0.2)) !important;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
     transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
   }
 
+  /* Fallback para o estilo padrão quando não há media queries específicas */
+  @media not (-moz-pref("nebula-workspace-style", 0)) and not (-moz-pref("nebula-workspace-style", 2)) {
+    #zen-workspaces-button {
+      /* --- CORREÇÃO APLICADA (v8) --- */
+      /* Largura responsiva com limite rígido para forçar scroll */
+      width: min(fit-content, 280px) !important;
+      min-width: auto !important;
+      max-width: 280px !important;
+      
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scrollbar-width: none !important;
+      
+      /* Habilita scroll suave com a bolinha do mouse */
+      scroll-behavior: smooth !important;
+      /* Permite scroll horizontal quando há overflow */
+      overscroll-behavior-x: contain !important;
+      
+      container-type: initial !important;
+      padding: 3px !important;
+      border-radius: calc(var(--nebula-border-radius) - 2px) !important;
+      background-color: light-dark(rgba(255,255,255,0.1), rgba(0,0,0,0.2)) !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
+      transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
+    }
+  }
+
+  /* Oculta a barra de rolagem em navegadores baseados em WebKit - apenas para estilo padrão */
+  @media not (-moz-pref("nebula-workspace-style", 0)) and not (-moz-pref("nebula-workspace-style", 2)) {
+    #zen-workspaces-button::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Indicadores visuais de scroll quando há mais workspaces */
+    #zen-workspaces-button::before,
+    #zen-workspaces-button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 8px;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Gradiente à esquerda (indica que há conteúdo para a esquerda) */
+    #zen-workspaces-button::before {
+      left: 0;
+      background: linear-gradient(to right, 
+        light-dark(rgba(255,255,255,0.3), rgba(0,0,0,0.4)), 
+        transparent);
+      border-radius: calc(var(--nebula-border-radius) - 2px) 0 0 calc(var(--nebula-border-radius) - 2px);
+    }
+
+    /* Gradiente à direita (indica que há conteúdo para a direita) */
+    #zen-workspaces-button::after {
+      right: 0;
+      background: linear-gradient(to left, 
+        light-dark(rgba(255,255,255,0.3), rgba(0,0,0,0.4)), 
+        transparent);
+      border-radius: 0 calc(var(--nebula-border-radius) - 2px) calc(var(--nebula-border-radius) - 2px) 0;
+    }
+
+    /* Mostra os indicadores quando há scroll disponível */
+    #zen-workspaces-button:hover::before,
+    #zen-workspaces-button:hover::after {
+      opacity: 1;
+    }
+  }
+
   #zen-workspaces-button:hover {
-    box-shadow: 0 2px 12px rgba(0,0,0,0.5) !important;
     background-color: light-dark(rgba(255,255,255,0.25), rgba(0,0,0,0.35)) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5) !important;
   }
 
-  /* Style 2 button styling - resets and custom styles */
+  /* Default subview button styling */
   #zen-workspaces-button .subviewbutton {
-    /* Reset defaults */
-    border-radius: unset !important;
-    font-size: unset !important;
-    opacity: unset !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    animation: none !important;
-    --toolbarbutton-hover-background: unset !important;
-
-    /* Custom styling */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 40px !important;
-    border-radius: 12px !important;
-    font-size: 1.25em !important;
-    transform: scale(1) !important;
-    transform-origin: bottom center !important;
-    transition: 
-      transform 0.25s ease, 
-      filter 0.3s ease, 
-      opacity 0.3s ease-out, 
-      color 0.3s ease-out !important;
-    color: transparent !important; /* Hide emoji text by default */
-  }
-
-  /* Hover states */
-  #zen-workspaces-button .subviewbutton:hover {
-    transform: scale(1.4) !important;
-    filter: grayscale(0%) !important;
-    opacity: 1 !important;
-    z-index: 3 !important;
-    font-size: 1.35em !important;
-    color: inherit !important;
-  }
-
-  #zen-workspaces-button .subviewbutton:active {
-    background-color: transparent !important;
-    transform: scale(1) !important;
+    flex-shrink: 0 !important;
+    border-radius: calc(var(--nebula-border-radius) - 4.5px) !important;
+    font-size: 16px !important;
+    opacity: 0.75 !important;
     filter: grayscale(var(--nebula-workspace-grayscale, 100%)) !important;
+    transition:
+      background-color 0.2s ease,
+      filter 0.3s ease,
+      opacity 0.3s ease-out,
+      transform 0.2s ease !important;
+    --toolbarbutton-hover-background: color-mix(
+      in srgb,
+      var(--zen-branding-bg-reverse) 10%,
+      transparent 90%
+    ) !important;
   }
 
-  #zen-workspaces-button .subviewbutton:active:hover {
-    transform: scale(1) !important;
-  }
-
-  #zen-workspaces-button .subviewbutton[active] {
-    background-color: transparent !important;
-    box-shadow: none !important;
-    overflow: unset !important;
-    position: static !important;
-    animation: none !important;
+  #zen-workspaces-button .subviewbutton:hover {
+    background-color: light-dark(rgba(255,255,255,0), rgba(100,100,100,0)) !important;
     filter: grayscale(0%) !important;
-    opacity: 1 !important;
-    color: inherit !important;
-  }
-
-  /* Sibling hover effects */
-  #zen-workspaces-button .subviewbutton:hover + .subviewbutton,
-  #zen-workspaces-button .subviewbutton:has(+ .subviewbutton:hover) {
-    transform: scale(1.15) !important;
-    z-index: 2 !important;
     opacity: 0.9 !important;
   }
 
-  #zen-workspaces-button .subviewbutton:hover + .subviewbutton + .subviewbutton,
-  #zen-workspaces-button .subviewbutton:has(+ .subviewbutton + .subviewbutton:hover) {
-    transform: scale(1) !important;
-    z-index: 1 !important;
-    opacity: 0.85 !important;
+  #zen-workspaces-button .subviewbutton:hover > img,
+  #zen-workspaces-button .subviewbutton:hover > svg {
+    opacity: 1 !important;
   }
 
-  /* Indicator dot */
-  #zen-workspaces-button .subviewbutton::before {
-    content: "•";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -56.5%);
-    font-size: 2em;
-    color: light-dark(white, rgba(255,255,255,0.35));
-    opacity: 1;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
+  #zen-workspaces-button .subviewbutton:active {
+    background-color: var(--toolbarbutton-active-background) !important;
+    filter: grayscale(0%) !important;
+    transform: scale(0.9) !important;
   }
 
-
-  #zen-workspaces-button .subviewbutton:hover::before,
-  #zen-workspaces-button .subviewbutton[active]::before {
-    opacity: 0;
+  #zen-workspaces-button .subviewbutton[active] {
+    background-color: light-dark(rgba(255,255,255,0.12), rgba(255,255,255,0.07)) !important;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2) !important;
+    overflow: hidden !important;
+    position: relative;
+    filter: grayscale(0%) !important;
+    opacity: 1 !important;
+    animation: emojiPulse 0.5s ease-out;
   }
-}
 
-/* ------------------------------ Configuration Options ------------------------------ */
+  /* Style 0 (Minimal Style) & Style 2 (Advanced Style) */
+  @media (-moz-pref("nebula-workspace-style", 0)), (-moz-pref("nebula-workspace-style", 2)) {
+    /* Container styling */
+    #zen-workspaces-button {
+      /* --- CORREÇÃO APLICADA (v3) --- */
+      /* Reseta a largura para o comportamento padrão, permitindo a quebra de linha. */
+      width: auto !important;
 
-/* Option to remove workspace name */
-@media (-moz-pref("nebula-remove-workspace-indicator")) {
-  
-.zen-current-workspace-indicator {
-  display: none !important;
-}
-  
-  #zen-tabs-wrapper {
-    padding-top: 4px; /* Add missing padding */
+      height: auto !important;
+      padding: 3px !important;
+      position: relative !important;
+      z-index: 1;
+      border-radius: calc(var(--nebula-border-radius) - 2px) !important;
+      transition: box-shadow 0.35s ease-out, background-color 0.35s ease-out;
+
+      overflow: visible !important;
+      flex-wrap: wrap !important;
+      max-width: none !important;
+    }
+    
+    /* Cores de fundo específicas para cada estilo */
+    @media (-moz-pref("nebula-workspace-style", 0)) {
+        #zen-workspaces-button {
+            background-color: transparent !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
+        }
+        #zen-workspaces-button:hover {
+            box-shadow: 0 2px 12px rgba(0,0,0,0) !important;
+            background-color: transparent !important;
+        }
+    }
+    @media (-moz-pref("nebula-workspace-style", 2)) {
+        #zen-workspaces-button {
+            background-color: light-dark(rgba(255,255,255,0.1), rgba(0,0,0,0.2)) !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1) !important;
+        }
+        #zen-workspaces-button:hover {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.5) !important;
+            background-color: light-dark(rgba(255,255,255,0.25), rgba(0,0,0,0.35)) !important;
+        }
+    }
+
+    /* Button styling for Styles 0 & 2 */
+    #zen-workspaces-button .subviewbutton {
+      /* Reset defaults */
+      border-radius: unset !important;
+      font-size: unset !important;
+      opacity: unset !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+      animation: none !important;
+      --toolbarbutton-hover-background: unset !important;
+
+      /* Custom styling */
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 40px !important;
+      border-radius: 12px !important;
+      font-size: 1.25em !important;
+      transform: scale(1) !important;
+      transform-origin: bottom center !important;
+      transition: 
+        transform 0.25s ease, 
+        filter 0.3s ease, 
+        opacity 0.3s ease-out, 
+        color 0.3s ease-out !important;
+      color: transparent !important;
+    }
+
+    /* Hover states */
+    #zen-workspaces-button .subviewbutton:hover {
+      transform: scale(1.4) !important;
+      filter: grayscale(0%) !important;
+      opacity: 1 !important;
+      z-index: 3 !important;
+      font-size: 1.35em !important;
+      color: inherit !important;
+    }
+
+    #zen-workspaces-button .subviewbutton:active {
+      background-color: transparent !important;
+      transform: scale(1.1) !important;
+      filter: grayscale(var(--nebula-workspace-grayscale, 100%)) !important;
+    }
+
+    #zen-workspaces-button .subviewbutton[active] {
+      background-color: transparent !important;
+      box-shadow: none !important;
+      overflow: unset !important;
+      position: static !important;
+      animation: none !important;
+      filter: grayscale(0%) !important;
+      opacity: 1 !important;
+      color: inherit !important;
+    }
+
+    /* Sibling hover effects */
+    #zen-workspaces-button .subviewbutton:hover + .subviewbutton,
+    #zen-workspaces-button .subviewbutton:has(+ .subviewbutton:hover) {
+      transform: scale(1.15) !important;
+      z-index: 2 !important;
+      opacity: 0.9 !important;
+    }
+
+    #zen-workspaces-button .subviewbutton:hover + .subviewbutton + .subviewbutton,
+    #zen-workspaces-button .subviewbutton:has(+ .subviewbutton + .subviewbutton:hover) {
+      transform: scale(1) !important;
+      z-index: 1 !important;
+      opacity: 0.85 !important;
+    }
+
+    /* Indicator dot */
+    #zen-workspaces-button .subviewbutton::before {
+      content: "•";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -56.5%);
+      font-size: 2em;
+      color: light-dark(white, rgba(255,255,255,0.35));
+      opacity: 1;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #zen-workspaces-button .subviewbutton:hover::before,
+    #zen-workspaces-button .subviewbutton[active]::before {
+      opacity: 0;
+    }
+  }
+
+  /* ------------------------------ Configuration Options ------------------------------ */
+
+  /* Option to remove workspace name */
+  @media (-moz-pref("nebula-remove-workspace-indicator")) {
+    
+  .zen-current-workspace-indicator {
+    display: none !important;
+  }
+    
+    #zen-tabs-wrapper {
+      padding-top: 4px; /* Add missing padding */
+    }
   }
 }
