@@ -217,6 +217,6 @@
 	{
         "type": "checkbox",
         "property": "nebula-disable-audio-indicator",
-        "label": "Disable nebula's audio indicator"
+        "label": "Disable nebula's audio indicator mod (for better compatibility with other mods)"
     }
 ]
