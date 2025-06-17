@@ -1,4 +1,5 @@
 /* ------------------------- QUIETIFY SOUND ICON ------------------------- */
+/* Option to disable audio indicator mod */
 @media not (-moz-pref("nebula-remove-audio-indicator")) {
   .tab-audio-button {
     display: none !important;
