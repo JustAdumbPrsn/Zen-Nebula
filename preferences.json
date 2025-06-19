@@ -214,4 +214,11 @@
         "property": "nebula-disable-container-styling",
         "label": "Disable nebula's container styling"
     }
+    {
+        "type": "checkbox",
+        "property": "only-Context-Menu-Icons",
+        "label": "only Context Menu Icons.",
+        "defaultValue": false
+
+    }
 ]
