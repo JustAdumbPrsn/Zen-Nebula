@@ -1,160 +1,160 @@
-/* -------------------------- ESSENTIALS -------------------------- */
-
-.zen-essentials-container .tabbrowser-tab {
-  .tab-background {
-    background-color: var(--nebula-color) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0)) !important;
-    border-radius: calc(var(--nebula-border-radius) + 1px) !important;
-  }
-
-  &:hover .tab-background {
-    background-color: var(--nebula-color-hover) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.95)) !important;
-  }
-
-  @media (-moz-pref("zen.theme.essentials-favicon-bg")) {
-    .tab-background::after {
-      content: "" !important;
-      position: absolute !important;
-      left: 0 !important;
-      top: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      display: block !important;
-      z-index: -1 !important;
-    }
-  }
-}
-
-.zen-essentials-container {
-  grid-template-columns: repeat(auto-fit, minmax(var(--nebula-essentials-width), auto)) !important;
+  /* -------------------------- ESSENTIALS -------------------------- */
   
-  .tabbrowser-tab {
-    overflow: visible !important;
-
-    &[selected],
-    &[visuallyselected] {
-      .tab-icon-image {
-        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
-      }
-
-      > .tab-stack > .tab-background {
-        border: none !important;
-
-        &::before {
-          opacity: 0 !important;
-        }
-
-        &::after {
-          filter: saturate(180%) blur(13.5px) !important;
-        }
-      }
-    }
-  }
-}
-
-#zen-main-app-wrapper:not(:has(#zen-welcome)) {
-  /* Tab click animations */
-  #tabbrowser-tabs:not([movingtab]) {
-    .tabbrowser-tab {
-      transition: scale 0.2s ease !important;
-    }
-
-    .tabbrowser-tab:active {
-      scale: 0.96 !important;
-    }
-
-    .tabbrowser-tab:has(.tab-close-button:hover) {
-      scale: 1 !important;
-    }
-  }
-
-  /* Split view tabs */
-  tab-group[split-view-group] {
-    .tabbrowser-tab {
-      > .tab-stack > .tab-background {
-        &::after {
-          mask-image: linear-gradient(to right, black, transparent 60%);
-        }
-      }
-    }
-  }
-}
-
-.collapsed-toolbar .essential-item {
-  justify-content: center; /* Ensures items are centered */
-  align-items: center;
-  margin: auto; /* Adjust if needed */
-}
-
-/* -------------------------- ANIMATIONS FOR ESSENTIALS -------------------------- */
-#zen-main-app-wrapper:not(:has(#zen-welcome)) {
-  .tabbrowser-tab {
-    scale: unset !important;
-
-    &[zen-glance-tab] {
-      box-shadow: none !important;
-
-      .tab-label-container {
-        display: none !important;
-      }
-    }
-
-    .tab-stack {
-      transition: transform 0.2s ease !important;
-    }
-
-    .tab-background,
-    .tab-icon-stack,
-    .tab-label-container {
-      transition: opacity 0.2s ease !important;
-    }
-
+  .zen-essentials-container .tabbrowser-tab {
     .tab-background {
-      transition: background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease !important;
-      overflow: hidden !important;
-      position: relative !important;
-
-      &::before {
-        transition: opacity 0.3s ease, width 0.3s ease, background 0.3s ease;
-        opacity: 0;
-      }
-
-      &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: var(--tab-min-height);
-        opacity: 0;
-        transition: opacity 0.3s ease-out;
+      background-color: var(--nebula-color) !important;
+      box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0)) !important;
+      border-radius: calc(var(--nebula-border-radius) + 1px) !important;
+    }
+  
+    &:hover .tab-background {
+      background-color: var(--nebula-color-hover) !important;
+      box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.95)) !important;
+    }
+  
+    @media (-moz-pref("zen.theme.essentials-favicon-bg")) {
+      .tab-background::after {
+        content: "" !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+        z-index: -1 !important;
       }
     }
-
-    &[selected]:not([zen-glance-tab="true"]),
-    &[visuallyselected]:not([zen-glance-tab="true"]) {
-      > .tab-stack > .tab-background {
-        &::after {
-          width: 100%;
-          opacity: 1;
+  }
+  
+  .zen-essentials-container {
+    grid-template-columns: repeat(auto-fit, minmax(var(--nebula-essentials-width), auto)) !important;
+    
+    .tabbrowser-tab {
+      overflow: visible !important;
+  
+      &[selected],
+      &[visuallyselected] {
+        .tab-icon-image {
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
+        }
+  
+        > .tab-stack > .tab-background {
+          border: none !important;
+  
+          &::before {
+            opacity: 0 !important;
+          }
+  
+          &::after {
+            filter: saturate(180%) blur(13.5px) !important;
+          }
         }
       }
     }
-
-    &:active {
-      .tab-stack {
-        transform: scale(0.95, 0.95) !important;
+  }
+  
+  #zen-main-app-wrapper:not(:has(#zen-welcome)) {
+    /* Tab click animations */
+    #tabbrowser-tabs:not([movingtab]) {
+      .tabbrowser-tab {
+        transition: scale 0.2s ease !important;
+      }
+  
+      .tabbrowser-tab:active:not(:has(.tab-icon-overlay:hover,.tab-icon-overlay:active)) {
+        scale: 0.96 !important;
+      }
+  
+      .tabbrowser-tab:has(.tab-close-button:hover) {
+        scale: 1 !important;
+      }
+    }
+  
+    /* Split view tabs */
+    tab-group[split-view-group] {
+      .tabbrowser-tab {
+        > .tab-stack > .tab-background {
+          &::after {
+            mask-image: linear-gradient(to right, black, transparent 60%);
+          }
+        }
       }
     }
   }
-}
-
-@media (-moz-pref("nebula-essentials-gray-icons")) {
-  .zen-essentials-container .tab-icon-image {
-    filter: grayscale(100%) contrast(75%) !important;
-    transition: filter 0.5s ease !important;
+  
+  .collapsed-toolbar .essential-item {
+    justify-content: center; /* Ensures items are centered */
+    align-items: center;
+    margin: auto; /* Adjust if needed */
   }
-  .zen-essentials-container .tabbrowser-tab[selected="true"] .tab-icon-stack > .tab-icon-image,
-  .zen-essentials-container .tabbrowser-tab:hover .tab-icon-stack > .tab-icon-image {
-    filter: none !important;
+  
+  /* -------------------------- ANIMATIONS FOR ESSENTIALS -------------------------- */
+  #zen-main-app-wrapper:not(:has(#zen-welcome)) {
+    .tabbrowser-tab {
+      scale: unset !important;
+  
+      &[zen-glance-tab] {
+        box-shadow: none !important;
+  
+        .tab-label-container {
+          display: none !important;
+        }
+      }
+  
+      .tab-stack {
+        transition: transform 0.2s ease !important;
+      }
+  
+      .tab-background,
+      .tab-icon-stack,
+      .tab-label-container {
+        transition: opacity 0.2s ease !important;
+      }
+  
+      .tab-background {
+        transition: background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease !important;
+        overflow: hidden !important;
+        position: relative !important;
+  
+        &::before {
+          transition: opacity 0.3s ease, width 0.3s ease, background 0.3s ease;
+          opacity: 0;
+        }
+  
+        &::after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: var(--tab-min-height);
+          opacity: 0;
+          transition: opacity 0.3s ease-out;
+        }
+      }
+  
+      &[selected]:not([zen-glance-tab="true"]),
+      &[visuallyselected]:not([zen-glance-tab="true"]) {
+        > .tab-stack > .tab-background {
+          &::after {
+            width: 100%;
+            opacity: 1;
+          }
+        }
+      }
+  
+      &:active {
+        .tab-stack {
+          transform: scale(0.95, 0.95) !important;
+        }
+      }
+    }
   }
-}
+  
+  @media (-moz-pref("nebula-essentials-gray-icons")) {
+    .zen-essentials-container .tab-icon-image {
+      filter: grayscale(100%) contrast(75%) !important;
+      transition: filter 0.5s ease !important;
+    }
+    .zen-essentials-container .tabbrowser-tab[selected="true"] .tab-icon-stack > .tab-icon-image,
+    .zen-essentials-container .tabbrowser-tab:hover .tab-icon-stack > .tab-icon-image {
+      filter: none !important;
+    }
+  }
