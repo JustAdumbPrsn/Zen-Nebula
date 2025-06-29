@@ -51,7 +51,7 @@
 
 ###
 
-## 💫 Sine Installation Guide (Recommended)
+## 💫 Nebula with Sine Installation Guide
 
 Follow these steps to install and apply the **Nebula** theme to Zen Browser:
 
@@ -71,42 +71,7 @@ Follow these steps to install and apply the **Nebula** theme to Zen Browser:
    - Search for `browser.tabs.allow_transparent_browser`.
    - If visible, set it to `true`.
 
-## 🚀 Manual Installation Guide (Windows, MacOS, and Linux installation)
-
-Follow these steps to install and apply the **Nebula** theme on Zen Browser:
-
-1. 📁 **Create the Chrome Folder**
-   If you haven't already, follow the [Zen Live Editing Guide](https://docs.zen-browser.app/guides/live-editing) to create your `chrome` folder.
-
-2. 📦 **Download the Theme**
-   - Download the `chrome.zip` file from the [latest release](https://github.com/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/releases).
-   - Extract it and paste the `Nebula` folder inside your `chrome` directory.
-
-3. 🧩 **Apply the Theme**
-   You have two options:
-
-   **Option A** – *Manual Import*
-   - Open your `userChrome.css` and add:
-     ```css
-     @import "Nebula/Nebula.css";
-     ```
-   - Open (or create) `userContent.css` and add:
-     ```css
-     @import "Nebula/Nebula-content.css";
-     ```
-
-   **Option B** – *Use Provided Files*
-   - Use the `userChrome.css` and `userContent.css` files provided in the ZIP and paste them directly into your `chrome` folder.
-
-4. 🔄 **Restart the Browser**
-   Reopen Zen to apply the UI changes.
-
-5. ⚙️ **Enable Transparent Tabs**
-   - Go to `about:config` in Zen.
-   - Search for `browser.tabs.allow_transparent_browser`.
-   - If visible, set it to `true`.
-
-6. 🖼️ **Install Wallpapers (Optional)**
+4. 🖼️ **Install Wallpapers (Optional)**
    - Download `wallpapers.zip` from the [latest release](https://github.com/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/releases/latest).
    - Extract and use them as desired.
 
