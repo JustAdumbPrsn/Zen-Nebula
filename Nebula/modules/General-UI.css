@@ -26,7 +26,6 @@ browser {
   will-change: transform !important;
 }
 
-
 /* ---------------------- TABS: NO SHADOW ---------------------- */
 
 @media (-moz-pref("nebula-tabs-no-shadow")) {
@@ -36,12 +35,10 @@ browser {
   }
 }
 
-
 /* ---------------------- NOGAPS MOD ---------------------- */
 
 @media (-moz-pref("nebula-nogaps-mod")) {
-  [zen-single-toolbar="true"]:not(:has(tab-group[split-view-group] .tabbrowser-tab:is([selected="true"], [visuallyselected="true"]))) {
-
+  html[nebula-single-toolbar]:not(:has(tab-group[split-view-group] .tabbrowser-tab:is([selected="true"], [visuallyselected="true"]))) {
     #zen-appcontent-wrapper {
       position: relative;
     }
@@ -50,7 +47,7 @@ browser {
       position: absolute;
       width: 100% !important;
       height: 50px;
-      backdrop-filter: blur(30px) saturate(110%) contrast(110%);
+      backdrop-filter: var(--nebula-glass);
       background: var(--zen-main-browser-background) !important;
       border-bottom: 1.7px solid light-dark(
         rgba(0, 0, 0, 0.2),
@@ -72,7 +69,7 @@ browser {
 /* ------------------ NOGAPS COMPACT MOD ------------------ */
 
 @media (-moz-bool-pref: "nebula-nogaps-compact-mod") {
-  :root[zen-compact-mode="true"]:not([customizing]) {
+  html[nebula-compact-mode]:not([customizing]) {
     #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
       margin: 0 !important;
 
@@ -86,15 +83,15 @@ browser {
         }
       }
 
-      :root[zen-single-toolbar="true"] & {
+      html[nebula-single-toolbar] & {
         position: relative;
       }
 
-      #zen-appcontent-navbar-wrapper:is(:root[zen-single-toolbar="true"] *) {
+      html[nebula-single-toolbar] #zen-appcontent-navbar-wrapper {
         position: absolute;
         width: 100% !important;
         height: 50px;
-        backdrop-filter: blur(30px) saturate(110%) contrast(110%);
+        backdrop-filter: var(--nebula-glass);
         background: var(--zen-main-browser-background) !important;
         border-bottom: 1.7px solid light-dark(
           rgba(0, 0, 0, 0.2),
@@ -104,7 +101,6 @@ browser {
     }
   }
 }
-
 
 /* ------------------- FLOATING STATUSBAR ------------------- */
 

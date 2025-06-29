@@ -1,15 +1,11 @@
 /* ------------------------- QUIETIFY SOUND ICON ------------------------- */
 
 @media not (-moz-pref("nebula-default-sound-indicator")) {
-  
-    .tab-audio-button {
-    display: none !important;
-    }
 
-    .zen-essentials-container .tab-icon-overlay {
-      pointer-events: none !important;
-    }
-  
+span[part="button"].button-background {
+  display: none !important; /* removes sound button added in 1.12t */
+}
+
     .tabbrowser-tab img {
       transition: opacity 0.3s ease-in-out;
     }
@@ -62,14 +58,14 @@
       }
     }
   
-
-      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked])
+    @media not (-moz-pref("zen.view.sidebar-expanded")) {
+      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked]):hover
         img {
         opacity: 1 !important;
         transition: opacity 0.1s ease-out !important;
       }
   
-      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked])
+      .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked]):hover
         .tab-icon-overlay {
         margin: 0px !important;
         transition: opacity 0.25s ease-out, transform 0.25s ease-out !important;
@@ -79,28 +75,11 @@
       .tabbrowser-tab:is([soundplaying], [muted], [activemedia-blocked]) .tab-icon-overlay {
         transition: opacity 0.25s ease-in, transform 0.25s ease-in !important;
       }
-    
+    }
   
     #zen-essentials-container {
       .tab-icon-overlay:is([soundplaying], [muted], [activemedia-blocked]) {
         margin: 0px !important;
-      }
-    }
-  }
-  
-  /* Better rounded workspace indicator */
-    @media (-moz-pref("zen.theme.pill-button")) {
-    #PanelUI-zen-workspaces-list toolbarbutton {
-      &.zen-workspace-button[active="true"] .zen-workspace-icon::before {
-        background-color: transparent !important;
-      }
-  
-      &.zen-workspace-icon {
-        border: 3px solid var(--zen-colors-border) !important;
-      }
-  
-      &.zen-workspace-button[active="true"] .zen-workspace-icon {
-        border: 3px solid var(--toolbarbutton-icon-fill-attention) !important;
       }
     }
   }

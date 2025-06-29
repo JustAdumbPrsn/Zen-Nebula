@@ -104,10 +104,10 @@
 
 @media (-moz-pref("nebula-tab-switch-animation", 2)) {
   #tabbrowser-tabpanels > hbox:not(:has(.zen-glance-background)):not([zen-split="true"]) {
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease-out !important;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease-out !important;
     scale: 0.95 !important;
     opacity: 1;
-    filter: blur(10px) !important;
+    filter: blur(0px) !important;
   }
 
   #tabbrowser-tabpanels > hbox.deck-selected:not(:has(.zen-glance-background)):not([zen-split="true"]) {
@@ -226,11 +226,6 @@
 #ctrlTab-panel:has(.ctrlTab-preview:not([hidden="true"])) {
   scale: 0.7 !important;
   border-radius: 13px;
-}
-
-slot:nth-child(1) {
-
-  padding: 0 !important;
 }
 
 .ctrlTab-preview-inner {

@@ -60,9 +60,6 @@ without searching through the code directly */
     /* 3. If you want marginless compact mode without NoGaps mod on default:
         Go to about:config and add a "boolean" "nebula-nogaps-compact-mod" and set it to true */
 
-    /* 4. If you want to remove background for compact sidebar when websites are transparent:
-        Go to about:config and add a "boolean" "nebula-compact-mode-no-sidebar-bg" and set it to true */
-
     /* 5. If you want to remove the background on Pinned tabs:
         Go to about:config and add a "boolean" "nebula-pinned-tabs-bg" and set it to true */
 
@@ -83,12 +80,12 @@ without searching through the code directly */
         Go to about:config and add a "boolean" "nebula-default-sound-indicator" and set it to true */
 
 :root {
+--nebula-glass: blur(32px) saturate(140%); /* the blur which Nebula uses */
 --nebula-border-radius: 13px; /* This will change roundness of everything in Nebula (DEFAULT: 13px) */
 --nebula-website-tint: light-dark(rgba(255,255,255,0),rgba(0,0,0,0)); /* Edit the color values to change the tint on transparent websites */
 --nebula-ui-tint: light-dark(rgba(255,255,255,0.2),rgba(0,0,0,0.2)); /* Edit the color values to change the tint of sidebar and etc. */
 --nebula-workspace-grayscale: 100%; /* Edit the % to make non active workspace icons more colored */
 --nebula-essentials-width: 60px !important; /* Edit the "60px" to something less to make width of essentials smaller */
---nebula-sidebar-width: 20em !important; /* Edit the 20em to any other value you would like for compact sidebar when nebula-compact-mode-sidebar-bg is true */
     
 /* Tabs color */
 --nebula-color: light-dark(rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.35)); /* default color */

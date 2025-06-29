@@ -1,5 +1,27 @@
 /* -------------------- Media Controls Toolbar -------------------- */
 
+#Nebula-media-cover-art {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  border-radius: inherit !important;
+  overflow: hidden !important;
+
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-blend-mode: darken !important;
+  filter: blur(24px) saturate(140%) contrast(120%) !important;
+
+  opacity: 0 !important;
+  transition: opacity 0.4s ease-in-out !important;
+}
+
+#zen-media-controls-toolbar > toolbaritem:hover > #Nebula-media-cover-art.visible {
+  opacity: 0.4 !important;
+}
+
 :root[zen-sidebar-expanded="true"] #zen-media-controls-toolbar {
   align-self: center !important;
   width: calc(100% - var(--zen-element-separation)) !important;
@@ -22,79 +44,12 @@
   backdrop-filter: saturate(1) !important;
   transition: border-radius 0.3s ease, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
   background: light-dark(rgba(235, 235, 235, 0.3), rgba(20, 20, 20, 0.3)) !important;
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      circle at 60% 30%,
-      color-mix(in srgb, var(--zen-primary-color) 80%, transparent),
-      color-mix(in srgb, var(--zen-primary-color) 20%, transparent) 40%,
-      transparent 100%
-    );
-    background-size: 200% 200%;
-    animation: miniplayer-gradient 10s ease-in-out infinite;
-    opacity: 0;
-    filter: blur(20px) opacity(0.57);
-    z-index: -1;
-    transition: opacity 0.3s ease-in-out;
-  }
 
   &:hover {
     border-radius: 12px !important;
     background: light-dark(rgba(235, 235, 235, 1), rgba(10, 10, 10, 1)) !important;
     box-shadow: 0 0 15px light-dark(rgba(255,255,255,0.5), rgba(0,0,0,0.5));
-
-    &::before {
-      opacity: 0.4;
-      pointer-events: none;
-      z-index: 0;
-    }
   }
-}
-
-/* Glow Gradient Variations */
-@media (-moz-pref("nebula-glow-gradient", 0)) {
-  #zen-media-controls-toolbar > toolbaritem::before {
-    display: none;
-  }
-}
-
-@media (-moz-pref("nebula-glow-gradient", 2)) {
-  #zen-media-controls-toolbar > toolbaritem::before {
-    background: radial-gradient(
-      circle at 30% 30%,
-      light-dark(#ffffff, #ffffff),
-      light-dark(#ffffff, #888888) 40%,
-      light-dark(#000000, #000000) 100%
-    );
-    background-size: 200% 200%;
-    animation: miniplayer-gradient 10s ease-in-out infinite;
-  }
-}
-
-@media (-moz-pref("nebula-glow-gradient", 3)) {
-  #zen-media-controls-toolbar > toolbaritem::before {
-    background: linear-gradient(
-      45deg,
-      #e52e71,
-      #7f00ff,
-      #00c9ff,
-      #ff8a00
-    );
-    background-size: 400% 400%;
-    animation: miniplayer-gradient 17s ease-in-out infinite;
-  }
-}
-
-/* Playing State */
-#zen-media-controls-toolbar.playing > toolbaritem::before {
-  opacity: 0;
-}
-#zen-media-controls-toolbar.playing > toolbaritem:hover::before {
-  opacity: 0.6;
 }
 
 /* --------------------- Media Info --------------------- */
@@ -139,6 +94,11 @@
       height: calc(var(--progress-height) + 2px) !important;
     }
   }
+}
+
+#zen-media-progress-bar {
+  --zen-primary-color: rgba(255,255,255,1) !important;
+  --zen-colors-border: rgba(100,100,100,0.01) !important;
 }
 
 /* --------------------- Utility Elements ------------------ */
