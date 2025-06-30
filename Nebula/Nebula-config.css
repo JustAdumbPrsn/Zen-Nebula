@@ -80,18 +80,19 @@ without searching through the code directly */
         Go to about:config and add a "boolean" "nebula-default-sound-indicator" and set it to true */
 
 :root {
---nebula-glass: blur(32px) saturate(140%); /* the blur which Nebula uses */
---nebula-border-radius: 13px; /* This will change roundness of everything in Nebula (DEFAULT: 13px) */
---nebula-website-tint: light-dark(rgba(255,255,255,0),rgba(0,0,0,0)); /* Edit the color values to change the tint on transparent websites */
---nebula-ui-tint: light-dark(rgba(255,255,255,0.2),rgba(0,0,0,0.2)); /* Edit the color values to change the tint of sidebar and etc. */
---nebula-workspace-grayscale: 100%; /* Edit the % to make non active workspace icons more colored */
---nebula-essentials-width: 60px !important; /* Edit the "60px" to something less to make width of essentials smaller */
-    
-/* Tabs color */
---nebula-color: light-dark(rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.35)); /* default color */
---nebula-color-hover: light-dark(rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.45)); /* color when hovered */
---nebula-color-selected: light-dark(rgba(255, 255, 255, 0.45), rgba(0, 0, 0, 0.55)); /* color when selected */
+  --nebula-glass: -moz-pref("nebula.glass"); /* the blur which Nebula uses */
+  --nebula-border-radius: -moz-pref("nebula.border-radius"); /* This will change roundness of everything in Nebula (DEFAULT: 13px) */
+  --nebula-website-tint: -moz-pref("nebula.website-tint"); /* Edit the color values to change the tint on transparent websites */
+  --nebula-ui-tint: -moz-pref("nebula.ui-tint"); /* Edit the color values to change the tint of sidebar and etc. */
+  --nebula-workspace-grayscale: -moz-pref("nebula.workspace-grayscale"); /* Edit the % to make non active workspace icons more colored */
+  --nebula-essentials-width: -moz-pref("nebula.essentials-width"); /* Edit the "60px" to something less to make width of essentials smaller */
+
+  /* Tabs color */
+  --nebula-color: -moz-pref("nebula.color-default"); /* default color */
+  --nebula-color-hover: -moz-pref("nebula.color-hover"); /* color when hovered */
+  --nebula-color-selected: -moz-pref("nebula.color-selected"); /* color when selected */
 }
+
  
 /* DO NOT ADD OTHER CSS BELOW */
 /* More styles and options will come soon here! */
