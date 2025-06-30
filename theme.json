@@ -11,9 +11,6 @@
     "chrome": "https://github.com/JustAdumbPrsn/Zen-Nebula/blob/testing/userChrome.css",
     "content": "https://github.com/JustAdumbPrsn/Zen-Nebula/blob/testing/userContent.css"
   },
-  "scripts": [
-    "https://github.com/JustAdumbPrsn/Zen-Nebula/blob/testing/JS/Nebula.uc.js"
-  ],
   "preferences": "https://github.com/JustAdumbPrsn/Zen-Nebula/blob/testing/preferences.json",
   "readme": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/README.md",
   "image": "https://github.com/user-attachments/assets/e09859a4-ad66-483e-be67-b25d11d54298",
