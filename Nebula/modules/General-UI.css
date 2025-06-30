@@ -20,6 +20,9 @@ browser[transparent='true'] {
   --attention-dot-color: transparent !important;
   --zen-themed-toolbar-bg-transparent: transparent !important;
 }
+:root[nebula-zen-gradient-contrast-zero] {
+  --zen-main-browser-background: transparent !important;
+}
 
 /* Ensure blur rendering works */
 browser {
