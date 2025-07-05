@@ -47,10 +47,6 @@
 
 ###
 
-<h2 align="left">☄️ Installation:</h2>
-
-###
-
 ## 💫 Nebula with Sine Installation Guide
 
 Follow these steps to install and apply the **Nebula** theme to Zen Browser:
