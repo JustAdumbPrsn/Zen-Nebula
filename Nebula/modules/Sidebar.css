@@ -55,7 +55,6 @@ html[nebula-collapsed-toolbar] {
   pointer-events: none;
   border-radius: 11px;
   opacity: 0;
-  transition: opacity 0.15s ease-out;
   background-color: light-dark(rgba(200, 200, 200, 1), rgba(40, 40, 40, 1));
 }
 
@@ -278,6 +277,25 @@ scrollbox {
 }
 
 /* -------------------------- FINDBAR -------------------------- */
+.browserContainer {
+  position: relative !important;
+}
+
+.nebula-findbar-background {
+  background: rgba(50, 50, 60, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: all 0.2s ease;
+}
+
+.nebula-findbar-background.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
 
 @keyframes findbar-show-animation {
   from {

@@ -24,7 +24,8 @@
  
   #tabbrowser-tabs {
     min-width: 100% !important;
-    height: calc(100% - 37px) !important;
+    height: calc(100% - 27px) !important;
+    transform: translateY(-3px);
   }
   
   #Zen-tabs-wrapper {

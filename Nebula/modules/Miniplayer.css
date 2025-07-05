@@ -101,12 +101,12 @@
   --zen-colors-border: rgba(100,100,100,0.01) !important;
 }
 
-/* --------------------- Utility Elements ------------------ */
-
+/* --------------------- Music notes animation ------------------ */
+/*
 #zen-media-focus-button::after {
   display: none !important;
 }
-
+*/
 /* ---------------------- Control Buttons ------------------- */
 
 #zen-media-focus-button,

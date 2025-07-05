@@ -1,6 +1,6 @@
 /* ==== Tab groups ==== */
 /* https://github.com/Anoms12/Advanced-Tab-Groups */
-/* ====== V2.3.0 - Corrected for Nebula Theme ====== */
+/* ====== V2.4.0 ====== */
 
 * {
   --zen-workspace-color-bg: light-dark(
@@ -89,10 +89,14 @@ tab-group {
       --tab-group-color: transparent !important;
       margin: 0 !important;
       height: 36px !important;
-      border-radius: calc(var(--zen-border-radius) + 2px) !important;
+        box-shadow: 0 0px 3px transparent !important;
+      border-radius: var(--nebula-border-radius) !important;
+      position: relative !important;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
 
       &:hover {
-        background-color: var(--tab-hover-background-color) !important;
+          background-color: var(--nebula-color-hover) !important;
+          box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.55)) !important;
       }
 
       > label {
