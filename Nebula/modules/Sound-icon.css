@@ -6,10 +6,6 @@
     display: none !important;
     }
 
-    .zen-essentials-container .tab-icon-overlay {
-      pointer-events: none !important;
-    }
-  
     .tabbrowser-tab img {
       transition: opacity 0.3s ease-in-out;
     }
