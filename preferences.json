@@ -239,10 +239,6 @@
         "type": "checkbox",
         "property": "nebula-disable-container-styling",
         "label": "Disable nebula's container styling"
-    },
-    {
-        "type": "checkbox",
-        "property": "nebula-default-sound-indicator",
-        "label": "Disable nebula's audio indicator styling"
     }
+
 ]
