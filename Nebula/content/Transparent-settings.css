@@ -9,6 +9,12 @@
   --zen-settings-secondary-background: transparent !important;
 }
 
+/* Fixes the transparent dialogs. */
+.dialogFrame {
+  background: var(--zen-dialog-background);
+  border-radius: 8px;
+}
+
 groupbox:not(#sineInstallationGroup:popover-open){
 /*   background: var(--zen-colors-tertiary) !important; */
   background: var(--zen-colors-border-contrast) !important;
