@@ -64,3 +64,24 @@ footer{
   }
 }
 
+@-moz-document url-prefix("http"), url-prefix("https"), url-prefix("file"), url(about:blank) {
+  html:not([style*="background-image"]) body:not([style*="background-image"]) {
+    background: #fff;
+    background-color: #fff;
+  }
+  html[style*="background-image"], body[style*="background-image"] {
+    background: unset !important;
+    background-color: unset !important;
+  }
+}
+
+@-moz-document url("moz-extension://a96290b5-1304-42e0-912f-4299e3e4dc84/index.html"), url-prefix("about") {
+  html, body {
+    background: transparent !important;
+  }
+}
+
+.dialogFrame {
+  background: var(--zen-dialog-background);
+  border-radius: 8px;
+}
