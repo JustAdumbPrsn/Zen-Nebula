@@ -64,3 +64,16 @@ footer{
   }
 }
 
+@-moz-document url-prefix("http"), url-prefix("https"), url-prefix("file"), url(about:blank) {
+  html, body {
+    background: #fff;
+    background-color: #fff;
+  }
+}
+
+@-moz-document url("moz-extension://a96290b5-1304-42e0-912f-4299e3e4dc84/index.html"), url-prefix("about") {
+  html, body {
+    background: transparent !important;
+  }
+}
+
