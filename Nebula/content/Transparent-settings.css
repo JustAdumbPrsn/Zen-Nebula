@@ -65,9 +65,13 @@ footer{
 }
 
 @-moz-document url-prefix("http"), url-prefix("https"), url-prefix("file"), url(about:blank) {
-  html, body {
+  html:not([style*="background-image"]) body:not([style*="background-image"]) {
     background: #fff;
     background-color: #fff;
+  }
+  html[style*="background-image"], body[style*="background-image"] {
+    background: unset !important;
+    background-color: unset !important;
   }
 }
 
@@ -77,3 +81,7 @@ footer{
   }
 }
 
+.dialogFrame {
+  background: var(--zen-dialog-background);
+  border-radius: 8px;
+}
