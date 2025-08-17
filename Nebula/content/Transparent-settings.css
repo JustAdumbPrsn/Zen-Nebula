@@ -65,11 +65,11 @@ footer{
 }
 
 @-moz-document url-prefix("http"), url-prefix("https"), url-prefix("file"), url(about:blank) {
-  html:not([style*="background-image"]) body:not([style*="background-image"]) {
+  html:not([style*="background-image"]) body:not([style*="background"]) {
     background: #fff;
     background-color: #fff;
   }
-  html[style*="background-image"], body[style*="background-image"] {
+  html[style*="background-image"], body[style*="background"] {
     background: unset !important;
     background-color: unset !important;
   }
@@ -85,3 +85,4 @@ footer{
   background: var(--zen-dialog-background);
   border-radius: 8px;
 }
+
