@@ -3,6 +3,19 @@
   border-radius: 7.6px !important; /* Adjust the radius as needed */
 }
 
+/* Always round all PiP content and backgrounds */
+@media not -moz-pref("nebula.pip.disabled") {
+  @-moz-document url("chrome://global/content/pictureinpicture/player.xhtml") {
+    html, .player-holder {
+      border-radius: 9px !important;
+      overflow: hidden !important;
+    }
+    .player-holder {
+      clip-path: none !important;
+    }
+  }
+}
+
 /* ------------------------- Nebula Picture in Picture ------------------------- */
 
 @media not -moz-pref("nebula.pip.disabled") {
