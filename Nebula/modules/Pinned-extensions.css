@@ -14,7 +14,22 @@
 :root[zen-single-toolbar="true"] #nav-bar {
   margin-bottom: 8px !important; /* Adjust gap between urlbar and extensions */
 }
+  
+/* Apply only in Nebula single-toolbar */
+:root[nebula-single-toolbar] #tabbrowser-tabs {
+  min-width: 100% !important;
+  height: calc(100% - 27px) !important;
+  transform: translateY(-1px) !important;
+}
 
+/* Reset transform for multi + collapsed */
+:root[nebula-multi-toolbar] #tabbrowser-tabs,
+:root[nebula-collapsed-toolbar] #tabbrowser-tabs {
+  min-width: 100% !important;
+  height: calc(100% - 27px) !important;
+  transform: translateY(2.5px) !important;
+}
+  
 /* Pinned extensions */
 #TabsToolbar-customization-target {
   display: flex !important;
@@ -22,12 +37,6 @@
   flex-wrap: wrap !important;
   gap: calc(var(--zen-toolbox-padding) - 3px) !important;
  
-  #tabbrowser-tabs {
-    min-width: 100% !important;
-    height: calc(100% - 27px) !important;
-    transform: translateY(-1px);
-  }
-  
   #Zen-tabs-wrapper {
     max-height: 700px !important;
   }

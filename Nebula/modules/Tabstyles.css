@@ -224,6 +224,7 @@ html:not([zen-single-toolbar="true"]):not([zen-sidebar-expanded="true"])
 */
 
 /* --- Ctrl+Click Multi-Selected Tab Glow --- */
+
 .tabbrowser-tab[multiselected="true"] .tab-background {
   position: relative !important;
   overflow: visible !important;
@@ -238,7 +239,7 @@ html:not([zen-single-toolbar="true"]):not([zen-sidebar-expanded="true"])
   position: absolute;
   inset: 0;
   transform: scale(0.9) translateZ(0);
-  filter: blur(15px);
+  filter: blur(16px);
   z-index: -1;
   opacity: 0.2 !important;
   height: 150%;
@@ -265,10 +266,10 @@ html:not([zen-single-toolbar="true"]):not([zen-sidebar-expanded="true"])
     color-mix(in srgb, var(--zen-primary-color) 10%, black),
     light-dark(#fffd, #000d)
   );
-  background-size: 200% 400%;
+  background-size: 200% 200%;
   pointer-events: none;
   animation: animateGlow 5s cubic-bezier(0.1, 0.7, 0.5, 0.1) infinite;
-  transition: all 0.3s ease-in-out !important;
+  transition: opacity 0s !important;
 }
 
 @keyframes animateGlow {
@@ -312,7 +313,7 @@ html:not([zen-single-toolbar="true"]):not([zen-sidebar-expanded="true"])
 .tabbrowser-tab::before {
     content: "";
     position: absolute;
-    inset: 2px; /* Shrinks the effect area */
+    inset: 3px; /* Shrinks the effect area */
     background: linear-gradient(
         45deg,
         color-mix(in srgb, var(--zen-primary-color) 5%, black),  
@@ -331,6 +332,11 @@ html:not([zen-single-toolbar="true"]):not([zen-sidebar-expanded="true"])
     filter: blur(10px) brightness(1) contrast(120%);
     transition: opacity 0.4s ease-in-out;
     pointer-events: none;
+}
+
+/* 🟣 Collapsed toolbar state: override inset */
+html[nebula-collapsed-toolbar] .tabbrowser-tab::before {
+    inset: 2px 6px;
 }
 
 /* ------------------- Gradient Style Variations ------------------- */
@@ -416,11 +422,12 @@ html:not([zen-single-toolbar="true"]):not([zen-sidebar-expanded="true"])
 }
 
 /* -------------------- Split View Tab Group Styling -------------------- */
-tab-group[split-view-group] {
-  position: relative !important;
+tab-group[split-view-group] .tab-group-container {
   display: flex;
   flex-direction: column;
   padding: 2px !important;
+  position: relative;
+
   transform: scale(1);
   border-radius: 13px !important;
   background-color: transparent !important;
@@ -428,41 +435,49 @@ tab-group[split-view-group] {
   transition:
     background-color 0.3s ease-out,
     box-shadow 0.3s ease-out,
-    transform 0.2s cubic-bezier(0.2, 0.8, 0.4, 1) !important;
+    transform 0.15s cubic-bezier(0.2, 0.8, 0.4, 1) !important;
+
+  /* Vertical bar indicator */
+  &::after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    border-radius: 2px;
+    background-color: var(--tab-selected-bgcolor, #0060df);
+    transition: width 0.2s ease-out, opacity 0.2s ease-out;
+  }
+
+  /* Hover background */
+  &:hover {
+    background-color: light-dark(rgba(255,255,255,0.45), rgba(0,0,0,0.45)) !important;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.55) !important;
+  }
+
+  /* Hide the left bar when hovered OR has a selected tab */
+  &:hover::after,
+  &:has(> tab:is([visuallyselected], [multiselected]))::after {
+    width: 0;
+    opacity: 0;
+  }
+
+  /* Selected styling */
+  &:has(> tab:is([visuallyselected], [multiselected])) {
+    background-color: light-dark(rgba(255,255,255,0.55), rgba(0,0,0,0.35)) !important;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.55) !important;
+  }
+
+  /* Remove separators */
+  & > .tabbrowser-tab:not(:last-child)::after {
+    width: 0 !important;
+    height: 0 !important;
+  }
 }
 
-tab-group[split-view-group]::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 2px;
-  width: 3px;
-  border-radius: 2px;
-  background-color: var(--tab-selected-bgcolor, #0060df);
-  transition: width 0.2s ease-out, opacity 0.2s ease-out;
-}
-
-tab-group[split-view-group]:hover {
-  background-color: light-dark(rgba(255,255,255,0.45), rgba(0,0,0,0.45)) !important;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.55) !important;
-}
-
-tab-group[split-view-group]:has(.tabbrowser-tab:is([selected], [visuallyselected])) {
-  background-color: light-dark(rgba(255,255,255,0.55), rgba(0,0,0,0.35)) !important;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.55) !important;
-}
-
-tab-group[split-view-group]:is(
-  :hover,
-  :has(.tabbrowser-tab:is([selected], [visuallyselected], [multiselected])),
-  :has(> tab-group-tab[selected])
-)::after {
-  width: 0;
-  opacity: 0;
-}
-
-tab-group[split-view-group]:active:not(:has(
+/* Active press animation */
+tab-group[split-view-group] .tab-group-container:active:not(:has(
   .tab-icon-overlay:hover,
   .tab-icon-overlay:active,
   .tab-close-button:hover,
@@ -474,19 +489,28 @@ tab-group[split-view-group]:active:not(:has(
 }
 
 /* -------------------- Tab Group Internals -------------------- */
-tab-group[split-view-group] .tabbrowser-tab .tab-background {
-  border-radius: 12px !important;
+
+tab-group[split-view-group] .tabbrowser-tab {
+  /* remove separators */
+  &:not(:last-child)::after {
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* background + shape */
+  .tab-background {
+    border-radius: 12px !important;
+  }
+
+  /* close button shape + scale */
+  .tab-close-button {
+    border-radius: 10px !important;
+    scale: 0.8 !important;
+  }
 }
 
-tab-group[split-view-group] .tabbrowser-tab .tab-close-button {
-  border-radius: 10px !important;
-}
-
-tab-group[split-view-group] .tabbrowser-tab:not(:last-child)::after {
-  width: 0 !important;
-  height: 0 !important;
-}
-
-tab-group[split-view-group="true"] .tab-close-button {
-  scale: 0.8 !important;
+/* Apply background only if the group has a selected tab */
+tab-group[split-view-group]:has(.tabbrowser-tab[visuallyselected]) 
+  .tabbrowser-tab .tab-background {
+  background-color: rgba(100,100,100,0.15);
 }

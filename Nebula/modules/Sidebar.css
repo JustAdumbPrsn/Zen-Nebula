@@ -77,6 +77,14 @@ html[nebula-compact-mode] #titlebar {
   right: var(--zen-element-separation) !important;
 }
 
+@media (-moz-pref("zen.view.compact.hide-toolbar")) {
+  @media not all and (-moz-pref("zen.view.compact.hide-tabbar")) {
+    #Nebula-titlebar-background {
+      opacity: 0 !important;
+    }
+  }
+}
+
 /* -------------------- SINGLE TOOLBAR -------------------- */
 
 html[nebula-single-toolbar][nebula-compact-mode] #titlebar {
@@ -265,7 +273,8 @@ scrollbox {
   }
 }
 
-#PersonalToolbar:not([collapsed="true"]) {
+/* Only apply when NOT in single toolbar */
+html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed="true"]) {
   padding-bottom: 3px !important;
 }
 
@@ -277,6 +286,7 @@ scrollbox {
 }
 
 /* -------------------------- FINDBAR -------------------------- */
+
 .browserContainer {
   position: relative !important;
 }
@@ -427,6 +437,12 @@ findbar toolbarbutton:active {
 
 #sidebar-box #sidebar-header {
     border-bottom: none !important;
+}
+#sidebar-search-container {
+background-color: rgba(0,0,0,0) !important;
+}
+#sidebar-header {
+  background-color: rgba(0,0,0,0) !important;
 }
 
 /* Transparent Sidebar Search Box & View Button */

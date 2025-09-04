@@ -20,13 +20,31 @@ browser[transparent='true'] {
   --attention-dot-color: transparent !important;
   --zen-themed-toolbar-bg-transparent: transparent !important;
 }
+
 :root[nebula-zen-gradient-contrast-zero] {
   --zen-main-browser-background: transparent !important;
 }
 
-/* Ensure blur rendering works */
+#browser,
+#appcontent {
+  background: rgba(0,0,0, calc(var(--nebula-gradient-contrast, 0)));
+}
+
+/* Ensure blur rendering works (Linux) */
 browser {
   will-change: transform !important;
+}
+
+#main-window {
+    will-change: transform !important;
+}
+
+/* Fix styling for Ctrl+P panel */
+.dialogBox,
+.printDialogBox {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(15px) !important;
+    scale: 0.9;
 }
 
 /* ---------------------- TABS: NO SHADOW ---------------------- */
@@ -41,6 +59,7 @@ browser {
 /* ---------------------- NOGAPS MOD ---------------------- */
 
 @media (-moz-pref("nebula-nogaps-mod")) {
+  
   html[nebula-single-toolbar]:not(:has(tab-group[split-view-group] .tabbrowser-tab:is([selected="true"], [visuallyselected="true"]))) {
     #zen-appcontent-wrapper {
       position: relative;
@@ -49,10 +68,10 @@ browser {
     #zen-appcontent-navbar-wrapper {
       position: absolute;
       width: 100% !important;
-      height: 50px;
+      height: 55px;
       backdrop-filter: var(--nebula-glass);
       background: var(--zen-main-browser-background) !important;
-      border-bottom: 1.7px solid light-dark(
+      border-bottom: 0px solid light-dark(
         rgba(0, 0, 0, 0.2),
         rgba(255, 255, 255, 0.1)
       );
@@ -93,10 +112,10 @@ browser {
       html[nebula-single-toolbar] #zen-appcontent-navbar-wrapper {
         position: absolute;
         width: 100% !important;
-        height: 50px;
+        height: 55px;
         backdrop-filter: var(--nebula-glass);
         background: var(--zen-main-browser-background) !important;
-        border-bottom: 1.7px solid light-dark(
+        border-bottom: 0px solid light-dark(
           rgba(0, 0, 0, 0.2),
           rgba(255, 255, 255, 0.1)
         );
@@ -108,12 +127,17 @@ browser {
 /* ------------------- FLOATING STATUSBAR ------------------- */
 
 #statuspanel {
-  margin: 10px !important;
+  margin: 12px !important;
+  pointer-events: none !important; /* Prevent it from blocking clicks */
 }
 
 #statuspanel-label {
-  border-radius: 11px !important;
-  padding: 3px 10px !important;
-  border: 1px solid var(--zen-colors-border) !important;
-  background: light-dark(rgba(255, 255, 255, 1), rgba(0, 0, 0, 0.9)) !important;
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+  font-size: 12.5px !important;
+
+  border: 1px solid var(--nebula-color) !important;
+  background: var(--nebula-color) !important;
+  backdrop-filter: blur(8px) saturate(140%) !important;
+  box-shadow: 0 4px 21px rgba(0, 0, 0, 1) !important;
 }

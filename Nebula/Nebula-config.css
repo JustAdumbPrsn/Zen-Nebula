@@ -78,6 +78,9 @@ without searching through the code directly */
 
     /* 10. If you want to disable nebula's audio indicator styling:
         Go to about:config and add a "boolean" "nebula-default-sound-indicator" and set it to true */
+    
+    /* 11. If you want to have MacOS style window controls on Windows 11 (IDK about Linux):
+        Go to about:config and add a "boolean" "nebula-macos-style-buttons" and set it to true */
 
 :root {
     --nebula-glass: blur(32px) saturate(140%); /* the blur which Nebula uses */

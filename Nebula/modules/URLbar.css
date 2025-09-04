@@ -22,7 +22,7 @@
 
 #urlbar-zoom-button {
     border-radius: calc(var(--nebula-border-radius) - 5px) !important;
-
+    background-color: var(--nebula-color) !important;
 }
 
 /* URL bar background - default state */
@@ -35,11 +35,11 @@
 }
 
 /* Center text in URL bar */
-#urlbar .urlbar-input,
+/*#urlbar .urlbar-input,
 .urlbar-input-container {
     text-align: center !important;
     position: relative;
-}
+}*/
 
 html[zen-single-toolbar="true"] #urlbar:not([open]) {
   height: 40px !important;
@@ -73,9 +73,7 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
 /* When URL bar is open - smooth visual effect */
 #urlbar[open] #urlbar-background {
     border-radius: 15px !important;
-    background: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)) !important;
-    backdrop-filter: blur(32px) saturate(140%) !important;
-    opacity: 1 !important;
+    background: light-dark(rgba(255,255,255,0.8), rgba(0,0,0,0));
     outline: none !important;
 }
 
@@ -83,12 +81,11 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     border-radius: 15px !important;
     overflow: hidden !important;
-    backdrop-filter: blur(0px) !important;
-    animation: fadeIn 0.15s cubic-bezier(0.12, 0, 0.39, 0) !important;
-
+    backdrop-filter: var(--nebula-glass) !important;
+    animation: fadeIn 0.25s cubic-bezier(0.12, 0, 0.39, 0) !important;
 }
 
-/* Unblur URL bar when opening */
+/* Opacity for URL bar when opening */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -107,22 +104,13 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
 /* ------------------ Base and Default (Style 1) ------------------ */
 
 .browserStack {
-    filter: none !important;
-    opacity: 1 !important;
-    scale: 1 !important;
-    transition:
-        filter 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.35),
-        opacity 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.35),
-        scale 0.25s cubic-bezier(0.175, 0.885, 0.32, 1) !important;
+    transition: all 0.3s cubic-bezier(0.175, 0.385, 0.12, 1) !important;
 }
 
 #browser:has(#urlbar[open]) .browserStack {
-    filter: blur(1rem) brightness(70%) saturate(140%) !important;
     scale: 1.075 !important;
-    transition:
-        filter 0.25s cubic-bezier(0.175, 0.385, 0.12, 1),
-        opacity 0.25s cubic-bezier(0.175, 0.385, 0.12, 1),
-        scale 0.25s cubic-bezier(0.175, 0.385, 0.12, 1) !important;
+    filter: brightness(70%) blur(16px) saturate(140%) !important;
+    opacity: 1 !important;
 }
 
 /* ------------------ Style 2 – Zoom out ------------------ */
@@ -155,6 +143,7 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
 }
 
 /* ------------------ Style 0 – No Animation ------------------ */
+
 @media (-moz-pref("nebula-urlbar-animation", 0)) {
     .browserStack {
         transition: none !important;
@@ -167,6 +156,7 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
 }
 
 /* ------------------ urlbar open hover links gradient animation ------------------ */
+
 #urlbar[open] #urlbar-results > * {
     position: relative;
     overflow: hidden;
