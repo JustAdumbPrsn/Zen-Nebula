@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name           nebula-core.uc.js
-// @description    Central engine for Nebula with modules (Polyfill + TitlebarNavBarURLBarBackgrounds + MediaCoverArt)
+// @description    Central engine for Nebula with modules (Polyfill + GradientSlider + TitlebarNavBarURLBarBackgrounds + MediaCoverArt)
 // @author         JustAdumbPrsn
-// @version        v3.1
+// @version        v3.2
 // @include        main
 // @grant          none
 // ==/UserScript==
@@ -108,14 +108,12 @@
     }
   };
 
- // ========== NebulaPolyfillModule ==========
+  // ========== NebulaPolyfillModule ==========
   class NebulaPolyfillModule {
     constructor() {
+      this.root = document.documentElement;
       this.compactObserver = null;
       this.modeObserver = null;
-      this.root = document.documentElement;
-      this.gradientSlider = null;
-      this.updateGradientOpacityAttr = null;
     }
 
     init() {
@@ -125,46 +123,115 @@
         'nebula-compact-mode'
       );
 
-      // Toolbar mode detection (single, multi, collapsed)
+      // Toolbar mode detection
       this.modeObserver = new MutationObserver(() => this.updateToolbarModes());
       this.modeObserver.observe(this.root, { attributes: true });
       this.updateToolbarModes();
 
-      // Gradient contrast detection
-      this.gradientSlider = document.querySelector("#PanelUI-zen-gradient-generator-opacity");
-      if (this.gradientSlider) {
-        this.updateGradientOpacityAttr = () => {
-          const isMin = Number(this.gradientSlider.value) === Number(this.gradientSlider.min);
-          this.root.toggleAttribute("nebula-zen-gradient-contrast-zero", isMin);
-        };
-        this.gradientSlider.addEventListener("input", this.updateGradientOpacityAttr);
-        this.updateGradientOpacityAttr();
-      } else {
-        Nebula.logger.warn("⚠️ [Polyfill] Gradient slider not found.");
-      }
-
-      Nebula.logger.log('✅ [Polyfill] Detection active.');
+      Nebula.logger.log("✅ [Polyfill] Detection active.");
     }
 
     updateToolbarModes() {
-      const hasSidebar = this.root.hasAttribute('zen-sidebar-expanded');
-      const isSingle = this.root.hasAttribute('zen-single-toolbar');
+      const hasSidebar = this.root.hasAttribute("zen-sidebar-expanded");
+      const isSingle = this.root.hasAttribute("zen-single-toolbar");
 
-      this.root.toggleAttribute('nebula-single-toolbar', isSingle);
-      this.root.toggleAttribute('nebula-multi-toolbar', hasSidebar && !isSingle);
-      this.root.toggleAttribute('nebula-collapsed-toolbar', !hasSidebar && !isSingle);
+      this.root.toggleAttribute("nebula-single-toolbar", isSingle);
+      this.root.toggleAttribute("nebula-multi-toolbar", hasSidebar && !isSingle);
+      this.root.toggleAttribute("nebula-collapsed-toolbar", !hasSidebar && !isSingle);
     }
 
     destroy() {
       this.compactObserver?.disconnect();
       this.modeObserver?.disconnect();
-      this.gradientSlider?.removeEventListener("input", this.updateGradientOpacityAttr);
-      this.root.removeAttribute("nebula-zen-gradient-contrast-zero");
-      Nebula.logger.log('🧹 [Polyfill] Destroyed.');
+      this.root.removeAttribute("nebula-single-toolbar");
+      this.root.removeAttribute("nebula-multi-toolbar");
+      this.root.removeAttribute("nebula-collapsed-toolbar");
+      Nebula.logger.log("🧹 [Polyfill] Destroyed.");
     }
   }
 
-  // ========== NebulaTitlebarBackgroundModule ==========
+  // ========== NebulaGradientSliderModule ==========
+  class NebulaGradientSliderModule {
+    constructor() {
+      this.root = document.documentElement;
+      this.gradientSlider = null;
+      this.observer = null;
+      this._workspacePatched = false;
+    }
+
+    init() {
+      this.waitForSlider(slider => {
+        this.setupGradientSlider(slider);
+
+        // Extra sync a bit later to catch Zen’s startup overwrite
+        setTimeout(() => this.sync(), 300);
+        requestIdleCallback(() => this.sync());
+      });
+
+      this.patchWorkspaceChanges();
+      Nebula.logger.log("✅ [GradientSlider] Initialized.");
+    }
+
+    waitForSlider(callback, retries = 20) {
+      const tryFind = () => {
+        const slider = document.querySelector("#PanelUI-zen-gradient-generator-opacity");
+        if (slider) {
+          callback(slider);
+        } else if (retries > 0) {
+          requestIdleCallback(() => tryFind(), { timeout: 200 });
+        } else {
+          Nebula.logger.warn("❌ [GradientSlider] Not found after retries.");
+        }
+      };
+      requestIdleCallback(tryFind);
+    }
+
+    setupGradientSlider(slider) {
+      if (this.gradientSlider === slider) return;
+
+      this.gradientSlider = slider;
+
+      // Clean up any old observer
+      this.observer?.disconnect();
+
+      // Watch for DOM value changes (user dragging)
+      this.observer = new MutationObserver(() => this.sync());
+      this.observer.observe(slider, { attributes: true, attributeFilter: ["value"] });
+
+      // Also catch real-time user input
+      slider.addEventListener("input", () => this.sync());
+
+      this.sync(); // initial sync
+    }
+
+    patchWorkspaceChanges() {
+      if (this._workspacePatched || !window.ZenWorkspacesStorage) return;
+
+      const original = ZenWorkspacesStorage._notifyWorkspacesChanged;
+      ZenWorkspacesStorage._notifyWorkspacesChanged = (...args) => {
+        // Let Zen apply its workspace settings first
+        requestIdleCallback(() => this.sync());
+        return original.apply(ZenWorkspacesStorage, args);
+      };
+
+      this._workspacePatched = true;
+    }
+
+    sync() {
+      if (!this.gradientSlider) return;
+      const isMin = Number(this.gradientSlider.value) === Number(this.gradientSlider.min);
+      this.root.toggleAttribute("nebula-zen-gradient-contrast-zero", isMin);
+    }
+
+    destroy() {
+      this.observer?.disconnect();
+      this.gradientSlider?.removeEventListener("input", () => this.sync());
+      this.root.removeAttribute("nebula-zen-gradient-contrast-zero");
+      Nebula.logger.log("🧹 [GradientSlider] Destroyed.");
+    }
+  }
+
+ // ========== NebulaTitlebarBackgroundModule ==========
   class NebulaTitlebarBackgroundModule {
     constructor() {
       this.root = document.documentElement;
@@ -174,6 +241,11 @@
       this.lastRect = {};
       this.lastVisible = false;
       this.animationFrameId = null;
+
+      this.update = this.update.bind(this);
+      this._compactCallback = this._compactCallback.bind(this);
+      this.resizeObserver = null;
+      this.intersectionObserver = null;
     }
 
     init() {
@@ -190,53 +262,60 @@
       });
       this.browser.appendChild(this.overlay);
 
-      this.update = this.update.bind(this);
-      requestAnimationFrame(this.update);
+      gZenCompactModeManager.addEventListener(this._compactCallback);
+
+      if (this.root.hasAttribute("nebula-compact-mode")) {
+        this.startLiveTracking();
+      }
 
       Nebula.logger.log("✅ [TitlebarBackground] Tracking initialized.");
+    }
+
+    _compactCallback() {
+      const isCompact = this.root.hasAttribute("nebula-compact-mode");
+      if (isCompact) {
+        this.startLiveTracking();
+      } else {
+        this.stopLiveTracking();
+        this.hideOverlay();
+      }
     }
 
     update() {
       const isCompact = this.root.hasAttribute("nebula-compact-mode");
 
       if (!isCompact) {
-        if (this.lastVisible) {
-          this.overlay.classList.remove("visible");
-          this.overlay.style.display = "none";
-          this.lastVisible = false;
-        }
-        this.animationFrameId = requestAnimationFrame(this.update);
+        this.stopLiveTracking();
+        this.hideOverlay();
         return;
       }
 
       const rect = this.titlebar.getBoundingClientRect();
       const style = getComputedStyle(this.titlebar);
 
-      const isReallyVisible = (
+      const isVisible =
         rect.width > 5 &&
         rect.height > 5 &&
         style.display !== "none" &&
         style.visibility !== "hidden" &&
         style.opacity !== "0" &&
         rect.bottom > 0 &&
-        rect.top < window.innerHeight
-      );
+        rect.top < window.innerHeight;
 
-      const changed = (
+      const changed =
         rect.top !== this.lastRect.top ||
         rect.left !== this.lastRect.left ||
         rect.width !== this.lastRect.width ||
-        rect.height !== this.lastRect.height
-      );
+        rect.height !== this.lastRect.height;
 
-      this.lastRect = {
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height
-      };
+      if (!changed && this.lastVisible === isVisible) {
+        this.animationFrameId = requestAnimationFrame(this.update);
+        return;
+      }
 
-      if (isReallyVisible) {
+      this.lastRect = { top: rect.top, left: rect.left, width: rect.width, height: rect.height };
+
+      if (isVisible) {
         Object.assign(this.overlay.style, {
           top: `${rect.top + window.scrollY}px`,
           left: `${rect.left + window.scrollX}px`,
@@ -250,21 +329,38 @@
           this.lastVisible = true;
         }
       } else {
-        if (this.lastVisible) {
-          this.overlay.classList.remove("visible");
-          this.overlay.style.display = "none";
-          this.lastVisible = false;
-        }
+        this.hideOverlay();
       }
 
       this.animationFrameId = requestAnimationFrame(this.update);
     }
 
+    hideOverlay() {
+      if (this.lastVisible) {
+        this.overlay.classList.remove("visible");
+        this.overlay.style.display = "none";
+        this.lastVisible = false;
+      }
+    }
+
+    startLiveTracking() {
+      this.stopLiveTracking();
+      this.update();
+    }
+
+    stopLiveTracking() {
+      if (this.animationFrameId) {
+        cancelAnimationFrame(this.animationFrameId);
+        this.animationFrameId = null;
+      }
+    }
+
     destroy() {
-      cancelAnimationFrame(this.animationFrameId);
+      gZenCompactModeManager.removeEventListener(this._compactCallback);
+      this.stopLiveTracking();
+      this.hideOverlay();
       this.overlay?.remove();
       this.overlay = null;
-      this.lastVisible = false;
       Nebula.logger.log("🧹 [TitlebarBackground] Destroyed.");
     }
   }
@@ -279,6 +375,9 @@
       this.lastRect = {};
       this.lastVisible = false;
       this.animationFrameId = null;
+
+      this.update = this.update.bind(this);
+      this._compactCallback = this._compactCallback.bind(this);
     }
 
     init() {
@@ -295,46 +394,57 @@
       });
       this.browser.appendChild(this.overlay);
 
-      this.update = this.update.bind(this);
-      requestAnimationFrame(this.update);
+      gZenCompactModeManager.addEventListener(this._compactCallback);
+
+      if (this.root.hasAttribute("nebula-compact-mode")) {
+        this.startLiveTracking();
+      }
 
       Nebula.logger.log("✅ [NavbarBackground] Tracking initialized.");
     }
 
+    _compactCallback() {
+      const isCompact = this.root.hasAttribute("nebula-compact-mode");
+      if (isCompact) {
+        this.startLiveTracking();
+      } else {
+        this.stopLiveTracking();
+        this.hideOverlay();
+      }
+    }
+
     update() {
       const isCompact = this.root.hasAttribute("nebula-compact-mode");
-
       if (!isCompact) {
-        if (this.lastVisible) {
-          this.overlay.classList.remove("visible");
-          this.overlay.style.display = "none";
-          this.lastVisible = false;
-        }
-        this.animationFrameId = requestAnimationFrame(this.update);
+        this.stopLiveTracking();
+        this.hideOverlay();
         return;
       }
 
       const rect = this.navbar.getBoundingClientRect();
-      const changed = (
+      const style = getComputedStyle(this.navbar);
+
+      const isVisible =
+        rect.width > 5 &&
+        rect.height > 5 &&
+        style.display !== "none" &&
+        style.visibility !== "hidden" &&
+        style.opacity !== "0" &&
+        rect.bottom > 0 &&
+        rect.top < window.innerHeight;
+
+      const changed =
         rect.top !== this.lastRect.top ||
         rect.left !== this.lastRect.left ||
         rect.width !== this.lastRect.width ||
-        rect.height !== this.lastRect.height
-      );
+        rect.height !== this.lastRect.height;
 
-      this.lastRect = {
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height
-      };
+      if (!changed && this.lastVisible === isVisible) {
+        this.animationFrameId = requestAnimationFrame(this.update);
+        return;
+      }
 
-      const isVisible = (
-        rect.width > 5 &&
-        rect.height > 5 &&
-        rect.top >= 0 &&
-        rect.bottom <= window.innerHeight
-      );
+      this.lastRect = { top: rect.top, left: rect.left, width: rect.width, height: rect.height };
 
       if (isVisible) {
         Object.assign(this.overlay.style, {
@@ -350,21 +460,38 @@
           this.lastVisible = true;
         }
       } else {
-        if (this.lastVisible) {
-          this.overlay.classList.remove("visible");
-          this.overlay.style.display = "none";
-          this.lastVisible = false;
-        }
+        this.hideOverlay();
       }
 
       this.animationFrameId = requestAnimationFrame(this.update);
     }
 
+    hideOverlay() {
+      if (this.lastVisible) {
+        this.overlay.classList.remove("visible");
+        this.overlay.style.display = "none";
+        this.lastVisible = false;
+      }
+    }
+
+    startLiveTracking() {
+      this.stopLiveTracking();
+      this.update();
+    }
+
+    stopLiveTracking() {
+      if (this.animationFrameId) {
+        cancelAnimationFrame(this.animationFrameId);
+        this.animationFrameId = null;
+      }
+    }
+
     destroy() {
-      cancelAnimationFrame(this.animationFrameId);
+      gZenCompactModeManager.removeEventListener(this._compactCallback);
+      this.stopLiveTracking();
+      this.hideOverlay();
       this.overlay?.remove();
       this.overlay = null;
-      this.lastVisible = false;
       Nebula.logger.log("🧹 [NavbarBackground] Destroyed.");
     }
   }
@@ -379,6 +506,9 @@
       this.lastRect = {};
       this.lastVisible = false;
       this.animationFrameId = null;
+
+      this.update = this.update.bind(this);
+      this.mutationObserver = null;
     }
 
     init() {
@@ -395,46 +525,59 @@
       });
       this.browser.appendChild(this.overlay);
 
-      this.update = this.update.bind(this);
-      requestAnimationFrame(this.update);
+      // Start mutation observer for `open` attribute change
+      this.mutationObserver = new MutationObserver(() => this.onMutation());
+      this.mutationObserver.observe(this.urlbar, { attributes: true, attributeFilter: ["open"] });
+
+      if (this.urlbar.hasAttribute("open")) {
+        this.startLiveTracking();
+      }
 
       Nebula.logger.log("✅ [URLBarBackground] Tracking initialized.");
     }
 
+    onMutation() {
+      const isOpen = this.urlbar.hasAttribute("open");
+      if (isOpen) {
+        this.startLiveTracking();
+      } else {
+        this.stopLiveTracking();
+        this.hideOverlay();
+      }
+    }
+
     update() {
       const isOpen = this.urlbar.hasAttribute("open");
-
       if (!isOpen) {
-        if (this.lastVisible) {
-          this.overlay.classList.remove("visible");
-          this.overlay.style.display = "none";
-          this.lastVisible = false;
-        }
-        this.animationFrameId = requestAnimationFrame(this.update);
+        this.stopLiveTracking();
+        this.hideOverlay();
         return;
       }
 
       const rect = this.urlbar.getBoundingClientRect();
-      const changed = (
+      const style = getComputedStyle(this.urlbar);
+
+      const isVisible =
+        rect.width > 5 &&
+        rect.height > 5 &&
+        style.display !== "none" &&
+        style.visibility !== "hidden" &&
+        style.opacity !== "0" &&
+        rect.bottom > 0 &&
+        rect.top < window.innerHeight;
+
+      const changed =
         rect.top !== this.lastRect.top ||
         rect.left !== this.lastRect.left ||
         rect.width !== this.lastRect.width ||
-        rect.height !== this.lastRect.height
-      );
+        rect.height !== this.lastRect.height;
 
-      this.lastRect = {
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height
-      };
+      if (!changed && this.lastVisible === isVisible) {
+        this.animationFrameId = requestAnimationFrame(this.update);
+        return;
+      }
 
-      const isVisible = (
-        rect.width > 5 &&
-        rect.height > 5 &&
-        rect.top >= 0 &&
-        rect.bottom <= window.innerHeight
-      );
+      this.lastRect = { top: rect.top, left: rect.left, width: rect.width, height: rect.height };
 
       if (isVisible) {
         Object.assign(this.overlay.style, {
@@ -450,26 +593,42 @@
           this.lastVisible = true;
         }
       } else {
-        if (this.lastVisible) {
-          this.overlay.classList.remove("visible");
-          this.overlay.style.display = "none";
-          this.lastVisible = false;
-        }
+        this.hideOverlay();
       }
 
       this.animationFrameId = requestAnimationFrame(this.update);
     }
 
+    hideOverlay() {
+      if (this.lastVisible) {
+        this.overlay.classList.remove("visible");
+        this.overlay.style.display = "none";
+        this.lastVisible = false;
+      }
+    }
+
+    startLiveTracking() {
+      this.stopLiveTracking();
+      this.update();
+    }
+
+    stopLiveTracking() {
+      if (this.animationFrameId) {
+        cancelAnimationFrame(this.animationFrameId);
+        this.animationFrameId = null;
+      }
+    }
+
     destroy() {
-      cancelAnimationFrame(this.animationFrameId);
+      this.mutationObserver?.disconnect();
+      this.stopLiveTracking();
+      this.hideOverlay();
       this.overlay?.remove();
       this.overlay = null;
-      this.lastVisible = false;
       Nebula.logger.log("🧹 [URLBarBackground] Destroyed.");
     }
   }
 
-  
   // ========== NebulaMediaCoverArtModule ==========
   class NebulaMediaCoverArtModule {
     constructor() {
@@ -478,18 +637,19 @@
       
       this.lastArtworkUrl = null;
       this.originalSetupMediaController = null;
+      this.overlay = null;
       this._metadataChangeHandler = this._metadataChangeHandler.bind(this);
     }
 
     init() {
       this._waitForController();
     }
-    
+
     _waitForController() {
       if (typeof window.gZenMediaController?.setupMediaController === 'function') {
         this._onControllerReady();
       } else {
-        setTimeout(() => this._waitForController(), 300);
+        requestIdleCallback(() => setTimeout(() => this._waitForController(), 200)); // gentle polling
       }
     }
 
@@ -501,24 +661,26 @@
 
       const initialController = gZenMediaController._currentMediaController;
       if (initialController) {
+        this._attachMetadataHandler(initialController);
         this._setBackgroundFromMetadata(initialController);
-        initialController.addEventListener("metadatachange", this._metadataChangeHandler);
       } else {
-        this._manageOverlayElement(false);
+        this._manageOverlayVisibility(false);
       }
 
       Nebula.logger.log("✅ [MediaCoverArt] Hooked into MediaPlayer.");
     }
 
     _setupMediaControllerPatcher(controller, browser) {
-      this._setBackgroundFromMetadata(controller);
-      
       if (controller) {
-        controller.removeEventListener("metadatachange", this._metadataChangeHandler);
-        controller.addEventListener("metadatachange", this._metadataChangeHandler);
+        this._attachMetadataHandler(controller);
+        this._setBackgroundFromMetadata(controller);
       }
-
       return this.originalSetupMediaController(controller, browser);
+    }
+
+    _attachMetadataHandler(controller) {
+      controller.removeEventListener("metadatachange", this._metadataChangeHandler);
+      controller.addEventListener("metadatachange", this._metadataChangeHandler);
     }
 
     _metadataChangeHandler(event) {
@@ -533,66 +695,76 @@
     _setBackgroundFromMetadata(controller) {
       const metadata = controller?.getMetadata?.();
       const artwork = metadata?.artwork;
-      let coverUrl = null;
 
-      if (Array.isArray(artwork) && artwork.length > 0) {
-        const sorted = [...artwork].sort((a, b) => {
-          const [aw, ah] = a.sizes?.split("x").map(Number) || [0, 0];
-          const [bw, bh] = b.sizes?.split("x").map(Number) || [0, 0];
-          return (bw * bh) - (aw * ah);
-        });
-        coverUrl = sorted[0]?.src || null;
+      if (!Array.isArray(artwork) || !artwork.length) {
+        return this._cleanupToDefaultState();
       }
-      
+
+      const sorted = [...artwork].sort((a, b) => {
+        const [aw, ah] = a.sizes?.split("x").map(Number) || [0, 0];
+        const [bw, bh] = b.sizes?.split("x").map(Number) || [0, 0];
+        return (bw * bh) - (aw * ah);
+      });
+
+      const coverUrl = sorted[0]?.src || null;
       if (coverUrl === this.lastArtworkUrl) return;
-      
+
       this.lastArtworkUrl = coverUrl;
-      this._manageOverlayElement(!!coverUrl);
-      this._updateOverlayState(coverUrl);
-    }
-    
-    _manageOverlayElement(shouldExist) {
-        const toolbarItem = document.querySelector(this.TOOLBAR_ITEM_SELECTOR);
-        if (!toolbarItem) return;
-
-        let overlay = toolbarItem.querySelector(`#${this.OVERLAY_ID}`);
-        if (shouldExist && !overlay) {
-            overlay = document.createElement('div');
-            overlay.id = this.OVERLAY_ID;
-            toolbarItem.prepend(overlay);
-        } else if (!shouldExist && overlay) {
-            overlay.remove();
-        }
+      this._ensureOverlayElement();
+      this._updateOverlayStyle(coverUrl);
     }
 
-    _updateOverlayState(coverUrl) {
-      const overlay = document.getElementById(this.OVERLAY_ID);
-      if (!overlay) return;
+    _ensureOverlayElement() {
+      if (this.overlay) return;
+
+      const toolbarItem = document.querySelector(this.TOOLBAR_ITEM_SELECTOR);
+      if (!toolbarItem) return;
+
+      this.overlay = document.createElement('div');
+      this.overlay.id = this.OVERLAY_ID;
+      toolbarItem.prepend(this.overlay);
+    }
+
+    _updateOverlayStyle(coverUrl) {
+      if (!this.overlay) return;
 
       if (coverUrl) {
-        overlay.style.backgroundImage = `url("${coverUrl}")`;
-        overlay.classList.add('visible');
+        if (this.overlay.style.backgroundImage !== `url("${coverUrl}")`) {
+          this.overlay.style.backgroundImage = `url("${coverUrl}")`;
+        }
+        this.overlay.classList.add('visible');
       } else {
-        overlay.style.backgroundImage = 'none';
-        overlay.classList.remove('visible');
+        this._cleanupToDefaultState();
+      }
+    }
+
+    _manageOverlayVisibility(show) {
+      if (!this.overlay) return;
+
+      if (show) {
+        this.overlay.classList.add('visible');
+      } else {
+        this.overlay.classList.remove('visible');
+        this.overlay.style.backgroundImage = 'none';
       }
     }
 
     _cleanupToDefaultState() {
       this.lastArtworkUrl = null;
-      this._updateOverlayState(null);
-      this._manageOverlayElement(false);
+      this._manageOverlayVisibility(false);
+      this.overlay?.remove();
+      this.overlay = null;
     }
-    
+
     destroy() {
       if (this.originalSetupMediaController) {
         gZenMediaController.setupMediaController = this.originalSetupMediaController;
         this.originalSetupMediaController = null;
       }
-      
-      const currentController = gZenMediaController?._currentMediaController;
-      if (currentController) {
-        currentController.removeEventListener("metadatachange", this._metadataChangeHandler);
+
+      const current = gZenMediaController?._currentMediaController;
+      if (current) {
+        current.removeEventListener("metadatachange", this._metadataChangeHandler);
       }
 
       this._cleanupToDefaultState();
@@ -603,6 +775,7 @@
 
   // Register modules
   Nebula.register("NebulaPolyfillModule", NebulaPolyfillModule);
+  Nebula.register("NebulaGradientSliderModule", NebulaGradientSliderModule);
   Nebula.register("NebulaTitlebarBackgroundModule", NebulaTitlebarBackgroundModule);
   Nebula.register("NebulaNavbarBackgroundModule", NebulaNavbarBackgroundModule);
   Nebula.register("NebulaURLBarBackgroundModule", NebulaURLBarBackgroundModule);
