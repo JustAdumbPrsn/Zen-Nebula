@@ -9,7 +9,7 @@
   {
     "type": "separator",
     "label": "🎨 Tab Animations",
-    "margin": "20px 0 8px 0"
+    "margin": "25px 0 15px 0"
   },
   {
     "type": "dropdown",
@@ -47,7 +47,7 @@
   {
     "type": "separator",
     "label": "✨ Glow Effects",
-    "margin": "25px 0 8px 0"
+    "margin": "25px 0 15px 0"
   },
   {
     "type": "dropdown",
@@ -67,7 +67,7 @@
   {
     "type": "separator",
     "label": "🌐 URL Bar Animations",
-    "margin": "25px 0 8px 0"
+    "margin": "25px 0 15px 0"
   },
   {
     "type": "dropdown",
@@ -87,7 +87,7 @@
   {
     "type": "separator",
     "label": "🧭 Workspace Buttons",
-    "margin": "25px 0 8px 0"
+    "margin": "25px 0 15px 0"
   },
   {
     "type": "dropdown",
@@ -106,7 +106,7 @@
   {
     "type": "separator",
     "label": "🔊 Sound Buttons",
-    "margin": "25px 0 8px 0"
+    "margin": "25px 0 15px 0"
   },
   {
     "type": "dropdown",
@@ -125,13 +125,13 @@
   {
     "type": "separator",
     "label": "",
-    "margin": "30px 0 5px 0"
+    "margin": "30px 0 15px 0"
   },
 
   {
     "type": "text",
     "label": "🧩 Other Settings",
-    "margin": "20px 0 15px 0",
+    "margin": "30px 0 15px 0",
     "size": "20px"
   },
 
@@ -182,5 +182,11 @@
     "type": "checkbox",
     "property": "nebula-remove-workspace-indicator",
     "label": "Remove workspace indicator"
+  },
+
+  {
+    "type": "checkbox",
+    "property": "nebula-macos-style-buttons",
+    "label": "Adds MacOS style window control buttons to Zen, Tested for Windows 11"
   }
 ]
