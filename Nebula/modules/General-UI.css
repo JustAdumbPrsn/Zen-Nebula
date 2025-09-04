@@ -141,3 +141,39 @@ browser {
   backdrop-filter: blur(8px) saturate(140%) !important;
   box-shadow: 0 4px 21px rgba(0, 0, 0, 1) !important;
 }
+
+/* ------------------- CONTEXT MENU ANIMATIONS ------------------- */
+
+/* Hide menu items and separators by default */
+menupopup > *:not(menuseparator):not(separator) {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+menupopup > menuseparator,
+menupopup > separator {
+  opacity: 0;
+  height: 0;
+  overflow: hidden; /* prevent flicker when animating height */
+}
+
+/* Animation for menu items */
+.nebula-menu-anim {
+  animation: menu-item-appear 250ms forwards;
+}
+
+/* Animation for separators */
+.nebula-menu-separator-anim {
+  animation: menu-separator-appear 200ms forwards;
+}
+
+/* Keyframes */
+@keyframes menu-item-appear {
+  0%   { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes menu-separator-appear {
+  0%   { opacity: 0; height: 0; }
+  100% { opacity: 1; height: 1px; } /* adjust thickness to match theme */
+}
