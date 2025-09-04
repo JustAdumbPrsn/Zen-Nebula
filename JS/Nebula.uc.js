@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           nebula-core.uc.js
-// @description    Central engine for Nebula with modules (Polyfill + GradientSlider + TitlebarNavBarURLBarBackgrounds + MediaCoverArt + ContextMenu)
+// @description    Central engine for Nebula with modules (Polyfill + GradientSlider + TitlebarNavBarURLBarBackgrounds + MediaCoverArt + Context+MainMenu)
 // @author         JustAdumbPrsn
 // @version        v3.2
 // @include        main
@@ -773,106 +773,123 @@
     }
   }
 
-  // ========== NebulaContextMenuModule ==========
-  class NebulaContextMenuModule {
-    constructor() {
-      this.NS_ITEM = "nebula-menu-anim";
-      this.NS_SEPARATOR = "nebula-menu-separator-anim";
-      this.STAGGER = 35;
-      this.MAX_DELAY = 400;
-      this.observedMenus = new WeakMap();
+    // ========== NebulaMenuModule ==========
+    class NebulaMenuModule {
+      constructor() {
+        this.NS_ITEM = "nebula-menu-anim";
+        this.NS_SEPARATOR = "nebula-menu-separator-anim";
+        this.STAGGER = 35;
+        this.MAX_DELAY = 400;
 
-      this.onPopupShowing = this.onPopupShowing.bind(this);
-      this.onPopupHidden = this.onPopupHidden.bind(this);
-    }
+        // selectors for main menu
+        this.MAIN_MENU_SELECTORS = ["#appMenu-popup", "#PanelUI-popup"];
+        this.observedMenus = new WeakMap();
 
-    init() {
-      if (window.NebulaMenuAnim?.destroy) {
-        try { window.NebulaMenuAnim.destroy(); } catch {}
+        this.onPopupShowing = this.onPopupShowing.bind(this);
+        this.onPopupHidden = this.onPopupHidden.bind(this);
       }
 
-      document.addEventListener("popupshowing", this.onPopupShowing, true);
-      document.addEventListener("popuphidden", this.onPopupHidden, true);
+      init() {
+        if (window.NebulaMenuModule?.destroy) {
+          try { window.NebulaMenuModule.destroy(); } catch {}
+        }
 
-      window.NebulaMenuAnim = this;
-      Nebula.logger.log("✅ [ContextMenu] Module initialized.");
-    }
+        document.addEventListener("popupshowing", this.onPopupShowing, true);
+        document.addEventListener("popuphidden", this.onPopupHidden, true);
 
-    cleanupMenu(popup) {
-      if (!popup?.children) return;
-      const children = popup.children;
-      for (let i = 0; i < children.length; i++) {
-        const el = children[i];
-        el.classList.remove(this.NS_ITEM, this.NS_SEPARATOR);
-        el.style.animationDelay = "";
-        el.style.opacity = "";
+        window.NebulaMenuModule = this;
       }
-      if (this.observedMenus.has(popup)) {
-        this.observedMenus.get(popup).disconnect();
-        this.observedMenus.delete(popup);
-      }
-    }
 
-    animateMenuItems(popup) {
-      if (!popup?.children) return;
-      const children = popup.children;
-      let index = 0;
-      for (let i = 0; i < children.length; i++) {
-        const el = children[i];
-        if (el.hidden) continue;
+      cleanupMenu(popup) {
+        if (!popup?.children) return;
 
-        const name = el.localName?.toLowerCase();
-        const targetClass = (name === "menuseparator" || name === "separator") ? this.NS_SEPARATOR : this.NS_ITEM;
-
-        const delay = Math.min(index * this.STAGGER, this.MAX_DELAY);
-        if (el.style.animationDelay !== `${delay}ms`) el.style.animationDelay = `${delay}ms`;
-        if (!el.classList.contains(targetClass)) el.classList.add(targetClass);
-
-        index++;
-      }
-    }
-
-    onPopupShowing(e) {
-      const popup = e.target;
-      if (!popup || popup.localName !== "menupopup") return;
-
-      this.animateMenuItems(popup);
-
-      if (!this.observedMenus.has(popup)) {
-        const observer = new MutationObserver(mutations => {
-          for (let i = 0; i < mutations.length; i++) {
-            if (mutations[i].addedNodes.length) {
-              this.animateMenuItems(popup);
-              break;
-            }
-          }
+        const children = Array.from(popup.children);
+        children.forEach(el => {
+          el.classList.remove(this.NS_ITEM, this.NS_SEPARATOR);
+          el.style.animationDelay = "";
+          el.style.opacity = "";
         });
-        observer.observe(popup, { childList: true });
-        this.observedMenus.set(popup, observer);
+
+        if (this.observedMenus.has(popup)) {
+          this.observedMenus.get(popup).disconnect();
+          this.observedMenus.delete(popup);
+        }
+      }
+
+      getMenuItems(popup) {
+        const name = popup.localName?.toLowerCase();
+        if (name === "menupopup") {
+          // Context menu: animate all children, separators separately
+          return Array.from(popup.children).filter(el => !el.hidden);
+        } else {
+          // For main menu (PanelUI / appMenu-popup)
+          const MAIN_ITEM_SELECTORS = [".subviewbutton", ".panel-menuitem"];
+          return Array.from(popup.querySelectorAll(MAIN_ITEM_SELECTORS.join(",")))
+                      .filter(el => !el.hidden);
+        }
+      }
+
+      animateMenuItems(popup) {
+        const children = this.getMenuItems(popup);
+        let index = 0;
+        for (const el of children) {
+          const name = el.localName?.toLowerCase();
+          const targetClass = (name === "menuseparator" || name === "separator") 
+                              ? this.NS_SEPARATOR 
+                              : this.NS_ITEM;
+
+          const delay = Math.min(index * this.STAGGER, this.MAX_DELAY);
+          if (el.style.animationDelay !== `${delay}ms`) el.style.animationDelay = `${delay}ms`;
+          if (!el.classList.contains(targetClass)) el.classList.add(targetClass);
+
+          index++;
+        }
+      }
+
+      onPopupShowing(e) {
+        const popup = e.target;
+        if (!popup) return;
+
+        // check if context menu or main menu
+        const isMenu = popup.localName === "menupopup" || 
+                      this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
+        if (!isMenu) return;
+
+        this.animateMenuItems(popup);
+
+        // observe dynamic additions
+        if (!this.observedMenus.has(popup)) {
+          const observer = new MutationObserver(() => {
+            this.animateMenuItems(popup);
+          });
+          observer.observe(popup, { childList: true, subtree: true });
+          this.observedMenus.set(popup, observer);
+        }
+      }
+
+      onPopupHidden(e) {
+        const popup = e.target;
+        if (!popup) return;
+
+        const isMenu = popup.localName === "menupopup" || 
+                      this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
+        if (!isMenu) return;
+
+        this.cleanupMenu(popup);
+      }
+
+      destroy() {
+        document.removeEventListener("popupshowing", this.onPopupShowing, true);
+        document.removeEventListener("popuphidden", this.onPopupHidden, true);
+
+        const popups = Array.from(document.querySelectorAll("menupopup"))
+                            .concat(Array.from(document.querySelectorAll(this.MAIN_MENU_SELECTORS.join(","))));
+        popups.forEach(popup => this.cleanupMenu(popup));
+
+        try { delete window.NebulaMenuModule; } catch { window.NebulaMenuModule = undefined; }
+        console.log("🧹 Nebula Menu Module destroyed.");
       }
     }
-
-    onPopupHidden(e) {
-      const popup = e.target;
-      if (!popup || popup.localName !== "menupopup") return;
-      this.cleanupMenu(popup);
-    }
-
-    destroy() {
-      document.removeEventListener("popupshowing", this.onPopupShowing, true);
-      document.removeEventListener("popuphidden", this.onPopupHidden, true);
-
-      const popups = document.querySelectorAll("menupopup");
-      for (let i = 0; i < popups.length; i++) this.cleanupMenu(popups[i]);
-
-      try { delete window.NebulaMenuAnim; } catch { window.NebulaMenuAnim = undefined; }
-      Nebula.logger.log("🧹 [ContextMenu] Module destroyed.");
-    }
-
-    get version() {
-      return "3.6";
-    }
-  }
 
   // Register modules
   Nebula.register("NebulaPolyfillModule", NebulaPolyfillModule);
@@ -881,7 +898,7 @@
   Nebula.register("NebulaNavbarBackgroundModule", NebulaNavbarBackgroundModule);
   Nebula.register("NebulaURLBarBackgroundModule", NebulaURLBarBackgroundModule);
   Nebula.register("NebulaMediaCoverArtModule", NebulaMediaCoverArtModule);
-  Nebula.register("NebulaContextMenuModule", NebulaContextMenuModule);
+  Nebula.register("NebulaMenuModule", NebulaMenuModule);
 
   // Start the core
   Nebula.init();
