@@ -39,4 +39,7 @@ jobs:
         with:
           token: ${{ secrets.SINE_BOT_TOKEN }}
           commit-message: "Update Nebula.uc.js"
-          bran
+          branch: update-nebula-js
+          base: main
+          title: "Update Nebula.uc.js"
+          body: "Automated PR: Updated Nebula.uc.js from Nebula theme repo"
