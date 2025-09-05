@@ -1,4 +1,4 @@
-name: Sync Nebula JS to Store
+name: 🚀 Sync Nebula JS to SineOrg Store
 
 on:
   push:
@@ -12,15 +12,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Zen-Nebula
+      # Checkout your Zen-Nebula repo
+      - name: 📥 Checkout Zen-Nebula
         uses: actions/checkout@v4
 
-      - name: Set up Git
+      # Extract commit subject + full message
+      - name: 📝 Get commit message
+        id: commit
+        run: |
+          echo "subject=$(git log -1 --pretty=%s)" >> $GITHUB_OUTPUT
+          echo "full=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
+      # Configure git identity
+      - name: ⚙️ Setup Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Checkout fork
+      # Clone fork and sync with upstream
+      - name: 🔄 Sync fork with upstream
         run: |
           git clone https://x-access-token:${{ secrets.FORK_PAT }}@github.com/JustAdumbPrsn/store.git store
           cd store
@@ -30,18 +40,21 @@ jobs:
           git merge upstream/main --no-edit || true
           git push origin main
 
-      - name: Copy updated Nebula.uc.js
+      # Copy Nebula.uc.js
+      - name: 📂 Copy updated Nebula.uc.js
         run: cp JS/Nebula.uc.js store/mods/Nebula/Nebula.uc.js
 
-      - name: Commit & push changes
+      # Commit and push branch
+      - name: 💾 Commit & Push changes
         run: |
           cd store
           git checkout -B auto-update-nebula
           git add mods/Nebula/Nebula.uc.js
-          git commit -m "Update Nebula.uc.js from Zen-Nebula" || echo "No changes"
+          git commit -m "Nebula.uc.js Sync => ${{ steps.commit.outputs.subject }}" || echo "No changes to commit"
           git push origin auto-update-nebula --force
 
-      - name: Create Pull Request with GitHub CLI
+      # Create PR with commit subject + body
+      - name: 📬 Create Pull Request
         env:
           GH_TOKEN: ${{ secrets.FORK_PAT }}
         run: |
@@ -49,5 +62,5 @@ jobs:
             --repo sineorg/store \
             --head JustAdumbPrsn:auto-update-nebula \
             --base main \
-            --title "Automated update of Nebula.uc.js" \
-            --body "This PR was automatically created by GitHub Actions to sync Nebula.uc.js from Zen-Nebula."
+            --title "Nebula.uc.js PR => ${{ steps.commit.outputs.subject }}" \
+            --body "### Commit message from Zen-Nebula:\n\n${{ steps.commit.outputs.full }}"
