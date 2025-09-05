@@ -31,11 +31,11 @@ jobs:
           git merge upstream/main --no-edit || true
           git push origin main
 
-      - name: Copy updated Nebula.uc.js from Zen-Nebula
+      - name: Copy Nebula.uc.js
         run: |
           cp JS/Nebula.uc.js store-fork/mods/Nebula/Nebula.uc.js
 
-      - name: Commit updated Nebula.uc.js
+      - name: Commit changes
         run: |
           cd store-fork
           git checkout -B auto-update-nebula
