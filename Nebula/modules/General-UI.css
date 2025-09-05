@@ -132,17 +132,17 @@ browser {
 }
 
 #statuspanel-label {
-  border-radius: 8px !important;
+  border-radius: 9px !important;
   padding: 4px 12px !important;
   font-size: 12.5px !important;
 
   border: 1px solid var(--nebula-color) !important;
-  background: var(--nebula-color) !important;
+  background: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)) !important;
   backdrop-filter: blur(8px) saturate(140%) !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7) !important;
 }
 
-/* ------------------- PANEL MENU ANIMATION ------------------- */
+/* ------------------- PANEL MENU ANIMATIONS ------------------- */
 
 /* Hide menu items by default */
 #appMenu-popup .subviewbutton,
@@ -154,16 +154,12 @@ browser {
 
 }
 
-/* Reveal animation */
-.menuitem-reveal {
-  animation: menu-item-appear 200ms forwards;
-  pointer-events: auto !important; /* enable interaction after animation */
-}
-
-/* Keyframes reused from context menu for consistency */
-@keyframes menu-item-appear {
-  0%   { opacity: 0; transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1); }
+#appMenu-popup[panelopen] .subviewbutton,
+#PanelUI-popup[panelopen] .subviewbutton,
+#appMenu-popup[panelopen] .panel-menuitem,
+#PanelUI-popup[panelopen] .panel-menuitem {
+  animation: menu-item-appear 0.15s both;
+  pointer-events: auto;
 }
 
 /* ------------------- CONTEXT MENU ANIMATIONS ------------------- */
@@ -183,12 +179,12 @@ menupopup > separator {
 
 /* Animation for menu items */
 .nebula-menu-anim {
-  animation: menu-item-appear 200ms forwards;
+  animation: menu-item-appear 150ms forwards;
 }
 
 /* Animation for separators */
 .nebula-menu-separator-anim {
-  animation: menu-separator-appear 200ms forwards;
+  animation: menu-separator-appear 150ms forwards;
 }
 
 /* Keyframes */
@@ -199,5 +195,5 @@ menupopup > separator {
 
 @keyframes menu-separator-appear {
   0%   { opacity: 0; }
-  100% { opacity: 1; } /* adjust thickness to match theme */
+  100% { opacity: 1; }
 }
