@@ -12,11 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout Zen-Nebula
       - name: Checkout Zen-Nebula
         uses: actions/checkout@v3
 
-      # Checkout your fork of sineorg/store
       - name: Checkout fork (JustAdumbPrsn/store)
         uses: actions/checkout@v3
         with:
@@ -24,7 +22,6 @@ jobs:
           token: ${{ secrets.FORK_PAT }}
           path: store-fork
 
-      # Add upstream remote & sync fork with official store
       - name: Sync fork with upstream
         run: |
           cd store-fork
@@ -34,32 +31,25 @@ jobs:
           git merge upstream/main --no-edit || true
           git push origin main
 
-      # Copy updated JS into fork
       - name: Copy Nebula.uc.js
         run: |
           cp JS/Nebula.uc.js store-fork/mods/Nebula/Nebula.uc.js
 
-      # Commit changes into a new branch
-      - name: Commit to fork
+      - name: Commit changes
         run: |
           cd store-fork
-          git checkout -b auto-update-nebula || git checkout auto-update-nebula
+          git checkout -B auto-update-nebula
           git add mods/Nebula/Nebula.uc.js
           git commit -m "Update Nebula.uc.js from Zen-Nebula main branch" || echo "No changes"
-          git push origin auto-update-nebula
+          git push origin auto-update-nebula --force
 
-      # Create a PR to sineorg/store
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.FORK_PAT }}
-          commit-message: "Update Nebula.uc.js from Zen-Nebula main branch"
-          title: "Automated update of Nebula.uc.js"
-          body: |
-            This PR was automatically created by GitHub Actions.
-
-            - Source repo: JustAdumbPrsn/Zen-Nebula
-            - Updated file: JS/Nebula.uc.js
-          branch: auto-update-nebula
-          base: main
-          repository: sineorg/store
+      - name: Create Pull Request to sineorg/store
+        env:
+          GH_TOKEN: ${{ secrets.FORK_PAT }}
+        run: |
+          gh pr create \
+            --repo sineorg/store \
+            --head JustAdumbPrsn:auto-update-nebula \
+            --base main \
+            --title "Automated update of Nebula.uc.js" \
+            --body "This PR was automatically created by GitHub Actions to sync Nebula.uc.js from Zen-Nebula."
