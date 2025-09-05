@@ -57,10 +57,12 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           source_branch: auto-update-nebula
+          source_repository: JustAdumbPrsn/store   # 👈 your fork
           destination_branch: main
-          destination_repository: sineorg/store
+          destination_repository: sineorg/store    # 👈 upstream
           pr_title: "Update Nebula.uc.js"
           pr_body: "Auto-update Nebula.uc.js from Zen-Nebula main branch."
           github_token: ${{ secrets.FORK_PAT }}
           pr_assignee: JustAdumbPrsn
+
 
