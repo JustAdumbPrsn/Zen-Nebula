@@ -1,0 +1,58 @@
+name: 🔄 Merge Dev → Main after Store PR Merge
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"  # runs every 15 minutes
+  workflow_dispatch:        # allows manual trigger too
+
+jobs:
+  check-store-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔎 Check latest PR from fork
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.FORK_PAT }}
+        run: |
+          # Get the most recent PR from your fork branch auto-update-nebula
+          pr=$(gh pr list \
+            --repo sineorg/store \
+            --state all \
+            --head JustAdumbPrsn:auto-update-nebula \
+            --limit 1 \
+            --json number,state,mergedAt \
+            --jq '.[0]')
+
+          if [ "$pr" = "null" ] || [ -z "$pr" ]; then
+            echo "No PR found from fork branch"
+            echo "found=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          number=$(echo "$pr" | jq -r '.number')
+          state=$(echo "$pr" | jq -r '.state')
+          mergedAt=$(echo "$pr" | jq -r '.mergedAt')
+
+          echo "number=$number" >> $GITHUB_OUTPUT
+          echo "state=$state" >> $GITHUB_OUTPUT
+          echo "mergedAt=$mergedAt" >> $GITHUB_OUTPUT
+          echo "found=true" >> $GITHUB_OUTPUT
+
+      - name: 📥 Checkout Zen-Nebula
+        if: steps.pr.outputs.found == 'true' && steps.pr.outputs.state == 'MERGED'
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Git
+        if: steps.pr.outputs.found == 'true' && steps.pr.outputs.state == 'MERGED'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: 🔄 Merge Dev into Main
+        if: steps.pr.outputs.found == 'true' && steps.pr.outputs.state == 'MERGED'
+        run: |
+          git fetch origin
+          git checkout main
+          git merge origin/Dev --no-edit || true
+          git push origin main
