@@ -1,0 +1,35 @@
+# .github/workflows/update-store.yml
+name: Update SineOrg Store Fork
+
+on:
+  push:
+    branches:
+      - Dev
+
+jobs:
+  update-store:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Nebula repo
+        uses: actions/checkout@v3
+
+      - name: Checkout store fork
+        uses: actions/checkout@v3
+        with:
+          repository: JustAdumbPrsn/store
+          path: store-fork
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Copy JS to store fork
+        run: |
+          cp JS/Nebula.uc.js store-fork/mods/Nebula/Nebula.uc.js
+
+      - name: Commit & push changes
+        run: |
+          cd store-fork
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mods/Nebula/Nebula.uc.js
+          git commit -m "Update Nebula.uc.js from Nebula Dev branch" || echo "No changes"
+          git push origin main
