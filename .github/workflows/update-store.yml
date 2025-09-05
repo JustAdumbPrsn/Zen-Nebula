@@ -1,58 +1,49 @@
-name: Sync and PR to SineOrg Store
+name: Sync Nebula.uc.js to Store
 
 on:
   push:
+    paths:
+      - "main/js/Nebula.uc.js"
     branches:
       - main
-    paths:
-      - 'JS/Nebula.uc.js'
+  workflow_dispatch:
 
 jobs:
-  update-store:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout your Zen-Nebula repo (the source of truth)
       - name: Checkout Zen-Nebula
         uses: actions/checkout@v3
+        with:
+          repository: JustAdumbPrsn/Zen-Nebula
+          ref: main
+          path: zen-nebula
 
-      - name: Checkout fork (JustAdumbPrsn/store)
+      # Checkout your fork of sineorg/store (target repo)
+      - name: Checkout fork of store
         uses: actions/checkout@v3
         with:
           repository: JustAdumbPrsn/store
-          token: ${{ secrets.FORK_PAT }}
-          path: store-fork
+          ref: main
+          path: store
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Sync fork with upstream
+      # Copy the updated file into the fork repo
+      - name: Update Nebula.uc.js in fork
         run: |
-          cd store-fork
-          git remote add upstream https://github.com/sineorg/store.git
-          git fetch upstream
-          git checkout main
-          git reset --hard upstream/main
-          git push origin main --force
-
-      - name: Create update branch
-        run: |
-          cd store-fork
+          cp zen-nebula/main/js/Nebula.uc.js store/mods/Nebula/Nebula.uc.js
+          cd store
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B auto-update-nebula
-
-      - name: Copy updated Nebula.uc.js from Zen-Nebula
-        run: |
-          cp JS/Nebula.uc.js store-fork/mods/Nebula/Nebula.uc.js
-
-      - name: Commit updated Nebula.uc.js
-        run: |
-          cd store-fork
           git add mods/Nebula/Nebula.uc.js
-          git commit -m "Update Nebula.uc.js from Zen-Nebula main branch" || echo "No changes"
+          git commit -m "Update Nebula.uc.js from Zen-Nebula" || echo "No changes to commit"
           git push origin auto-update-nebula --force
 
-      - name: Setup GitHub CLI
-        uses: cli/cli-action@v2
-
-      - name: Create Pull Request to sineorg/store
-        env:
-          GH_TOKEN: ${{ secrets.FORK_PAT }}
+      # Create the PR into sineorg/store
+      - name: Create Pull Request
         run: |
           gh pr create \
             --repo sineorg/store \
@@ -60,3 +51,5 @@ jobs:
             --base main \
             --title "Automated update of Nebula.uc.js" \
             --body "This PR was automatically created by GitHub Actions to sync Nebula.uc.js from Zen-Nebula."
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
