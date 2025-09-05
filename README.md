@@ -68,7 +68,8 @@ Follow these steps to install and apply the **Nebula** theme to Zen Browser:
    - If visible, set it to `true`.
 
 4. 🖼️ **Install Wallpapers (Optional)**
-   - Download `wallpapers.zip` from the [latest release](https://github.com/JustAdumbPrsn/Nebula-A-Minimal-Theme-for-Zen-Browser/releases/latest).
+   - Download `wallpapers.zip` from this [Link](https://github.com/JustAdumbPrsn/Zen-Nebula/releases/download/v3.1/Wallpapers.rar).
+
    - Extract and use them as desired.
 
 
