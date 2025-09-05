@@ -3,7 +3,7 @@ name: Sync Nebula.uc.js to Store
 on:
   push:
     paths:
-      - "main/js/Nebula.uc.js"
+      - "JS/Nebula.uc.js"
     branches:
       - main
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
       # Copy the updated file into the fork repo
       - name: Update Nebula.uc.js in fork
         run: |
-          cp zen-nebula/main/js/Nebula.uc.js store/mods/Nebula/Nebula.uc.js
+          cp zen-nebula/JS/Nebula.uc.js store/mods/Nebula/Nebula.uc.js
           cd store
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
