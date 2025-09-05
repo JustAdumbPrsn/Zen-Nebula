@@ -188,5 +188,11 @@
     "type": "checkbox",
     "property": "nebula-macos-style-buttons",
     "label": "Adds MacOS style window control buttons to Zen, Tested for Windows 11"
+  },
+
+  {
+    "type": "checkbox",
+    "property": "nebula-disable-menu-animations",
+    "label": "Disable the Context Menu Animations"
   }
 ]

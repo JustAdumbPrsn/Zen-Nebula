@@ -183,91 +183,34 @@
   }
 }
 
-/* ----------------- Other animations ------------------ */
-
 /* ------------------ Custom Split View Animation ------------------- */
 
-@keyframes scaleAndBrighten {
-  
-  0% {
-    transform: scale(0.95);
-    opacity: 0;
-    filter: brightness(0);
-  }
+@media not (-moz-pref("nebula-tab-switch-animation", 0)) {
+  @keyframes scaleAndBrighten {
 
-  50% {
-    filter: brightness(0);
-  }
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+      filter: brightness(0);
+    }
 
-  100% {
-    transform: scale(1);
-    opacity: 1;
-    filter: brightness(1);
-  }
-}
+    50% {
+      filter: brightness(0);
+    }
 
-#tabbrowser-tabpanels[zen-split-view="true"] {
-  transition: none !important;
-}
-
-#tabbrowser-tabpanels[zen-split-view="true"] .browserSidebarContainer {
-
-  animation: scaleAndBrighten 0.6s cubic-bezier(0.33, 1, 0.68, 1) forwards;
-}
-
-/* ctrl tab visuals and animations */
-#ctrlTab-panel {
-  --panel-background: rgba(0,0,0,0.9) !important;
-  transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.1) 0.2s !important;
-  border-radius: 13px;
-  scale: 0.7;
-}
-
-#ctrlTab-panel:has(.ctrlTab-preview:not([hidden="true"])) {
-  scale: 0.7 !important;
-  border-radius: 13px;
-}
-
-.ctrlTab-preview-inner {
-  /* 	padding: 0 !important; */
-  margin: 0 !important;
-  transition: all 0.2s ease-in-out;
-
-  .ctrlTab-canvas {
-    border-radius: 1em !important;
-    overflow: hidden;
-
-    img {
-      background-color: #000000 !important;
+    100% {
+      transform: scale(1);
+      opacity: 1;
+      filter: brightness(1);
     }
   }
 
-  .ctrlTab-favicon-container {
-    justify-content: center !important;
-    transition: all 0.5s ease-in-out;
-
-    image {
-      border-radius: 50% !important;
-      transition: all 0.5s ease-in-out !important;
-      /* 			scale: 1.25 !important; */
-    }
+  #tabbrowser-tabpanels[zen-split-view="true"] {
+    transition: none !important;
   }
 
-  .ctrlTab-label {
-    margin-top: 1.5em !important;
-  }
-}
+  #tabbrowser-tabpanels[zen-split-view="true"] .browserSidebarContainer {
 
-.ctrlTab-preview:focus > .ctrlTab-preview-inner {
-  outline: none !important;
-  /* border: none !important;   */
-  background-color: var(--sidebar-background-color) !important;
-  border-radius: 1.5em !important;
-  scale: 1.03 !important;
-
-  .ctrlTab-favicon-container {
-    image {
-      padding: 2px !important;
-    }
+    animation: scaleAndBrighten 0.6s cubic-bezier(0.33, 1, 0.68, 1) forwards;
   }
 }

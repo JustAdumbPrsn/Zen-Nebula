@@ -82,6 +82,9 @@ without searching through the code directly */
     /* 11. If you want to have MacOS style window controls on Windows 11 (IDK about Linux):
         Go to about:config and add a "boolean" "nebula-macos-style-buttons" and set it to true */
 
+    /* 12. If you want to disable the Context Menu Animations:
+        Go to about:config and add a "boolean" "nebula-disable-menu-animations" and set it to true */
+
 :root {
     --nebula-glass: blur(32px) saturate(140%); /* the blur which Nebula uses */
     --nebula-border-radius: 13px; /* This will change roundness of everything in Nebula (DEFAULT: 13px) */

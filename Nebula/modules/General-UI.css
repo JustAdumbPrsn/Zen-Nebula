@@ -90,9 +90,12 @@ browser {
 
 /* ------------------ NOGAPS COMPACT MOD ------------------ */
 
-@media (-moz-bool-pref: "nebula-nogaps-compact-mod") {
+@media (-moz-pref("nebula-nogaps-compact-mod")) {
   html[nebula-compact-mode]:not([customizing]) {
-    #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
+    /* scope everything to the wrapper */
+    #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), 
+                           :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
+                             
       margin: 0 !important;
 
       #zen-tabbox-wrapper {
@@ -105,21 +108,23 @@ browser {
         }
       }
 
-      html[nebula-single-toolbar] & {
+      /* single-toolbar case */
+      &[nebula-single-toolbar] {
         position: relative;
       }
+    }
 
-      html[nebula-single-toolbar] #zen-appcontent-navbar-wrapper {
-        position: absolute;
-        width: 100% !important;
-        height: 55px;
-        backdrop-filter: var(--nebula-glass);
-        background: var(--zen-main-browser-background) !important;
-        border-bottom: 0px solid light-dark(
-          rgba(0, 0, 0, 0.2),
-          rgba(255, 255, 255, 0.1)
-        );
-      }
+    /* navbar wrapper for single-toolbar */
+    &[nebula-single-toolbar] #zen-appcontent-navbar-wrapper {
+      position: absolute;
+      width: 100% !important;
+      height: 55px;
+      backdrop-filter: var(--nebula-glass);
+      background: var(--zen-main-browser-background) !important;
+      border-bottom: 0px solid light-dark(
+        rgba(0, 0, 0, 0.2),
+        rgba(255, 255, 255, 0.1)
+      );
     }
   }
 }
@@ -144,56 +149,134 @@ browser {
 
 /* ------------------- PANEL MENU ANIMATIONS ------------------- */
 
-/* Hide menu items by default */
-#appMenu-popup .subviewbutton,
-#appMenu-popup .panel-menuitem,
-#PanelUI-popup .subviewbutton,
-#PanelUI-popup .panel-menuitem {
-  opacity: 0;
-  transform: scale(0.95);
+@media not (-moz-pref("nebula-disable-menu-animations")) {
 
-}
+  /* Hide menu items by default */
+  #appMenu-popup .subviewbutton,
+  #appMenu-popup .panel-menuitem,
+  #PanelUI-popup .subviewbutton,
+  #PanelUI-popup .panel-menuitem {
+    opacity: 0;
+    transform: scale(0.95);
+  }
 
-#appMenu-popup[panelopen] .subviewbutton,
-#PanelUI-popup[panelopen] .subviewbutton,
-#appMenu-popup[panelopen] .panel-menuitem,
-#PanelUI-popup[panelopen] .panel-menuitem {
-  animation: menu-item-appear 0.15s both;
-  pointer-events: auto;
+  /* Animate menu items */
+  #appMenu-popup[panelopen] .subviewbutton,
+  #PanelUI-popup[panelopen] .subviewbutton,
+  #appMenu-popup[panelopen] .panel-menuitem,
+  #PanelUI-popup[panelopen] .panel-menuitem {
+    animation: menu-item-appear 0.15s both;
+    pointer-events: auto;
+  }
 }
 
 /* ------------------- CONTEXT MENU ANIMATIONS ------------------- */
 
-/* Hide menu items and separators by default */
-menupopup > *:not(menuseparator):not(separator) {
-  opacity: 0;
-  transform: scale(0.95);
+@media not (-moz-pref("nebula-disable-menu-animations")) {
+
+  /* Hide menu items and separators by default */
+  menupopup > *:not(menuseparator):not(separator) {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  menupopup > menuseparator,
+  menupopup > separator {
+    opacity: 0;
+    height: 0;
+    overflow: hidden; /* prevent flicker when animating height */
+  }
+
+  /* Animate menu items */
+  .nebula-menu-anim {
+    animation: menu-item-appear 150ms forwards;
+  }
+
+  /* Animate separators */
+  .nebula-menu-separator-anim {
+    animation: menu-separator-appear 150ms forwards;
+  }
+
+  /* Keyframes */
+  @keyframes menu-item-appear {
+    0%   { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes menu-separator-appear {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+  }
 }
 
-menupopup > menuseparator,
-menupopup > separator {
-  opacity: 0;
-  height: 0;
-  overflow: hidden; /* prevent flicker when animating height */
+/* ------------------ Ctrl Tab Styling ------------------- */
+
+#nebula-ctrltab-background-below {
+  background-color: light-dark(rgba(200, 200, 200, 1), rgba(20, 20, 20, 1));
+  border-radius: 10px;
 }
 
-/* Animation for menu items */
-.nebula-menu-anim {
-  animation: menu-item-appear 150ms forwards;
+#nebula-ctrltab-background-above {
+  backdrop-filter: var(--nebula-glass);
+  border-radius: 10px;
 }
 
-/* Animation for separators */
-.nebula-menu-separator-anim {
-  animation: menu-separator-appear 150ms forwards;
+#ctrlTab-panel {
+  --panel-background: rgba(0,0,0,0.5) !important;
+  border-radius: 10px;
+  scale: 0.7;
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.6) !important;
 }
 
-/* Keyframes */
-@keyframes menu-item-appear {
-  0%   { opacity: 0; transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1); }
+#ctrlTab-panel:has(.ctrlTab-preview:not([hidden="true"])) {
+  scale: 0.7 !important;
+  border-radius: 10px;
 }
 
-@keyframes menu-separator-appear {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
+/* Remove default focus/hover borders */
+.ctrlTab-preview-inner {
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 13px !important;
+  transition: 
+    transform 0.2s ease-out, /* smoother scale */
+    background-color 0.2s ease-out, 
+    box-shadow 0.2s ease-out;
+}
+
+/* Hover effect for previews */
+.ctrlTab-preview-inner:hover {
+  transform: scale(1.03); /* gentle scaling on hover */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* subtle glow */
+}
+
+/* Canvas inside each preview */
+.ctrlTab-preview-inner .ctrlTab-canvas {
+  border-radius: inherit !important;
+  overflow: hidden;
+}
+
+/* Favicon container alignment */
+.ctrlTab-preview-inner .ctrlTab-favicon-container {
+  justify-content: center !important;
+}
+
+.ctrlTab-preview-inner .ctrlTab-favicon-container image {
+  border-radius: 50% !important;
+}
+
+/* Label spacing */
+.ctrlTab-preview-inner .ctrlTab-label {
+  margin-top: 1.2em !important;
+}
+
+/* Focused / selected preview effect */
+.ctrlTab-preview:focus > .ctrlTab-preview-inner {
+  background-color: light-dark(
+    rgba(255, 255, 255, 0.12), 
+    rgba(255, 255, 255, 0.08)
+  ) !important;
+  border-radius: 13px !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
 }

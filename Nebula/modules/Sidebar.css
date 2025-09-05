@@ -93,58 +93,21 @@ html[nebula-single-toolbar][nebula-compact-mode] #titlebar {
   height: calc(100% - (var(--zen-element-separation) * 2)) !important;
 }
 
-/* -------------------- MULTI TOOLBAR -------------------- */
+/* -------------------- MULTI & COLLAPSED TOOLBAR -------------------- */
 
 @media (-moz-pref("zen.view.compact.hide-tabbar")) {
-  html[nebula-multi-toolbar][nebula-compact-mode] #titlebar {
-    top: var(--zen-element-separation) !important;
-    left: var(--zen-element-separation) !important;
-    height: calc(100% - (var(--zen-element-separation) * 2)) !important;
-  }
-
-  html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
-    left: auto !important;
-    right: var(--zen-element-separation) !important;
-  }
-}
-
-@media (-moz-pref("zen.view.compact.hide-toolbar")) {
-  @media not all and (-moz-pref("zen.view.compact.hide-tabbar")) {
-    html[nebula-multi-toolbar][nebula-compact-mode] #titlebar {
-      background: none !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      backdrop-filter: none !important;
-    }
-
-    html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
-      left: auto !important;
-      right: unset !important;
-    }
-  }
-}
-
-
-@media (-moz-pref("zen.view.compact.hide-tabbar")) and (-moz-pref("zen.view.compact.hide-toolbar")) {
-  html[nebula-multi-toolbar][nebula-compact-mode] #titlebar {
-    top: var(--zen-element-separation) !important;
-    left: var(--zen-element-separation) !important;
-    height: calc(100% - (var(--zen-element-separation) * 3)) !important;
-  }
-
-  html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
-    left: auto !important;
-    right: var(--zen-element-separation) !important;
-  }
-}
-
-/* -------------------- COLLAPSED TOOLBAR -------------------- */
-
-@media (-moz-pref("zen.view.compact.hide-tabbar")) {
+  /* Base position for multi and collapsed toolbars */
+  html[nebula-multi-toolbar][nebula-compact-mode] #titlebar,
   html[nebula-collapsed-toolbar][nebula-compact-mode] #titlebar {
     top: var(--zen-element-separation) !important;
     left: var(--zen-element-separation) !important;
     height: calc(100% - (var(--zen-element-separation) * 2)) !important;
+  }
+
+  /* Right-side adjustments */
+  html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
+    left: auto !important;
+    right: var(--zen-element-separation) !important;
   }
 
   html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
@@ -155,6 +118,7 @@ html[nebula-single-toolbar][nebula-compact-mode] #titlebar {
 
 @media (-moz-pref("zen.view.compact.hide-toolbar")) {
   @media not all and (-moz-pref("zen.view.compact.hide-tabbar")) {
+    html[nebula-multi-toolbar][nebula-compact-mode] #titlebar,
     html[nebula-collapsed-toolbar][nebula-compact-mode] #titlebar {
       background: none !important;
       padding: 0 !important;
@@ -162,6 +126,7 @@ html[nebula-single-toolbar][nebula-compact-mode] #titlebar {
       backdrop-filter: none !important;
     }
 
+    html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar,
     html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
       left: auto !important;
       right: unset !important;
@@ -170,10 +135,16 @@ html[nebula-single-toolbar][nebula-compact-mode] #titlebar {
 }
 
 @media (-moz-pref("zen.view.compact.hide-tabbar")) and (-moz-pref("zen.view.compact.hide-toolbar")) {
+  html[nebula-multi-toolbar][nebula-compact-mode] #titlebar,
   html[nebula-collapsed-toolbar][nebula-compact-mode] #titlebar {
     top: var(--zen-element-separation) !important;
     left: var(--zen-element-separation) !important;
     height: calc(100% - (var(--zen-element-separation) * 3)) !important;
+  }
+
+  html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
+    left: auto !important;
+    right: var(--zen-element-separation) !important;
   }
 
   html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
