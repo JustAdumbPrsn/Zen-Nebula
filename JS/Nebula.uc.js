@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           nebula-core.uc.js
-// @description    Central engine for Nebula with modules (Polyfill + GradientSlider + TitlebarNavBarURLBarBackgrounds + MediaCoverArt + Context+MainMenu)
+// @description    Central engine for Nebula with all modules
 // @author         JustAdumbPrsn
 // @version        v3.2
 // @include        main
@@ -11,7 +11,7 @@
   'use strict';
 
   if (window.Nebula) {
-    window.Nebula.destroy();
+    try { window.Nebula.destroy(); } catch {}
   }
 
   window.Nebula = {
@@ -30,14 +30,28 @@
       else document.addEventListener('DOMContentLoaded', callback, { once: true });
     },
 
-    register(name, ModuleClass) {
+    register(ModuleClass) {
+      const name = ModuleClass?.name || 'UnnamedModule';
+      if (!ModuleClass) {
+        this.logger.warn(`Module "${name}" is not defined, skipping registration.`);
+        return;
+      }
       if (this._modules.find(m => m._name === name)) {
         this.logger.warn(`Module "${name}" already registered.`);
         return;
       }
-      const instance = new ModuleClass();
+
+      let instance;
+      try {
+        instance = new ModuleClass();
+      } catch (err) {
+        this.logger.error(`Module "${name}" failed to construct:\n${err}`);
+        return; // skip this module, keep others running
+      }
+
       instance._name = name;
       this._modules.push(instance);
+
       if (this._initialized && typeof instance.init === 'function') {
         try {
           instance.init();
@@ -773,133 +787,248 @@
     }
   }
 
-    // ========== NebulaMenuModule ==========
-    class NebulaMenuModule {
-      constructor() {
-        this.NS_ITEM = "nebula-menu-anim";
-        this.NS_SEPARATOR = "nebula-menu-separator-anim";
-        this.STAGGER = 35;
-        this.MAX_DELAY = 400;
+  // ========== NebulaMenuModule ==========
+  class NebulaMenuModule {
+    constructor() {
+      this.NS_ITEM = "nebula-menu-anim";
+      this.NS_SEPARATOR = "nebula-menu-separator-anim";
+      this.STAGGER = 35;
+      this.MAX_DELAY = 400;
 
-        // selectors for main menu
-        this.MAIN_MENU_SELECTORS = ["#appMenu-popup", "#PanelUI-popup"];
-        this.observedMenus = new WeakMap();
+      this.MAIN_MENU_SELECTORS = ["#appMenu-popup", "#PanelUI-popup"];
+      this.observedMenus = new WeakMap();
 
-        this.onPopupShowing = this.onPopupShowing.bind(this);
-        this.onPopupHidden = this.onPopupHidden.bind(this);
+      this.onPopupShowing = this.onPopupShowing.bind(this);
+      this.onPopupHidden = this.onPopupHidden.bind(this);
+    }
+
+    init() {
+      if (window.NebulaMenuModule?.destroy) {
+        try { window.NebulaMenuModule.destroy(); } catch {}
       }
 
-      init() {
-        if (window.NebulaMenuModule?.destroy) {
-          try { window.NebulaMenuModule.destroy(); } catch {}
-        }
+      document.addEventListener("popupshowing", this.onPopupShowing, true);
+      document.addEventListener("popuphidden", this.onPopupHidden, true);
 
-        document.addEventListener("popupshowing", this.onPopupShowing, true);
-        document.addEventListener("popuphidden", this.onPopupHidden, true);
+      window.NebulaMenuModule = this;
+      Nebula.logger.log("✅ [MenuModule] Initialized.");
+    }
 
-        window.NebulaMenuModule = this;
+    getMenuItems(popup) {
+      if (!popup) {
+        Nebula.logger.warn("⚠️ [MenuModule] getMenuItems called with null popup.");
+        return [];
       }
 
-      cleanupMenu(popup) {
-        if (!popup?.children) return;
-
-        const children = Array.from(popup.children);
-        children.forEach(el => {
-          el.classList.remove(this.NS_ITEM, this.NS_SEPARATOR);
-          el.style.animationDelay = "";
-          el.style.opacity = "";
-        });
-
-        if (this.observedMenus.has(popup)) {
-          this.observedMenus.get(popup).disconnect();
-          this.observedMenus.delete(popup);
-        }
-      }
-
-      getMenuItems(popup) {
-        const name = popup.localName?.toLowerCase();
-        if (name === "menupopup") {
-          // Context menu: animate all children, separators separately
-          return Array.from(popup.children).filter(el => !el.hidden);
-        } else {
-          // For main menu (PanelUI / appMenu-popup)
-          const MAIN_ITEM_SELECTORS = [".subviewbutton", ".panel-menuitem"];
-          return Array.from(popup.querySelectorAll(MAIN_ITEM_SELECTORS.join(",")))
-                      .filter(el => !el.hidden);
-        }
-      }
-
-      animateMenuItems(popup) {
-        const children = this.getMenuItems(popup);
-        let index = 0;
-        for (const el of children) {
-          const name = el.localName?.toLowerCase();
-          const targetClass = (name === "menuseparator" || name === "separator") 
-                              ? this.NS_SEPARATOR 
-                              : this.NS_ITEM;
-
-          const delay = Math.min(index * this.STAGGER, this.MAX_DELAY);
-          if (el.style.animationDelay !== `${delay}ms`) el.style.animationDelay = `${delay}ms`;
-          if (!el.classList.contains(targetClass)) el.classList.add(targetClass);
-
-          index++;
-        }
-      }
-
-      onPopupShowing(e) {
-        const popup = e.target;
-        if (!popup) return;
-
-        // check if context menu or main menu
-        const isMenu = popup.localName === "menupopup" || 
-                      this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
-        if (!isMenu) return;
-
-        this.animateMenuItems(popup);
-
-        // observe dynamic additions
-        if (!this.observedMenus.has(popup)) {
-          const observer = new MutationObserver(() => {
-            this.animateMenuItems(popup);
-          });
-          observer.observe(popup, { childList: true, subtree: true });
-          this.observedMenus.set(popup, observer);
-        }
-      }
-
-      onPopupHidden(e) {
-        const popup = e.target;
-        if (!popup) return;
-
-        const isMenu = popup.localName === "menupopup" || 
-                      this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
-        if (!isMenu) return;
-
-        this.cleanupMenu(popup);
-      }
-
-      destroy() {
-        document.removeEventListener("popupshowing", this.onPopupShowing, true);
-        document.removeEventListener("popuphidden", this.onPopupHidden, true);
-
-        const popups = Array.from(document.querySelectorAll("menupopup"))
-                            .concat(Array.from(document.querySelectorAll(this.MAIN_MENU_SELECTORS.join(","))));
-        popups.forEach(popup => this.cleanupMenu(popup));
-
-        try { delete window.NebulaMenuModule; } catch { window.NebulaMenuModule = undefined; }
-        console.log("🧹 Nebula Menu Module destroyed.");
+      const name = popup.localName?.toLowerCase();
+      if (name === "menupopup") {
+        return Array.from(popup.children).filter(el => !el.hidden);
+      } else {
+        const MAIN_ITEM_SELECTORS = [".subviewbutton", ".panel-menuitem"];
+        return Array.from(popup.querySelectorAll(MAIN_ITEM_SELECTORS.join(",")))
+                    .filter(el => !el.hidden);
       }
     }
 
-  // Register modules
-  Nebula.register("NebulaPolyfillModule", NebulaPolyfillModule);
-  Nebula.register("NebulaGradientSliderModule", NebulaGradientSliderModule);
-  Nebula.register("NebulaTitlebarBackgroundModule", NebulaTitlebarBackgroundModule);
-  Nebula.register("NebulaNavbarBackgroundModule", NebulaNavbarBackgroundModule);
-  Nebula.register("NebulaURLBarBackgroundModule", NebulaURLBarBackgroundModule);
-  Nebula.register("NebulaMediaCoverArtModule", NebulaMediaCoverArtModule);
-  Nebula.register("NebulaMenuModule", NebulaMenuModule);
+    animateMenuItems(popup) {
+      const children = this.getMenuItems(popup);
+      children.forEach((el, index) => {
+        const name = el.localName?.toLowerCase();
+        const targetClass = (name === "menuseparator" || name === "separator")
+                            ? this.NS_SEPARATOR
+                            : this.NS_ITEM;
+
+        const delay = Math.min(index * this.STAGGER, this.MAX_DELAY);
+        if (el.style.animationDelay !== `${delay}ms`) el.style.animationDelay = `${delay}ms`;
+        if (!el.classList.contains(targetClass)) el.classList.add(targetClass);
+      });
+    }
+
+    cleanupMenu(popup) {
+      if (!popup?.children) return;
+
+      Array.from(popup.children).forEach(el => {
+        el.classList.remove(this.NS_ITEM, this.NS_SEPARATOR);
+        el.style.animationDelay = "";
+        el.style.opacity = "";
+      });
+
+      if (this.observedMenus.has(popup)) {
+        this.observedMenus.get(popup).disconnect();
+        this.observedMenus.delete(popup);
+      }
+    }
+
+    onPopupShowing(e) {
+      const popup = e.target;
+      if (!popup) {
+        Nebula.logger.warn("⚠️ [MenuModule] popupshowing event without target.");
+        return;
+      }
+
+      const isMenu = popup.localName === "menupopup" ||
+                    this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
+      if (!isMenu) return;
+
+      this.animateMenuItems(popup);
+
+      if (!this.observedMenus.has(popup)) {
+        const observer = new MutationObserver(() => this.animateMenuItems(popup));
+        observer.observe(popup, { childList: true, subtree: true });
+        this.observedMenus.set(popup, observer);
+      }
+    }
+
+    onPopupHidden(e) {
+      const popup = e.target;
+      if (!popup) {
+        Nebula.logger.warn("⚠️ [MenuModule] popuphidden event without target.");
+        return;
+      }
+
+      const isMenu = popup.localName === "menupopup" ||
+                    this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
+      if (!isMenu) return;
+
+      this.cleanupMenu(popup);
+    }
+
+    destroy() {
+      document.removeEventListener("popupshowing", this.onPopupShowing, true);
+      document.removeEventListener("popuphidden", this.onPopupHidden, true);
+
+      const popups = Array.from(document.querySelectorAll("menupopup"))
+                          .concat(Array.from(document.querySelectorAll(this.MAIN_MENU_SELECTORS.join(","))));
+      popups.forEach(popup => this.cleanupMenu(popup));
+
+      try { delete window.NebulaMenuModule; } catch { window.NebulaMenuModule = undefined; }
+      Nebula.logger.log("🧹 [MenuModule] Destroyed.");
+    }
+  }
+
+  // ========== NebulaCtrlTabDualBackgroundModule ==========
+  class NebulaCtrlTabDualBackgroundModule {
+    constructor({ trackingMode = "both" } = {}) {
+      this.browser = document.getElementById("browser");
+      this.panel = document.getElementById("ctrlTab-panel");
+      this.overlays = {};
+      this.lastRect = null;
+      this.lastVisible = false;
+      this.rafId = null;
+      this.trackingMode = trackingMode;
+
+      this.update = this.update.bind(this);
+      this.onPopupShown = this.startTracking.bind(this);
+      this.onPopupHidden = this.stopTracking.bind(this);
+    }
+
+    init() {
+      if (!this.browser || !this.panel) {
+        return Nebula.logger.warn("⚠️ [CtrlTabDualBackground] Required elements not found.");
+      }
+
+      if (this.trackingMode !== "below")
+        this.overlays.above = this.createOverlay("nebula-ctrltab-background-above", 2147483646, true);
+      if (this.trackingMode !== "above")
+        this.overlays.below = this.createOverlay("nebula-ctrltab-background-below", 0, false);
+
+      this.panel.addEventListener("popupshown", this.onPopupShown);
+      this.panel.addEventListener("popuphidden", this.onPopupHidden);
+
+      Nebula.logger.log("✅ [CtrlTabDualBackground] Initialized.");
+    }
+
+    createOverlay(id, zIndex, interactive) {
+      const o = document.createElement("div");
+      o.id = id;
+      Object.assign(o.style, {
+        position: "absolute",
+        display: "none",
+        zIndex: interactive ? zIndex : "",
+        pointerEvents: interactive ? "auto" : "none"
+      });
+      this.browser.appendChild(o);
+      return o;
+    }
+
+    startTracking() {
+      if (!this.rafId) this.update();
+    }
+
+    stopTracking() {
+      if (this.rafId) cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+      this.hideOverlays();
+    }
+
+    update() {
+      const p = this.panel;
+      if (!p) return;
+
+      const r = p.getBoundingClientRect();
+      const cs = getComputedStyle(p);
+      const visible =
+        r.width > 5 &&
+        r.height > 5 &&
+        cs.display !== "none" &&
+        cs.visibility !== "hidden" &&
+        cs.opacity !== "0";
+
+      if (!visible) return this.hideOverlays();
+
+      const changed =
+        !this.lastRect ||
+        r.top !== this.lastRect.top ||
+        r.left !== this.lastRect.left ||
+        r.width !== this.lastRect.width ||
+        r.height !== this.lastRect.height;
+
+      if (!changed && this.lastVisible) {
+        this.rafId = requestAnimationFrame(this.update);
+        return;
+      }
+
+      this.lastRect = { top: r.top, left: r.left, width: r.width, height: r.height };
+      const style = {
+        top: `${r.top + window.scrollY}px`,
+        left: `${r.left + window.scrollX}px`,
+        width: `${r.width}px`,
+        height: `${r.height}px`,
+        display: "block"
+      };
+
+      Object.values(this.overlays).forEach(o => o && Object.assign(o.style, style));
+
+      this.lastVisible = true;
+      this.rafId = requestAnimationFrame(this.update);
+    }
+
+    hideOverlays() {
+      Object.values(this.overlays).forEach(o => o && (o.style.display = "none"));
+      this.lastVisible = false;
+    }
+
+    destroy() {
+      this.panel?.removeEventListener("popupshown", this.onPopupShown);
+      this.panel?.removeEventListener("popuphidden", this.onPopupHidden);
+      this.stopTracking();
+      Object.values(this.overlays).forEach(o => o?.remove());
+      this.overlays = {};
+      Nebula.logger.log("🧹 [CtrlTabDualBackground] Destroyed.");
+    }
+  }
+
+  // Register Nebula Modules
+  Nebula.register(NebulaPolyfillModule);
+  Nebula.register(NebulaGradientSliderModule);
+  Nebula.register(NebulaTitlebarBackgroundModule);
+  Nebula.register(NebulaNavbarBackgroundModule);
+  Nebula.register(NebulaURLBarBackgroundModule);
+  Nebula.register(NebulaMediaCoverArtModule);
+  Nebula.register(NebulaMenuModule);
+  Nebula.register(NebulaCtrlTabDualBackgroundModule);
 
   // Start the core
   Nebula.init();
+
 })();
