@@ -40,7 +40,9 @@ jobs:
           git checkout -B auto-update-nebula
           git add mods/Nebula/Nebula.uc.js
           git commit -m "Update Nebula.uc.js from Zen-Nebula" || echo "No changes to commit"
-          git push origin auto-update-nebula --force
+          # ✅ push with PAT explicitly
+          git push https://x-access-token:${{ secrets.FORK_PAT }}@github.com/JustAdumbPrsn/store.git auto-update-nebula --force
+
 
       # Create the PR into sineorg/store
       - name: Create Pull Request
