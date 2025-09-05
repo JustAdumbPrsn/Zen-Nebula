@@ -13,31 +13,32 @@ jobs:
       - name: Checkout source repo
         uses: actions/checkout@v3
 
-      # Step 2: Configure Git user
+      # Step 2: Setup Git user
       - name: Setup Git
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
 
-      # Step 3: Clone the target repo (Sine store)
+      # Step 3: Clone target repo (Sine store)
       - name: Clone target repo
         run: |
           git clone https://github.com/sineorg/store.git store
           cd store
           git checkout main
 
-      # Step 4: Copy the updated script
+      # Step 4: Copy updated script
       - name: Copy updated Nebula.uc.js
         run: |
           cp $GITHUB_WORKSPACE/JS/Nebula.uc.js store/mods/Nebula/Nebula.uc.js
 
-      # Step 5: Commit and push changes
+      # Step 5: Commit and push changes to a new branch
       - name: Commit and push changes
         run: |
           cd store
+          git checkout -b update-nebula-js || git checkout update-nebula-js
           git add mods/Nebula/Nebula.uc.js
           git diff --cached --quiet || git commit -m "Update Nebula.uc.js"
-          git push origin main
+          git push https://x-access-token:${{ secrets.SINE_BOT_TOKEN }}@github.com/sineorg/store.git update-nebula-js --force
 
       # Step 6: Create Pull Request
       - name: Create Pull Request
