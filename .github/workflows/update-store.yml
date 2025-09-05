@@ -12,54 +12,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Zen-Nebula repo
+      - name: Checkout Zen-Nebula
         uses: actions/checkout@v4
-        with:
-          repository: JustAdumbPrsn/Zen-Nebula
-          ref: main
 
       - name: Set up Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Clone store fork
+      - name: Checkout fork
         run: |
           git clone https://x-access-token:${{ secrets.FORK_PAT }}@github.com/JustAdumbPrsn/store.git store
           cd store
           git remote add upstream https://github.com/sineorg/store.git
           git fetch upstream
           git checkout main
-          git merge upstream/main || true
+          git merge upstream/main --no-edit || true
+          git push origin main
 
       - name: Copy updated Nebula.uc.js
-        run: |
-          cp JS/Nebula.uc.js store/mods/Nebula/Nebula.uc.js
+        run: cp JS/Nebula.uc.js store/mods/Nebula/Nebula.uc.js
 
-      - name: Commit changes
+      - name: Commit & push changes
         run: |
           cd store
           git checkout -B auto-update-nebula
           git add mods/Nebula/Nebula.uc.js
-          git commit -m "Update Nebula.uc.js from Zen-Nebula" || echo "No changes to commit"
+          git commit -m "Update Nebula.uc.js from Zen-Nebula" || echo "No changes"
+          git push origin auto-update-nebula --force
 
-      - name: Push branch to fork
+      - name: Create Pull Request with GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.FORK_PAT }}
         run: |
-          cd store
-          git push https://x-access-token:${{ secrets.FORK_PAT }}@github.com/JustAdumbPrsn/store.git auto-update-nebula --force
-
-      - name: Fetch branch back for PR action
-        run: |
-          git remote add fork https://x-access-token:${{ secrets.FORK_PAT }}@github.com/JustAdumbPrsn/store.git
-          git fetch fork auto-update-nebula:auto-update-nebula
-
-      - name: Create Pull Request
-        uses: repo-sync/pull-request@v2
-        with:
-          source_branch: auto-update-nebula
-          destination_branch: main
-          destination_repository: sineorg/store
-          pr_title: "Update Nebula.uc.js"
-          pr_body: "Auto-update Nebula.uc.js from Zen-Nebula main branch."
-          github_token: ${{ secrets.FORK_PAT }}
-          pr_assignee: JustAdumbPrsn
+          gh pr create \
+            --repo sineorg/store \
+            --head JustAdumbPrsn:auto-update-nebula \
+            --base main \
+            --title "Automated update of Nebula.uc.js" \
+            --body "This PR was automatically created by GitHub Actions to sync Nebula.uc.js from Zen-Nebula."
