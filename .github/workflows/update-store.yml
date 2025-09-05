@@ -47,15 +47,15 @@ jobs:
         run: |
           cd store
           git push https://x-access-token:${{ secrets.FORK_PAT }}@github.com/JustAdumbPrsn/store.git auto-update-nebula --force
-
-      - name: Create cross-repo Pull Request
+          
+      - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
           source_branch: auto-update-nebula
           destination_branch: main
-          source_repo: JustAdumbPrsn/store
-          destination_repo: sineorg/store
-          github_token: ${{ secrets.FORK_PAT }}
+          destination_repository: sineorg/store
           pr_title: "Update Nebula.uc.js"
           pr_body: "Auto-update Nebula.uc.js from Zen-Nebula main branch."
+          github_token: ${{ secrets.FORK_PAT }}
           pr_assignee: JustAdumbPrsn
+
