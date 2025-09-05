@@ -1,0 +1,42 @@
+name: Auto PR to Sine Nebula
+
+on:
+  push:
+    paths:
+      - 'JS/Nebula.uc.js'
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v3
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: Clone target repo
+        run: |
+          git clone https://github.com/sineorg/store.git store
+          cd store
+          git checkout main
+
+      - name: Copy updated script
+        run: |
+          cp ../JS/Nebula.uc.js store/mods/Nebula/Nebula.uc.js
+
+      - name: Commit and push changes
+        run: |
+          cd store
+          git add mods/Nebula/Nebula.uc.js
+          git commit -m "Update Nebula.uc.js" || echo "No changes to commit"
+          git push origin main
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.SINE_BOT_TOKEN }}
+          commit-message: "Update Nebula.uc.js"
+          bran
