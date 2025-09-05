@@ -56,7 +56,7 @@ jobs:
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: JustAdumbPrsn:auto-update-nebula   # 👈 fully qualified
+          source_branch: auto-update-nebula
           destination_branch: main
           destination_repository: sineorg/store
           pr_title: "Update Nebula.uc.js"
