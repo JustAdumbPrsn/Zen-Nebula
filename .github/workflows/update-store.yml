@@ -31,6 +31,10 @@ jobs:
           git reset --hard upstream/main
           git push origin main --force
 
+      - name: Create update branch
+        run: |
+          cd store-fork
+          git checkout -B auto-update-nebula
 
       - name: Copy updated Nebula.uc.js from Zen-Nebula
         run: |
@@ -39,10 +43,12 @@ jobs:
       - name: Commit updated Nebula.uc.js
         run: |
           cd store-fork
-          git checkout -B auto-update-nebula
           git add mods/Nebula/Nebula.uc.js
           git commit -m "Update Nebula.uc.js from Zen-Nebula main branch" || echo "No changes"
           git push origin auto-update-nebula --force
+
+      - name: Setup GitHub CLI
+        uses: cli/cli-action@v2
 
       - name: Create Pull Request to sineorg/store
         env:
