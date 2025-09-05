@@ -2,7 +2,7 @@ name: 🔄 Merge Dev → Main after Store PR Merge
 
 on:
   schedule:
-    - cron: "*/15 * * * *"  # check every 15 minutes
+    - cron: "*/2 * * * *"  # check every 15 minutes
   workflow_dispatch:        # manual trigger
 
 jobs:
