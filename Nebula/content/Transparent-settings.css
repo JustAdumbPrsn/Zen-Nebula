@@ -23,9 +23,12 @@ groupbox:not(#sineInstallationGroup:popover-open) {
   border: none;
 }
 
-table, .action-box {
-  background-color: var(--nebula-color) !important;
-  border-radius: 13px;
+@-moz-document url-prefix("about:") {
+  table,
+  .action-box {
+    background-color: var(--nebula-color) !important;
+    border-radius: 13px !important;
+  }
 }
 
 @-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing) {
