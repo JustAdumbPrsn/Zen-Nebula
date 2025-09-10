@@ -11,7 +11,7 @@
   margin: 0 5px 5px 0;
   padding: 0px;
   border-radius: 12px;
-  background: light-dark(rgba(255, 255, 255, 0.32), rgba(0, 0, 0, 0.4)) !important;
+  background: var(--nebula-color) !important;
 }
 
 /* Vertical tabs on right side */
@@ -44,5 +44,5 @@
   margin: 0 !important;
   border: none !important;
   border-radius: 8px;
-  background: light-dark(rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.5)) !important;
+  background: var(--nebula-color-selected) !important;
 }

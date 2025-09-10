@@ -2,7 +2,7 @@
 // @name           nebula-core.uc.js
 // @description    Central engine for Nebula with all modules
 // @author         JustAdumbPrsn
-// @version        v3.2
+// @version        v3.3
 // @include        main
 // @grant          none
 // ==/UserScript==
@@ -245,7 +245,7 @@
     }
   }
 
- // ========== NebulaTitlebarBackgroundModule ==========
+  // ========== NebulaTitlebarBackgroundModule ==========
   class NebulaTitlebarBackgroundModule {
     constructor() {
       this.root = document.documentElement;
@@ -790,119 +790,190 @@
   // ========== NebulaMenuModule ==========
   class NebulaMenuModule {
     constructor() {
-      this.NS_ITEM = "nebula-menu-anim";
-      this.NS_SEPARATOR = "nebula-menu-separator-anim";
-      this.STAGGER = 35;
-      this.MAX_DELAY = 400;
+      this.root = document.documentElement;
+      this.STAGGER_DELAY = 15;
+      this.MAX_DELAY = 200;
+      this.MENU_ITEM_SELECTORS = [
+        'menuitem',
+        'menuseparator',
+        '.subviewbutton',
+        '.panel-menuitem',
+        '.panel-list-item',
+        '.PanelUI-subView .subviewbutton',
+        '.panel-subview-body > *',
+        '.panel-subview .subviewbutton',
+        'toolbarbutton[class*="subviewbutton"]',
+        '.cui-widget-panel .subviewbutton',
+        'vbox.panel-subview-body > *',
+        '.panel-subview-body > toolbarbutton',
+        '.panel-subview-body > .subviewbutton'
+      ];
 
-      this.MAIN_MENU_SELECTORS = ["#appMenu-popup", "#PanelUI-popup"];
-      this.observedMenus = new WeakMap();
+      this.observers = new Map();
 
-      this.onPopupShowing = this.onPopupShowing.bind(this);
-      this.onPopupHidden = this.onPopupHidden.bind(this);
+      // Bind methods
+      this.handlePopupShowing = this.handlePopupShowing.bind(this);
+      this.handlePopupHidden = this.handlePopupHidden.bind(this);
     }
 
     init() {
-      if (window.NebulaMenuModule?.destroy) {
-        try { window.NebulaMenuModule.destroy(); } catch {}
-      }
+      document.addEventListener('popupshowing', this.handlePopupShowing, true);
+      document.addEventListener('popuphidden', this.handlePopupHidden, true);
+      document.addEventListener('ViewShowing', this.handlePopupShowing, true);
+      document.addEventListener('ViewHiding', this.handlePopupHidden, true);
 
-      document.addEventListener("popupshowing", this.onPopupShowing, true);
-      document.addEventListener("popuphidden", this.onPopupHidden, true);
-
-      window.NebulaMenuModule = this;
-      Nebula.logger.log("✅ [MenuModule] Initialized.");
+      Nebula.logger.log("✅ [MenuModule] Animations initialized.");
     }
 
     getMenuItems(popup) {
-      if (!popup) {
-        Nebula.logger.warn("⚠️ [MenuModule] getMenuItems called with null popup.");
-        return [];
+      if (!popup) return [];
+      let items = [];
+      // Cache selector string
+      const selectorString = this._cachedSelectorString || (this._cachedSelectorString = this.MENU_ITEM_SELECTORS.join(','));
+
+      if (popup.localName === 'menupopup') {
+        items = Array.from(popup.children);
+      } else {
+        const subviewBody = popup.querySelector('.panel-subview-body');
+        items = Array.from((subviewBody || popup).querySelectorAll(selectorString));
       }
 
-      const name = popup.localName?.toLowerCase();
-      if (name === "menupopup") {
-        return Array.from(popup.children).filter(el => !el.hidden);
-      } else {
-        const MAIN_ITEM_SELECTORS = [".subviewbutton", ".panel-menuitem"];
-        return Array.from(popup.querySelectorAll(MAIN_ITEM_SELECTORS.join(",")))
-                    .filter(el => !el.hidden);
+      // Flatten children only if needed
+      const flattenedItems = [];
+      for (const item of items) {
+        if (item.matches && item.matches('.panel-subview-body, .panel-subview')) {
+          for (const child of item.children) {
+            if (this.MENU_ITEM_SELECTORS.some(selector => child.matches(selector))) {
+              flattenedItems.push(child);
+            }
+          }
+        } else {
+          flattenedItems.push(item);
+        }
       }
+
+      // Filter visible elements efficiently
+      return flattenedItems.filter(item => {
+        if (!item || item.nodeType !== 1) return false;
+        const rect = item.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0 && getComputedStyle(item).display !== 'none';
+      });
     }
 
     animateMenuItems(popup) {
-      const children = this.getMenuItems(popup);
-      children.forEach((el, index) => {
-        const name = el.localName?.toLowerCase();
-        const targetClass = (name === "menuseparator" || name === "separator")
-                            ? this.NS_SEPARATOR
-                            : this.NS_ITEM;
-
-        const delay = Math.min(index * this.STAGGER, this.MAX_DELAY);
-        if (el.style.animationDelay !== `${delay}ms`) el.style.animationDelay = `${delay}ms`;
-        if (!el.classList.contains(targetClass)) el.classList.add(targetClass);
+      if (!popup) return;
+      const items = this.getMenuItems(popup);
+      // Batch DOM updates for animation
+      window.requestAnimationFrame(() => {
+        items.forEach((item, index) => this.animateItem(item, index));
       });
     }
 
-    cleanupMenu(popup) {
-      if (!popup?.children) return;
+    animateItem(item, index) {
+      const shouldAnimate = getComputedStyle(this.root)
+        .getPropertyValue('--nebula-menu-animation')
+        .trim() === 'true';
 
-      Array.from(popup.children).forEach(el => {
-        el.classList.remove(this.NS_ITEM, this.NS_SEPARATOR);
-        el.style.animationDelay = "";
-        el.style.opacity = "";
-      });
+      item.classList.remove('nebula-menu-anim');
+      item.style.animationDelay = '';
 
-      if (this.observedMenus.has(popup)) {
-        this.observedMenus.get(popup).disconnect();
-        this.observedMenus.delete(popup);
-      }
+      if (!shouldAnimate) return;
+
+      const delay = Math.min(index * this.STAGGER_DELAY, this.MAX_DELAY);
+      item.style.animationDelay = `${delay}ms`;
+      item.classList.add('nebula-menu-anim');
     }
 
-    onPopupShowing(e) {
-      const popup = e.target;
-      if (!popup) {
-        Nebula.logger.warn("⚠️ [MenuModule] popupshowing event without target.");
-        return;
-      }
+    cleanupMenuItems(popup) {
+      if (!popup) return;
+      // Batch DOM updates for cleanup
+      window.requestAnimationFrame(() => {
+        popup.querySelectorAll('.nebula-menu-anim').forEach(item => {
+          item.classList.remove('nebula-menu-anim');
+          item.style.animationDelay = '';
+        });
+      });
+    }
 
-      const isMenu = popup.localName === "menupopup" ||
-                    this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
-      if (!isMenu) return;
+    isTargetMenu(popup) {
+      if (!popup || !popup.localName) return false;
+      const menuTypes = [
+        'menupopup',
+        '#appMenu-popup',
+        '#PanelUI-popup',
+        '.panel-popup',
+        '.panel-subview',
+        '#PanelUI-history',
+        '#PanelUI-bookmarks',
+        '#PanelUI-downloads'
+      ];
+      return menuTypes.some(selector =>
+        selector.startsWith('#') || selector.startsWith('.') ?
+          (popup.matches && popup.matches(selector)) :
+          popup.localName === selector
+      ) || popup.classList.contains('panel-subview') ||
+        popup.classList.contains('PanelUI-subView') ||
+        popup.querySelector('.panel-subview-body');
+    }
 
+    setupMutationObserver(popup) {
+      if (this.observers.has(popup)) return;
+
+      const observer = new MutationObserver(mutations => {
+        if (mutations.some(m => m.type === 'childList' && m.addedNodes.length > 0 ||
+                              m.type === 'attributes' && ['hidden', 'collapsed'].includes(m.attributeName))) {
+          setTimeout(() => this.animateMenuItems(popup), 5);
+        }
+      });
+
+      observer.observe(popup, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['hidden', 'collapsed', 'disabled']
+      });
+
+      this.observers.set(popup, observer);
+    }
+
+    handlePopupShowing(event) {
+      const popup = event.target;
+      if (!this.isTargetMenu(popup)) return;
       this.animateMenuItems(popup);
+      this.setupMutationObserver(popup);
+    }
 
-      if (!this.observedMenus.has(popup)) {
-        const observer = new MutationObserver(() => this.animateMenuItems(popup));
-        observer.observe(popup, { childList: true, subtree: true });
-        this.observedMenus.set(popup, observer);
+    handlePopupHidden(event) {
+      const popup = event.target;
+      if (!this.isTargetMenu(popup)) return;
+      this.cleanupMenuItems(popup);
+
+      if (this.observers.has(popup)) {
+        this.observers.get(popup).disconnect();
+        this.observers.delete(popup);
       }
     }
 
-    onPopupHidden(e) {
-      const popup = e.target;
-      if (!popup) {
-        Nebula.logger.warn("⚠️ [MenuModule] popuphidden event without target.");
-        return;
-      }
+    stop() {
+      document.removeEventListener('popupshowing', this.handlePopupShowing, true);
+      document.removeEventListener('popuphidden', this.handlePopupHidden, true);
+      document.removeEventListener('ViewShowing', this.handlePopupShowing, true);
+      document.removeEventListener('ViewHiding', this.handlePopupHidden, true);
 
-      const isMenu = popup.localName === "menupopup" ||
-                    this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
-      if (!isMenu) return;
+      this.observers.forEach(observer => observer.disconnect());
+      this.observers.clear();
 
-      this.cleanupMenu(popup);
+      document.querySelectorAll('.nebula-menu-anim').forEach(item => {
+        item.classList.remove('nebula-menu-anim');
+        item.style.animationDelay = '';
+      });
+
+      Nebula.logger.log("🛑 [MenuModule] Animations disabled.");
     }
 
     destroy() {
-      document.removeEventListener("popupshowing", this.onPopupShowing, true);
-      document.removeEventListener("popuphidden", this.onPopupHidden, true);
-
-      const popups = Array.from(document.querySelectorAll("menupopup"))
-                          .concat(Array.from(document.querySelectorAll(this.MAIN_MENU_SELECTORS.join(","))));
-      popups.forEach(popup => this.cleanupMenu(popup));
-
-      try { delete window.NebulaMenuModule; } catch { window.NebulaMenuModule = undefined; }
-      Nebula.logger.log("🧹 [MenuModule] Destroyed.");
+      this.stop();
+      Nebula.logger.log("🧹 [MenuModule] Module destroyed.");
     }
   }
 
@@ -1032,36 +1103,3 @@
   Nebula.init();
 
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -30,6 +30,7 @@ html[nebula-collapsed-toolbar] {
       content: '';
       position: absolute;
       pointer-events: none;
+      outline: 0px !important;
       z-index: -1;
       border-radius: 11px !important;
       background: transparent !important;
@@ -216,7 +217,7 @@ scrollbox {
         width: calc(100% - 28px) !important;
         margin: 14px !important;
         border-radius: 13px !important;
-        background: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)) !important;
+        background: var(--nebula-color-glass) !important;
         backdrop-filter: var(--nebula-glass) !important;
         overflow: hidden;
       }
@@ -251,7 +252,7 @@ html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed="true"]) {
 
 #PersonalToolbar toolbarbutton:hover {
   background-color: var(--nebula-color-hover) !important;
-  box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.55)) !important;
+  box-shadow: 0 0px 3px var(--nebula-color-shadow) !important;
   border-radius: 10px !important;
   transition: background-color 0.3s ease, box-shadow 0.2s ease-out !important;
 }
@@ -261,22 +262,6 @@ html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed="true"]) {
 .browserContainer {
   position: relative !important;
 }
-
-.nebula-findbar-background {
-  background: rgba(50, 50, 60, 0.6);
-  backdrop-filter: blur(8px);
-  border-radius: 8px;
-  opacity: 0;
-  transform: scale(0.96);
-  transition: all 0.2s ease;
-}
-
-.nebula-findbar-background.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-
 
 @keyframes findbar-show-animation {
   from {
@@ -300,11 +285,10 @@ findbar {
     align-items: center !important;
     gap: 6px !important;
     padding: 6px 10px !important;
-    background: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)) !important;
+    background: var(--nebula-color-glass) !important;
     backdrop-filter: var(--nebula-glass) !important;
     border-radius: 13px !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important;
-    will-change: transform, opacity;
+    box-shadow: 0 4px 14px var(--nebula-color-shadow) !important;
 }
 
 #zen-tabbox-wrapper::before {

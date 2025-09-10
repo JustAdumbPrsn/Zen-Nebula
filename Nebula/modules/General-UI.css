@@ -25,26 +25,9 @@ browser[transparent='true'] {
   --zen-main-browser-background: transparent !important;
 }
 
-#browser,
-#appcontent {
-  background: rgba(0,0,0, calc(var(--nebula-gradient-contrast, 0)));
-}
-
 /* Ensure blur rendering works (Linux) */
 browser {
-  will-change: transform !important;
-}
-
-#main-window {
-    will-change: transform !important;
-}
-
-/* Fix styling for Ctrl+P panel */
-.dialogBox,
-.printDialogBox {
-    background-color: rgba(0, 0, 0, 0.1) !important;
-    backdrop-filter: blur(15px) !important;
-    scale: 0.9;
+  will-change: transform;
 }
 
 /* ---------------------- TABS: NO SHADOW ---------------------- */
@@ -59,8 +42,9 @@ browser {
 /* ---------------------- NOGAPS MOD ---------------------- */
 
 @media (-moz-pref("nebula-nogaps-mod")) {
-  
+
   html[nebula-single-toolbar]:not(:has(tab-group[split-view-group] .tabbrowser-tab:is([selected="true"], [visuallyselected="true"]))) {
+
     #zen-appcontent-wrapper {
       position: relative;
     }
@@ -86,46 +70,11 @@ browser {
       box-shadow: none !important;
     }
   }
-}
 
-/* ------------------ NOGAPS COMPACT MOD ------------------ */
-
-@media (-moz-pref("nebula-nogaps-compact-mod")) {
-  html[nebula-compact-mode]:not([customizing]) {
-    /* scope everything to the wrapper */
-    #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), 
-                           :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
-                             
-      margin: 0 !important;
-
-      #zen-tabbox-wrapper {
-        margin: 0 !important;
-
-        .browserSidebarContainer,
-        browser {
-          margin: 0 !important;
-          border-radius: 0 !important;
-        }
-      }
-
-      /* single-toolbar case */
-      &[nebula-single-toolbar] {
-        position: relative;
-      }
-    }
-
-    /* navbar wrapper for single-toolbar */
-    &[nebula-single-toolbar] #zen-appcontent-navbar-wrapper {
-      position: absolute;
-      width: 100% !important;
-      height: 55px;
-      backdrop-filter: var(--nebula-glass);
-      background: var(--zen-main-browser-background) !important;
-      border-bottom: 0px solid light-dark(
-        rgba(0, 0, 0, 0.2),
-        rgba(255, 255, 255, 0.1)
-      );
-    }
+  html[nebula-single-toolbar][zen-right-side="true"]:not([nebula-compact-mode]):not(:has(tab-group[split-view-group] .tabbrowser-tab:is([selected="true"], [visuallyselected="true"]))) 
+    #zen-appcontent-navbar-wrapper {
+      opacity: 0 !important;       /* invisible but still occupies space */
+      pointer-events: none !important;
   }
 }
 
@@ -142,102 +91,58 @@ browser {
   font-size: 12.5px !important;
 
   border: 1px solid var(--nebula-color) !important;
-  background: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)) !important;
+  background: var(--nebula-color-glass) !important;
   backdrop-filter: blur(8px) saturate(140%) !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7) !important;
+  box-shadow: 0 4px 14px var(--nebula-color-shadow) !important;
 }
 
-/* ------------------- PANEL MENU ANIMATIONS ------------------- */
+/* ------------------- MENU ANIMATIONS ------------------- */
 
 @media not (-moz-pref("nebula-disable-menu-animations")) {
-
-  /* Hide menu items by default */
-  #appMenu-popup .subviewbutton,
-  #appMenu-popup .panel-menuitem,
-  #PanelUI-popup .subviewbutton,
-  #PanelUI-popup .panel-menuitem {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-
-  /* Animate menu items */
-  #appMenu-popup[panelopen] .subviewbutton,
-  #PanelUI-popup[panelopen] .subviewbutton,
-  #appMenu-popup[panelopen] .panel-menuitem,
-  #PanelUI-popup[panelopen] .panel-menuitem {
-    animation: menu-item-appear 0.15s both;
-    pointer-events: auto;
-  }
+:root { --nebula-menu-animation: true; }
 }
 
-/* ------------------- CONTEXT MENU ANIMATIONS ------------------- */
+/* Keyframes */
+@keyframes nebula-menu-item-enter {
+  0% { opacity: 0; transform: translateY(-6px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-@media not (-moz-pref("nebula-disable-menu-animations")) {
-
-  /* Hide menu items and separators by default */
-  menupopup > *:not(menuseparator):not(separator) {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-
-  menupopup > menuseparator,
-  menupopup > separator {
-    opacity: 0;
-    height: 0;
-    overflow: hidden; /* prevent flicker when animating height */
-  }
-
-  /* Animate menu items */
-  .nebula-menu-anim {
-    animation: menu-item-appear 150ms forwards;
-  }
-
-  /* Animate separators */
-  .nebula-menu-separator-anim {
-    animation: menu-separator-appear 150ms forwards;
-  }
-
-  /* Keyframes */
-  @keyframes menu-item-appear {
-    0%   { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  @keyframes menu-separator-appear {
-    0%   { opacity: 0; }
-    100% { opacity: 1; }
-  }
+/* Animation class */
+.nebula-menu-anim {
+  animation: nebula-menu-item-enter 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
+  backface-visibility: hidden;
 }
 
 /* ------------------ Ctrl Tab Styling ------------------- */
 
 #nebula-ctrltab-background-below {
   background-color: light-dark(rgba(200, 200, 200, 1), rgba(20, 20, 20, 1));
-  border-radius: 10px;
+  border-radius: var(--nebula-border-radius);
 }
 
 #nebula-ctrltab-background-above {
   backdrop-filter: var(--nebula-glass);
-  border-radius: 10px;
+  border-radius: var(--nebula-border-radius);
 }
 
 #ctrlTab-panel {
-  --panel-background: rgba(0,0,0,0.5) !important;
-  border-radius: 10px;
+  --panel-background: var(--nebula-color-glass) !important;
+  border-radius: var(--nebula-border-radius);
   scale: 0.7;
-  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 4px 20px var(--nebula-color-shadow) !important;
 }
 
 #ctrlTab-panel:has(.ctrlTab-preview:not([hidden="true"])) {
   scale: 0.7 !important;
-  border-radius: 10px;
+  border-radius: var(--nebula-border-radius);
 }
 
 /* Remove default focus/hover borders */
 .ctrlTab-preview-inner {
   margin: 0 !important;
   border: none !important;
-  border-radius: 13px !important;
+  border-radius: var(--nebula-border-radius) !important;
   transition: 
     transform 0.2s ease-out, /* smoother scale */
     background-color 0.2s ease-out, 
@@ -246,8 +151,8 @@ browser {
 
 /* Hover effect for previews */
 .ctrlTab-preview-inner:hover {
-  transform: scale(1.03); /* gentle scaling on hover */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* subtle glow */
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px var(--nebula-color-shadow);
 }
 
 /* Canvas inside each preview */
@@ -276,7 +181,7 @@ browser {
     rgba(255, 255, 255, 0.12), 
     rgba(255, 255, 255, 0.08)
   ) !important;
-  border-radius: 13px !important;
+  border-radius: var(--nebula-border-radius) !important;
   transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 6px 20px var(--nebula-color-shadow) !important;
 }

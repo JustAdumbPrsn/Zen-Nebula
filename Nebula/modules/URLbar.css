@@ -1,9 +1,8 @@
-/* ------------------ URLBAR Styling ------------------ */
+/* ------------------ JS Pseudo Background ------------------ */
 
-/* JS pseudo background */
 #Nebula-urlbar-background {
   position: absolute;
-  z-index: -100000;
+  z-index: -10;
   pointer-events: none;
   border-radius: 15px;
   opacity: 0;
@@ -15,73 +14,36 @@
   opacity: 1;
 }
 
-.urlbarView-url {
-  color: light-dark(rgba(90,90,90,1), rgba(145,145,145,1)) !important;
-}
-
-#urlbar-zoom-button {
-    border-radius: calc(var(--nebula-border-radius) - 5px) !important;
-    background-color: var(--nebula-color) !important;
-}
+/* ------------------ URLBar styling ------------------ */
 
 /* URL bar background - default state */
 #urlbar-background {
     background: var(--nebula-color) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0)) !important;
+    box-shadow: 0 0px 3px transparent !important;
     border-radius: var(--nebula-border-radius) !important;
     backdrop-filter: 0px;
-    transition: box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-/* Center text in URL bar */
-/*#urlbar .urlbar-input,
-.urlbar-input-container {
-    text-align: center !important;
-    position: relative;
-}*/
-
-html[zen-single-toolbar="true"] #urlbar:not([open]) {
-  height: 40px !important;
-}
-
-#identity-icon-box {
-  background: none !important;
-}
-
-/* Selected row highlight & favicon fix */
-.urlbarView-row[selected] {
-    background-color: rgba(100, 100, 100, 0.1) !important;
-}
-
-/* Remove background in all modes */
-.urlbarView-row-inner[selected] .urlbarView-favicon {
-    background: none !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  .urlbarView-favicon[src="chrome://global/skin/icons/search-glass.svg"] {
-    filter: invert(1);
-  }
-}
-
-/* Rounded corners */
-.urlbarView-row {
-    border-radius: 12px !important;
+#urlbar:hover:not([open]) #urlbar-background {
+    background-color: var(--nebula-color-hover) !important;
+    box-shadow: 0 0 3px var(--nebula-color-shadow) !important;
 }
 
 /* When URL bar is open - smooth visual effect */
 #urlbar[open] #urlbar-background {
     border-radius: 15px !important;
-    background: light-dark(rgba(255,255,255,0.8), rgba(0,0,0,0));
+    background: light-dark(rgba(255,255,255,0.85), rgba(0,0,0,0.4)) !important;
     outline: none !important;
+    scale: 1.01 !important;
 }
 
 #urlbar[open] {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px var(--nebula-color-shadow);
     border-radius: 15px !important;
     overflow: hidden !important;
     backdrop-filter: var(--nebula-glass) !important;
-    animation: fadeIn 0.25s cubic-bezier(0.12, 0, 0.39, 0) !important;
+    animation: fadeIn 0.2s ease-in !important;
 }
 
 /* Opacity for URL bar when opening */
@@ -94,14 +56,122 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
     }
 }
 
-/* Limit to 5 visible results, prevent "dancing" */
-#urlbar[open] #urlbar-results > :nth-child(n+6),
-#urlbar[open] #reader-mode-button {
-    display: none !important;
+/* ------------------ Results Rows Styling ------------------ */
+
+/* Highlight selected row */
+.urlbarView-row[selected] {
+  background-color: rgba(100, 100, 100, 0.1) !important;
 }
 
-/* ------------------ Base and Default (Style 1) ------------------ */
+/* Rounded corners for all rows */
+.urlbarView-row {
+  border-radius: 12px !important;
+}
 
+/* Remove favicon background when row is selected */
+.urlbarView-row-inner[selected] .urlbarView-favicon {
+  background: none !important;
+}
+
+/* Invert search icon for dark mode */
+@media (prefers-color-scheme: dark) {
+  .urlbarView-favicon[src="chrome://global/skin/icons/search-glass.svg"] {
+    filter: invert(1);
+  }
+}
+
+/* ------------------ Misc Styling ------------------ */
+
+.urlbarView-url {
+  color: light-dark(rgba(90, 90, 90, 1), rgba(145, 145, 145, 1)) !important;
+}
+
+#identity-icon-box {
+  background: none !important;
+}
+
+#urlbar-zoom-button {
+  border-radius: calc(var(--nebula-border-radius) - 5px) !important;
+  background-color: var(--nebula-color) !important;
+}
+
+/* Limit to 5 visible results & hide reader mode button */
+#urlbar[open] #urlbar-results > :nth-child(n+6),
+#urlbar[open] #reader-mode-button {
+  display: none !important;
+}
+
+/* Center text in URL bar */
+/*#urlbar .urlbar-input,
+.urlbar-input-container {
+    text-align: center !important;
+    position: relative;
+}*/
+
+/* ------------------ Links Animation ------------------ */
+
+@keyframes url-links-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  60% {
+    transform: scale(1.0);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+#urlbar-results .urlbarView-row {
+  opacity: 0;
+  animation: url-links-appear 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Staggered delay (50ms) for 5 results */
+#urlbar-results .urlbarView-row:nth-child(1) { animation-delay: 0s; }
+#urlbar-results .urlbarView-row:nth-child(2) { animation-delay: 0.05s; }
+#urlbar-results .urlbarView-row:nth-child(3) { animation-delay: 0.1s; }
+#urlbar-results .urlbarView-row:nth-child(4) { animation-delay: 0.15s; }
+#urlbar-results .urlbarView-row:nth-child(5) { animation-delay: 0.2s; }
+
+/* ------------------ Dynamic Background Height ------------------ */
+
+:root {
+  --nebula-url-rows: 0; /* Default dynamic variable */
+}
+
+/* Dynamic Row Counting (only when not animating background) */
+:root:not([animating-background="true"]) {
+  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(1)) { --nebula-url-rows: 1 !important; }
+  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(2)) { --nebula-url-rows: 2 !important; }
+  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(3)) { --nebula-url-rows: 3 !important; }
+  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(4)) { --nebula-url-rows: 4 !important; }
+  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(5)) { --nebula-url-rows: 5 !important; }
+}
+
+/* Open URL Bar State */
+#urlbar[open] .urlbarView {
+  min-height: 280px !important;
+  max-height: 73px !important;
+  transition: min-height 0.2s ease, max-height 0.2s ease !important;
+}
+
+/* URL Bar with Results (User Typing) */
+#zen-main-app-wrapper:has(#urlbar[open=""][focused=""][usertyping=""]) #urlbar .urlbarView {
+  --Auxiliar-Row-Height: calc(45px + 10px);
+  --min-height-view: calc(var(--Auxiliar-Row-Height) * var(--nebula-url-rows) + 8px);
+  min-height: var(--min-height-view) !important;
+  transition: min-height 0.5s ease !important;
+}
+
+/* ------------------ URLBar Website Animation ------------------ */
+
+/* Style 1 - Default */
 .browserStack {
     transition: all 0.3s cubic-bezier(0.175, 0.385, 0.12, 1) !important;
 }
@@ -112,8 +182,7 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
     opacity: 1 !important;
 }
 
-/* ------------------ Style 2 – Zoom out ------------------ */
-
+/* Style 2 – Zoom out */
 @media (-moz-pref("nebula-urlbar-animation", 2)) {
     .browserStack {
         transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
@@ -126,8 +195,7 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
     }
 }
 
-/* ------------------ Style 3 – Desaturate and Darken ------------------ */
-
+/* Style 3 – Desaturate and Darken */
 @media (-moz-pref("nebula-urlbar-animation", 3)) {
     .browserStack {
         transition: all 0.3s cubic-bezier(0.175, 0.385, 0.12, 1) !important;
@@ -141,8 +209,7 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
     }
 }
 
-/* ------------------ Style 0 – No Animation ------------------ */
-
+/* Style 0 – No Animation */
 @media (-moz-pref("nebula-urlbar-animation", 0)) {
     .browserStack {
         transition: none !important;
@@ -154,7 +221,7 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
     }
 }
 
-/* ------------------ urlbar open hover links gradient animation ------------------ */
+/* ------------------ Link Hovering Gradient ------------------ */
 
 #urlbar[open] #urlbar-results > * {
     position: relative;
@@ -235,125 +302,3 @@ html[zen-single-toolbar="true"] #urlbar:not([open]) {
         background-position: -300% 50%;
     }
 }
-
-/* ------------------ URLbar loading & hover animation ------------------ */
-#urlbar .urlbar-input-container {
-    border-radius: var(--nebula-border-radius) !important;
-    position: relative;
-}
-
-#urlbar .urlbar-input-container::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: linear-gradient(
-        45deg,
-        color-mix(in srgb, var(--zen-primary-color) 5%, black),
-        color-mix(in srgb, var(--zen-primary-color) 30%, black),
-        color-mix(in srgb, var(--zen-primary-color) 75%, black),
-        color-mix(in srgb, var(--zen-primary-color) 100%, black),
-        color-mix(in srgb, var(--zen-primary-color) 50%, black),
-        color-mix(in srgb, var(--zen-primary-color) 15%, black)
-    );
-    background-size: 300% 100%;
-    background-repeat: repeat-x;
-    animation: urlbar-gradient 8s linear infinite;
-    opacity: 0;
-    filter: blur(20px) brightness(1) contrast(120%);
-    transition: opacity 0.5s ease-in-out;
-}
-
-/* Show animation when a tab is loading or on hover */
-#main-window:has(.tabbrowser-tab[selected][busy]) .urlbar-input-container::before,
-#urlbar:not([open]):hover .urlbar-input-container::before {
-    opacity: 0.485;
-}
-
-/* Style 0 - No gradient */
-@media (-moz-pref("nebula-glow-gradient", 0)) {
-    #urlbar .urlbar-input-container::before {
-        display: none;
-    }
-}
-
-/* Style 2 - Monochrome gradient */
-@media (-moz-pref("nebula-glow-gradient", 2)) {
-    #urlbar .urlbar-input-container::before {
-        background: linear-gradient(
-            45deg,
-            light-dark(#dddddd, #ffffff),
-            light-dark(#eeeeee, #dddddd),
-            light-dark(#dddddd, #bbbbbb),
-            light-dark(#ffffff, #000000),
-            light-dark(#eeeeee, #dddddd),
-            light-dark(#dddddd, #ffffff)
-        );
-        background-size: 300% 100%;
-        background-repeat: repeat-x;
-        animation: urlbar-gradient 8s linear infinite;
-        filter: blur(20px) opacity(0.6);
-    }
-}
-
-/* Style 3 - RGB gradient */
-@media (-moz-pref("nebula-glow-gradient", 3)) {
-    #urlbar .urlbar-input-container::before {
-        background: linear-gradient(
-            45deg,
-            #ff8a00,
-            #e52e71,
-            #7f00ff,
-            #00c9ff,
-            #ff8a00
-        );
-        background-size: 300% 100%;
-        background-repeat: repeat-x;
-        animation: urlbar-gradient 8s linear infinite;
-        filter: blur(20px) opacity(0.6);
-    }
-}
-
-/* Keyframes for URL bar animation */
-@keyframes urlbar-gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    100% {
-        background-position: 300% 50%;
-    }
-}
-
-/* Links open animation */
-
-/* Keyframe for individual result (link) appear */
-@keyframes individual-result-appear {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  70% {
-    opacity: 1;
-  }
-  60% {
-    transform: scale(1.0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Apply animation to each link row */
-#urlbar-results .urlbarView-row {
-  animation: individual-result-appear 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  opacity: 0;
-}
-
-/* staggered delay for up to 5 results */
-#urlbar-results .urlbarView-row:nth-child(1) { animation-delay: 0s; }
-#urlbar-results .urlbarView-row:nth-child(2) { animation-delay: 0.05s; }
-#urlbar-results .urlbarView-row:nth-child(3) { animation-delay: 0.1s; }
-#urlbar-results .urlbarView-row:nth-child(4) { animation-delay: 0.15s; }
-#urlbar-results .urlbarView-row:nth-child(5) { animation-delay: 0.2s; }

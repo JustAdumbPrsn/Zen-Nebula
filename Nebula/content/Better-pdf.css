@@ -109,12 +109,10 @@ Edit the natsumi-config.css file instead.
 @keyframes pdfjs-appear {
   from {
     opacity: 0;
-    filter: blur(5px);
   }
 
   to {
     opacity: 1;
-    filter: blur(0);
   }
 }
 
@@ -122,13 +120,11 @@ Edit the natsumi-config.css file instead.
   0% {
     opacity: 0;
     margin-top: -10px;
-    filter: blur(5px);
   }
 
   100% {
     opacity: 1;
     margin-top: 0;
-    filter: blur(0);
   }
 }
 
@@ -144,331 +140,322 @@ Edit the natsumi-config.css file instead.
   }
 }
 
-@media not (-moz-bool-pref: "natsumi.pdfjs.disabled") {
-  html[mozdisallowselectionprint] {
-    &:has(head link:nth-of-type(1)[href^="resource://pdf.js"]) {
-      --natsumi-colors-border: color-mix(in srgb, var(--natsumi-colors-secondary) 80%, black 20%);
-      --toolbarbutton-active-background: rgba(255, 255, 255, 0.9);
-      --toolbarbutton-hover-background: color-mix(in srgb, #202020 10%, transparent);
+html[mozdisallowselectionprint] {
+  &:has(head link:nth-of-type(1)[href^="resource://pdf.js"]) {
+    --natsumi-colors-border: color-mix(in srgb, var(--natsumi-colors-secondary) 80%, black 20%);
+    --toolbarbutton-active-background: rgba(255, 255, 255, 0.9);
+    --toolbarbutton-hover-background: color-mix(in srgb, #202020 10%, transparent);
 
+    @media (prefers-color-scheme: dark) {
+      --toolbarbutton-active-background: color-mix(in srgb, var(--natsumi-primary-color) 50%, rgba(255, 255, 255, .1));
+      --toolbarbutton-hover-background: color-mix(in srgb, #ebebeb 10%, transparent);
+    }
+
+    body {
       @media (prefers-color-scheme: dark) {
-        --toolbarbutton-active-background: color-mix(in srgb, var(--natsumi-primary-color) 50%, rgba(255, 255, 255, .1));
-        --toolbarbutton-hover-background: color-mix(in srgb, #ebebeb 10%, transparent);
-      }
-
-      body {
-        @media (prefers-color-scheme: dark) {
-          background: transparent !important;
-          background-color: transparent !important;
-        }
-      }
-
-      #viewerContainer {
-        inset: 0 !important;
         background: transparent !important;
         background-color: transparent !important;
+      }
+    }
 
-        #viewer > .page:first-of-type,
-        #viewer .spread:first-of-type .page {
-          margin-top: 43px !important;
-          transition: margin-top 0.3s ease;
-        }
+    #viewerContainer {
+      inset: 0 !important;
+      background: transparent !important;
+      background-color: transparent !important;
+
+      #viewer > .page:first-of-type,
+      #viewer .spread:first-of-type .page {
+        margin-top: 43px !important;
+        transition: margin-top 0.3s ease;
+      }
+    }
+
+    .toolbar {
+      width: 100%;
+      height: 10px;
+
+      @media (-moz-bool-pref: "natsumi.theme.compact-marginless") {
+        height: 15px;
+      }
+    }
+
+    #toolbarContainer, #sidebarContainer {
+      background: var(--natsumi-glass-background) !important;
+      backdrop-filter: blur(5px);
+      border-radius: 10px;
+    }
+
+    #toolbarContainer {
+      position: absolute !important;
+      top: 5px !important;
+      left: 50% !important;
+      transform: translate(-50%, 0);
+      width: calc(100% - 10px) !important;
+      max-width: min(var(--natsumi-pdfjs-topbar-max-width), calc(100% - 10px)) !important;
+      border-radius: 10px;
+      padding-top: 5px !important;
+      padding-bottom: 5px !important;
+      height: calc(var(--toolbar-height) + 10px) !important;
+      border: 1px solid rgba(20, 20, 20, 0.2) !important;
+      box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+      animation: pdfjs-appear 0.3s ease;
+      overflow: hidden !important;
+
+      @media (prefers-color-scheme: dark) {
+        border-color: rgba(235, 235, 235, 0.3) !important;
       }
 
-      .toolbar {
-        width: 100%;
-        height: 10px;
-
-        @media (-moz-bool-pref: "natsumi.theme.compact-marginless") {
-          height: 15px;
-        }
+      &:has(#loadingBar.hidden) {
+        overflow: visible !important;
       }
 
-      #toolbarContainer, #sidebarContainer {
-        background: var(--natsumi-glass-background) !important;
-        backdrop-filter: blur(5px);
-        border-radius: 10px;
+      #toolbarViewer {
+        padding-left: 5px;
+        padding-right: 5px;
       }
 
-      #toolbarContainer {
-        position: absolute !important;
-        top: 5px !important;
-        left: 50% !important;
-        transform: translate(-50%, 0);
-        width: calc(100% - 10px) !important;
-        max-width: min(var(--natsumi-pdfjs-topbar-max-width), calc(100% - 10px)) !important;
-        border-radius: 10px;
-        padding-top: 5px !important;
-        padding-bottom: 5px !important;
-        height: calc(var(--toolbar-height) + 10px) !important;
-        border: 1px solid rgba(20, 20, 20, 0.2) !important;
-        box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
-        animation: pdfjs-appear 0.3s ease;
-        overflow: hidden !important;
-
-        @media (prefers-color-scheme: dark) {
-          border-color: rgba(235, 235, 235, 0.3) !important;
-        }
-
-        &:has(#loadingBar.hidden) {
-          overflow: visible !important;
-        }
-
-        #toolbarViewer {
-          padding-left: 5px;
-          padding-right: 5px;
-        }
-
-        .doorHangerRight {
-          padding: 5px !important;
-          top: 40px !important;
-          right: -7px !important;
-          background: var(--natsumi-glass-background) !important;
-          backdrop-filter: blur(5px);
-          border-radius: 10px !important;
-          border: 1px solid rgba(20, 20, 20, 0.2) !important;
-          box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
-          animation: secondary-appear 0.3s ease;
-
-          &.hidden {
-            animation: none !important;
-          }
-
-          @media (prefers-color-scheme: dark) {
-            border-color: rgba(235, 235, 235, 0.3) !important;
-          }
-
-          &::before, &::after {
-            display: none !important;
-          }
-        }
-
-        .thicknessPicker {
-          &::before, &::after {
-            @media (prefers-color-scheme: dark) {
-              background-color: white !important;
-            }
-          }
-        }
-
-        #loadingBar {
-          top: unset !important;
-          bottom: 0 !important;
-          border: none !important;
-
-          .progress {
-            background-color: var(--natsumi-primary-color) !important;
-          }
-        }
-      }
-
-      #sidebarContainer {
-        height: calc(100% - 62px) !important;
-        left: -5px !important;
-        top: auto !important;
-        bottom: 5px !important;
-        opacity: 0 !important;
-        transition: left 0.2s ease, opacity 0.2s ease, filter 0.2s ease !important;
-        border: 1px solid rgba(20, 20, 20, 0.2) !important;
-        box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
-        filter: blur(5px);
-
-        @media (prefers-color-scheme: dark) {
-          border-color: rgba(235, 235, 235, 0.3) !important;
-        }
-
-        #toolbarSidebar {
-          background: transparent !important;
-          box-shadow: none !important;
-          padding: 5px !important;
-          height: calc(var(--toolbar-height) + 10px) !important;
-        }
-
-        #sidebarContent {
-          margin-top: 10px !important;
-          box-shadow: none !important;
-        }
-
-        .treeItem {
-          a, .treeItems {
-            border-radius: 5px !important;
-            transition: background-color 0.2s ease;
-          }
-
-          .treeItemToggler {
-            &::before {
-              background-color: transparent !important;
-              mask-image: none !important;
-              background-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
-
-              @media (prefers-color-scheme: dark) {
-                filter: invert();
-              }
-            }
-
-            &.treeItemsHidden::before {
-              background-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
-            }
-          }
-        }
-
-        .thumbnail {
-          margin-bottom: 22px !important;
-          transition: border-color 0.2s ease;
-
-          &::after {
-            content: attr(data-page-number);
-            display: block;
-            color: black;
-            width: 100%;
-            margin-top: 8px;
-            text-align: center;
-
-            @media (prefers-color-scheme: dark) {
-              color: white;
-            }
-          }
-        }
-      }
-
-      #outerContainer.sidebarOpen #sidebarContainer {
-        left: 5px !important;
-        opacity: 1 !important;
-        filter: blur(0);
-      }
-
-      #scaleSelectContainer {
-        border-radius: 4px !important;
-        overflow: hidden !important;
-
-        select {
-          background-color: #f1f1f1 !important;
-
-          @media (prefers-color-scheme: dark) {
-            background-color: #363636 !important;
-          }
-        }
-      }
-
-      #pageNumber {
-        border-radius: 4px !important;
-        overflow: hidden !important;
-        background-color: #ffffff !important;
-        border-color: var(--natsumi-colors-border) !important;
-
-        @media (prefers-color-scheme: dark) {
-          background-color: #23222b !important;
-        }
-      }
-
-      .verticalToolbarSeparator, .splitToolbarButtonSeparator, .horizontalToolbarSeparator, .separator {
-        border-color: rgba(20, 20, 20, 0.2) !important;
-
-        @media (prefers-color-scheme: dark) {
-          border-color: rgba(235, 235, 235, 0.3) !important;
-        }
-      }
-
-      #editorHighlightVisibility .divider {
-        background-color: rgba(20, 20, 20, 0.2) !important;
-
-        @media (prefers-color-scheme: dark) {
-          background-color: rgba(235, 235, 235, 0.3) !important;
-        }
-      }
-
-      .toolbarButton {
-        border-radius: 6px !important;
-        transition: background-color 0.2s ease;
-
-        &:hover {
-          background-color: var(--toolbarbutton-hover-background) !important;
-        }
-
-        &.toggled {
-          background-color: var(--toolbarbutton-active-background) !important;
-        }
-
-        &::before {
-          mask-size: contain !important;
-          mask-repeat: no-repeat;
-          -moz-context-properties: fill;
-        }
-      }
-
-      /* Document properties */
-
-      #documentPropertiesDialog {
+      .doorHangerRight {
+        padding: 5px !important;
+        top: 40px !important;
+        right: -7px !important;
         background: var(--natsumi-glass-background) !important;
         backdrop-filter: blur(5px);
         border-radius: 10px !important;
         border: 1px solid rgba(20, 20, 20, 0.2) !important;
         box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+        animation: secondary-appear 0.3s ease;
+
+        &.hidden {
+          animation: none !important;
+        }
 
         @media (prefers-color-scheme: dark) {
           border-color: rgba(235, 235, 235, 0.3) !important;
         }
 
-        &:is([open]) {
-          animation: properties-appear 0.3s ease !important;
+        &::before, &::after {
+          display: none !important;
         }
+      }
 
-        #documentPropertiesClose {
-          border-radius: 5px !important;
-          background-color: #f1f1f1 !important;
-
+      .thicknessPicker {
+        &::before, &::after {
           @media (prefers-color-scheme: dark) {
-            background-color: #363636 !important;
+            background-color: white !important;
           }
         }
       }
 
-      /* Compact mode */
+      #loadingBar {
+        top: unset !important;
+        bottom: 0 !important;
+        border: none !important;
 
-      @media (-moz-bool-pref: "natsumi.pdfjs.compact") {
-        .toolbar {
+        .progress {
+          background-color: var(--natsumi-primary-color) !important;
+        }
+      }
+    }
+
+    #sidebarContainer {
+      height: calc(100% - 62px) !important;
+      left: -5px !important;
+      top: auto !important;
+      bottom: 5px !important;
+      opacity: 0 !important;
+      transition: left 0.2s ease, opacity 0.2s ease, filter 0.2s ease !important;
+      border: 1px solid rgba(20, 20, 20, 0.2) !important;
+      box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+      filter: blur(0px);
+
+      @media (prefers-color-scheme: dark) {
+        border-color: rgba(235, 235, 235, 0.3) !important;
+      }
+
+      #toolbarSidebar {
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 5px !important;
+        height: calc(var(--toolbar-height) + 10px) !important;
+      }
+
+      #sidebarContent {
+        margin-top: 10px !important;
+        box-shadow: none !important;
+      }
+
+      .treeItem {
+        a, .treeItems {
+          border-radius: 5px !important;
+          transition: background-color 0.2s ease;
+        }
+
+        .treeItemToggler {
+          &::before {
+            background-color: transparent !important;
+            mask-image: none !important;
+            background-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+
+            @media (prefers-color-scheme: dark) {
+              filter: invert();
+            }
+          }
+
+          &.treeItemsHidden::before {
+            background-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
+          }
+        }
+      }
+
+      .thumbnail {
+        margin-bottom: 22px !important;
+        transition: border-color 0.2s ease;
+
+        &::after {
+          content: attr(data-page-number);
+          display: block;
+          color: black;
+          width: 100%;
+          margin-top: 8px;
+          text-align: center;
+
+          @media (prefers-color-scheme: dark) {
+            color: white;
+          }
+        }
+      }
+    }
+
+    #outerContainer.sidebarOpen #sidebarContainer {
+      left: 5px !important;
+      opacity: 1 !important;
+      filter: blur(0);
+    }
+
+    #scaleSelectContainer {
+      border-radius: 4px !important;
+      overflow: hidden !important;
+
+      select {
+        background-color: #f1f1f1 !important;
+
+        @media (prefers-color-scheme: dark) {
+          background-color: #363636 !important;
+        }
+      }
+    }
+
+    #pageNumber {
+      border-radius: 4px !important;
+      overflow: hidden !important;
+      background-color: #ffffff !important;
+      border-color: var(--natsumi-colors-border) !important;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: #23222b !important;
+      }
+    }
+
+    .verticalToolbarSeparator, .splitToolbarButtonSeparator, .horizontalToolbarSeparator, .separator {
+      border-color: rgba(20, 20, 20, 0.2) !important;
+
+      @media (prefers-color-scheme: dark) {
+        border-color: rgba(235, 235, 235, 0.3) !important;
+      }
+    }
+
+    #editorHighlightVisibility .divider {
+      background-color: rgba(20, 20, 20, 0.2) !important;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: rgba(235, 235, 235, 0.3) !important;
+      }
+    }
+
+    .toolbarButton {
+      border-radius: 6px !important;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: var(--toolbarbutton-hover-background) !important;
+      }
+
+      &.toggled {
+        background-color: var(--toolbarbutton-active-background) !important;
+      }
+
+      &::before {
+        mask-size: contain !important;
+        mask-repeat: no-repeat;
+        -moz-context-properties: fill;
+      }
+    }
+
+    /* Document properties */
+
+    #documentPropertiesDialog {
+      background: var(--natsumi-glass-background) !important;
+      backdrop-filter: blur(5px);
+      border-radius: 10px !important;
+      border: 1px solid rgba(20, 20, 20, 0.2) !important;
+      box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+
+      @media (prefers-color-scheme: dark) {
+        border-color: rgba(235, 235, 235, 0.3) !important;
+      }
+
+      &:is([open]) {
+        animation: properties-appear 0.3s ease !important;
+      }
+
+      #documentPropertiesClose {
+        border-radius: 5px !important;
+        background-color: #f1f1f1 !important;
+
+        @media (prefers-color-scheme: dark) {
+          background-color: #363636 !important;
+        }
+      }
+    }
+
+    /* Compact mode */
+
+    @media (-moz-bool-pref: "natsumi.pdfjs.compact") {
+      .toolbar {
+        #toolbarContainer {
+          opacity: 0 !important;
+          pointer-events: none;
+          top: -5px !important;
+          transition: opacity 0.3s ease, top 0.3s ease, filter 0.3s ease;
+          filter: blur(5px);
+        }
+
+        &:hover, &:has(.toolbarButton:not(#sidebarToggleButton)[aria-expanded="true"]),
+        &:has(input:focus), &:has(select:focus) {
+          height: 52px;
+
           #toolbarContainer {
-            opacity: 0 !important;
-            pointer-events: none;
-            top: -5px !important;
-            transition: opacity 0.3s ease, top 0.3s ease, filter 0.3s ease;
-            filter: blur(5px);
+            top: 5px !important;
+            opacity: 1 !important;
+            pointer-events: auto;
+            filter: blur(0);
           }
+        }
+      }
 
-          &:hover, &:has(.toolbarButton:not(#sidebarToggleButton)[aria-expanded="true"]),
-          &:has(input:focus), &:has(select:focus) {
-            height: 52px;
+      @media (-moz-bool-pref: "natsumi.pdfjs.compact-dynamic") {
+        .toolbar:has(#sidebarToggleButton[aria-expanded="true"]) {
+          height: 52px;
 
-            #toolbarContainer {
-              top: 5px !important;
-              opacity: 1 !important;
-              pointer-events: auto;
-              filter: blur(0);
-            }
+          #toolbarContainer {
+            top: 5px !important;
+            opacity: 1 !important;
+            pointer-events: auto;
+            filter: blur(0);
           }
         }
 
-        @media (-moz-bool-pref: "natsumi.pdfjs.compact-dynamic") {
-          .toolbar:has(#sidebarToggleButton[aria-expanded="true"]) {
-            height: 52px;
-
-            #toolbarContainer {
-              top: 5px !important;
-              opacity: 1 !important;
-              pointer-events: auto;
-              filter: blur(0);
-            }
-          }
-
-          &:has(#sidebarToggleButton:not([aria-expanded="true"])) {
-            #viewer > .page:first-of-type,
-            #viewer .spread:first-of-type .page {
-              margin-top: 0 !important;
-            }
-          }
-        }
-
-        @media not (-moz-bool-pref: "natsumi.pdfjs.compact-dynamic") {
+        &:has(#sidebarToggleButton:not([aria-expanded="true"])) {
           #viewer > .page:first-of-type,
           #viewer .spread:first-of-type .page {
             margin-top: 0 !important;
@@ -476,155 +463,163 @@ Edit the natsumi-config.css file instead.
         }
       }
 
-      /* Topbar buttons */
-
-      #previous::before {
-        mask-image: url('chrome://browser/skin/zen-icons/arrow-up.svg') !important;
+      @media not (-moz-bool-pref: "natsumi.pdfjs.compact-dynamic") {
+        #viewer > .page:first-of-type,
+        #viewer .spread:first-of-type .page {
+          margin-top: 0 !important;
+        }
       }
+    }
 
-      #next::before {
-        mask-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
-      }
+    /* Topbar buttons */
 
-      #zoomOutButton::before {
-        mask-image: url('chrome://browser/skin/zen-icons/zoom-out.svg') !important;
-      }
+    #previous::before {
+      mask-image: url('chrome://browser/skin/zen-icons/arrow-up.svg') !important;
+    }
 
-      #zoomInButton::before {
-        mask-image: url('chrome://browser/skin/zen-icons/plus.svg') !important;
-      }
+    #next::before {
+      mask-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+    }
 
-      #sidebarToggleButton::before {
-        mask-image: url('chrome://browser/skin/zen-icons/sidebar.svg') !important;
-      }
+    #zoomOutButton::before {
+      mask-image: url('chrome://browser/skin/zen-icons/zoom-out.svg') !important;
+    }
 
-      #editorHighlightButton::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-editorHighlight.svg') !important;
-      }
+    #zoomInButton::before {
+      mask-image: url('chrome://browser/skin/zen-icons/plus.svg') !important;
+    }
 
-      #editorFreeTextButton::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-editorFreeText.svg') !important;
-      }
+    #sidebarToggleButton::before {
+      mask-image: url('chrome://browser/skin/zen-icons/sidebar.svg') !important;
+    }
 
-      #editorInkButton::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-editorInk.svg') !important;
-      }
+    #editorHighlightButton::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-editorHighlight.svg') !important;
+    }
 
-      #editorStampButton::before {
-        mask-image: url('chrome://browser/skin/zen-icons/canvas.svg') !important;
-      }
+    #editorFreeTextButton::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-editorFreeText.svg') !important;
+    }
 
-      #secondaryPrint::before, #printButton::before {
-        mask-image: url('chrome://browser/skin/zen-icons/print.svg') !important;
-      }
+    #editorInkButton::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-editorInk.svg') !important;
+    }
 
-      #secondaryDownload::before, #downloadButton::before {
-        mask-image: url('chrome://browser/skin/zen-icons/save.svg') !important;
-      }
+    #editorStampButton::before {
+      mask-image: url('chrome://browser/skin/zen-icons/canvas.svg') !important;
+    }
 
-      #presentationMode::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-presentationMode.svg') !important;
-      }
+    #secondaryPrint::before, #printButton::before {
+      mask-image: url('chrome://browser/skin/zen-icons/print.svg') !important;
+    }
 
-      #viewBookmark::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-bookmark.svg') !important;
-      }
+    #secondaryDownload::before, #downloadButton::before {
+      mask-image: url('chrome://browser/skin/zen-icons/save.svg') !important;
+    }
 
-      #firstPage::before {
-        mask-image: url('chrome://browser/skin/zen-icons/arrow-up.svg') !important;
-      }
+    #presentationMode::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-presentationMode.svg') !important;
+    }
 
-      #lastPage::before {
-        mask-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
-      }
+    #viewBookmark::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-bookmark.svg') !important;
+    }
 
-      #pageRotateCw::before {
-        mask-image: url('chrome://browser/skin/zen-icons/reload.svg') !important;
-      }
+    #firstPage::before {
+      mask-image: url('chrome://browser/skin/zen-icons/arrow-up.svg') !important;
+    }
 
-      #pageRotateCcw::before {
-        transform: scaleX(-1);
-        mask-image: url('chrome://browser/skin/zen-icons/reload.svg') !important;
-      }
+    #lastPage::before {
+      mask-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+    }
 
-      #cursorSelectTool::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-selectTool.svg') !important;
-      }
+    #pageRotateCw::before {
+      mask-image: url('chrome://browser/skin/zen-icons/reload.svg') !important;
+    }
 
-      #cursorHandTool::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-handTool.svg') !important;
-      }
+    #pageRotateCcw::before {
+      transform: scaleX(-1);
+      mask-image: url('chrome://browser/skin/zen-icons/reload.svg') !important;
+    }
 
-      #scrollPage::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollPage.svg') !important;
-      }
+    #cursorSelectTool::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-selectTool.svg') !important;
+    }
 
-      #scrollVertical::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollVertical.svg') !important;
-      }
+    #cursorHandTool::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-handTool.svg') !important;
+    }
 
-      #scrollHorizontal::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollHorizontal.svg') !important;
-      }
+    #scrollPage::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollPage.svg') !important;
+    }
 
-      #scrollWrapped::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollWrapped.svg') !important;
-      }
+    #scrollVertical::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollVertical.svg') !important;
+    }
 
-      #spreadNone::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadNone.svg') !important;
-      }
+    #scrollHorizontal::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollHorizontal.svg') !important;
+    }
 
-      #spreadOdd::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadOdd.svg') !important;
-      }
+    #scrollWrapped::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollWrapped.svg') !important;
+    }
 
-      #spreadEven::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadEven.svg') !important;
-      }
+    #spreadNone::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadNone.svg') !important;
+    }
 
-      #documentProperties::before {
-        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-documentProperties.svg') !important;
-      }
+    #spreadOdd::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadOdd.svg') !important;
+    }
 
-      #editorStampAddImage::before {
-        mask-image: url('chrome://browser/skin/zen-icons/plus.svg') !important;
-      }
+    #spreadEven::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadEven.svg') !important;
+    }
 
-      #secondaryToolbarToggleButton::before {
-        mask-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
-      }
+    #documentProperties::before {
+      mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-documentProperties.svg') !important;
+    }
 
-      /* Sidebar buttons */
+    #editorStampAddImage::before {
+      mask-image: url('chrome://browser/skin/zen-icons/plus.svg') !important;
+    }
 
-      #viewThumbnail::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-viewThumbnail.svg') !important;
-      }
+    #secondaryToolbarToggleButton::before {
+      mask-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
+    }
 
-      #viewOutline::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-viewOutline.svg') !important;
-      }
+    /* Sidebar buttons */
 
-      #viewAttachments::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-viewAttachments.svg') !important;
-      }
+    #viewThumbnail::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-viewThumbnail.svg') !important;
+    }
 
-      #viewLayers::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-viewLayers.svg') !important;
-      }
+    #viewOutline::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-viewOutline.svg') !important;
+    }
 
-      #currentOutlineItem::before {
-        mask-image: url('resource://pdf.js/web/images/toolbarButton-currentOutlineItem.svg') !important;
-      }
+    #viewAttachments::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-viewAttachments.svg') !important;
+    }
 
-      /* Checked buttons */
+    #viewLayers::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-viewLayers.svg') !important;
+    }
 
-      #secondaryToolbarButtonContainer .toolbarButton[aria-checked="true"]::before {
-        mask-image: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
-      }
+    #currentOutlineItem::before {
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-currentOutlineItem.svg') !important;
+    }
+
+    /* Checked buttons */
+
+    #secondaryToolbarButtonContainer .toolbarButton[aria-checked="true"]::before {
+      mask-image: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
     }
   }
 }
+
 
 /* global */
 /* ==== Global tweaks ==== */

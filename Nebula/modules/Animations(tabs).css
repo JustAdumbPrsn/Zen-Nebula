@@ -1,4 +1,5 @@
 /* ------------------------ Glance Animation ----------------------- */
+
 .browserSidebarContainer.zen-glance-background.deck-selected {
   filter: blur(5px) brightness(50%);
   transition: filter 0.1s ease-in-out;
@@ -7,17 +8,12 @@
 /* ---------------------- Tab Loading Animation ---------------------- */
 
 .browserSidebarContainer:not([zen-split="true"]) {
-  will-change: transform, filter;
   transform-origin: center;
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.3, 1.2) !important,
+  transition: transform 0.2s ease-out !important,
               filter 0.2s cubic-bezier(0.2, 0.7, 0.3, 1.2) !important;
-  transition-delay: 0s !important;
 }
 
 #main-window:has(.tabbrowser-tab[selected][busy]) .browserSidebarContainer:not([zen-split="true"]) {
-  filter: blur(8px) brightness(65%) !important;
   transform: scale(0.978) !important;
   transition-delay: 0.5s !important;
   border-radius: 8px !important;
@@ -71,6 +67,19 @@
     filter: saturate(0%) brightness(60%) blur(6px) !important;
     transform: scale(0.99) !important;
     transition-delay: 0.5s !important;
+  }
+}
+
+@media (-moz-pref("nebula-tab-loading-animation", 6)) {
+  .browserSidebarContainer:not([zen-split="true"]) {
+    transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.3, 1.2) !important,
+                filter 0.2s cubic-bezier(0.2, 0.7, 0.3, 1.2) !important;
+  }
+  #main-window:has(.tabbrowser-tab[selected][busy]) .browserSidebarContainer:not([zen-split="true"]) {
+    filter: blur(8px) brightness(65%) !important;
+    transform: scale(0.978) !important;
+    transition-delay: 0.5s !important;
+    border-radius: 8px !important;
   }
 }
 

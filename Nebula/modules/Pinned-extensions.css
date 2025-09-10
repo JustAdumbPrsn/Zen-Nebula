@@ -1,204 +1,189 @@
 /* ------------------------- PINNED EXTENSIONS ------------------------- */
 
 @media (-moz-pref("nebula-pinned-extensions-mod")) {
-/* Zen 1.12.6b Fix */
-:root[customizing] #TabsToolbar-customization-target {
-  visibility: visible !important;
-}
-
-.zen-workspace-pinned-tabs-section {
-  display: flex !important;
-  flex-direction: column;
-} 
-
-:root[zen-single-toolbar="true"] #nav-bar {
-  margin-bottom: 8px !important; /* Adjust gap between urlbar and extensions */
-}
   
-/* Apply only in Nebula single-toolbar */
-:root[nebula-single-toolbar] #tabbrowser-tabs {
-  min-width: 100% !important;
-  height: calc(100% - 27px) !important;
-  transform: translateY(-1px) !important;
-}
+  :root[customizing] #TabsToolbar-customization-target {
+    visibility: visible !important;
+  }
 
-/* Reset transform for multi + collapsed */
-:root[nebula-multi-toolbar] #tabbrowser-tabs,
-:root[nebula-collapsed-toolbar] #tabbrowser-tabs {
-  min-width: 100% !important;
-  height: calc(100% - 27px) !important;
-  transform: translateY(2.5px) !important;
-}
-  
-/* Pinned extensions */
-#TabsToolbar-customization-target {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  gap: calc(var(--zen-toolbox-padding) - 3px) !important;
- 
-  #Zen-tabs-wrapper {
+  .zen-workspace-pinned-tabs-section {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  :root[zen-single-toolbar="true"] #nav-bar {
+    margin-bottom: 8px !important;
+  }
+
+  :root[nebula-single-toolbar] #tabbrowser-tabs {
+    min-width: 100% !important;
+    height: calc(100% - 27px) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  :root[nebula-multi-toolbar] #tabbrowser-tabs,
+  :root[nebula-collapsed-toolbar] #tabbrowser-tabs {
+    min-width: 100% !important;
+    height: calc(100% - 27px) !important;
+    transform: translateY(2.5px) !important;
+  }
+
+  #TabsToolbar-customization-target {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: calc(var(--zen-toolbox-padding) - 3px) !important;
+  }
+
+  #TabsToolbar-customization-target #Zen-tabs-wrapper {
     max-height: 700px !important;
   }
-  
-  .unified-extensions-item-action-button {
-    padding: 0px !important;
+
+  #TabsToolbar-customization-target .unified-extensions-item-action-button {
+    padding: 0 !important;
   }
-  
-  /* Pinned Extensions */
-  .unified-extensions-item {
+
+  #TabsToolbar-customization-target .unified-extensions-item {
     margin-inline: 2px !important;
-    border-bottom: 0px !important;
-    padding: 0px !important;
+    padding: 0 !important;
     height: 32px !important;
     width: 32px !important;
     flex-grow: 1 !important;
     order: -1 !important;
     background-color: var(--nebula-color) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0),rgba(0, 0, 0, 0)) !important;
+    box-shadow: 0 0 3px transparent !important;
     border-radius: calc(var(--nebula-border-radius) - 0.5px) !important;
     transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
   }
 
-  .unified-extensions-item:hover {
+  #TabsToolbar-customization-target .unified-extensions-item:hover {
     background-color: var(--nebula-color-hover) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.5),rgba(0, 0, 0, 0.95)) !important;
+    box-shadow: 0 0 3px var(--nebula-color-shadow) !important;
   }
 
- > toolbarbutton:not([id="tabs-newtab-button"]):not(#sort-button):not(#clear-button),
-  > toolbaritem:not(#sort-button):not(#clear-button) {
+  #TabsToolbar-customization-target > toolbarbutton:not([id="tabs-newtab-button"]):not(#sort-button):not(#clear-button),
+  #TabsToolbar-customization-target > toolbaritem:not(#sort-button):not(#clear-button) {
     height: 32px !important;
     width: 32px !important;
     flex-grow: 1 !important;
-    padding: 0px !important;
-
-    toolbarbutton,
-    stack {
-      --toolbarbutton-active-background: transparent !important;
-      --toolbarbutton-hover-background: transparent !important;
-    }
-
-    .toolbarbutton-badge {
-      display: none !important;
-    }
-
-    .toolbarbutton-text {
-      display: none !important;
-    }
-    
+    padding: 0 !important;
   }
 
-  >toolbarbutton:not([id="tabs-newtab-button"]),
-  >toolbaritem {
+  #TabsToolbar-customization-target > toolbarbutton:not([id="tabs-newtab-button"]),
+  #TabsToolbar-customization-target > toolbaritem {
     background-color: var(--nebula-color) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.12),rgba(0, 0, 0, 0.12)) !important;
+    box-shadow: 0 0 3px light-dark(rgba(255,255,255,0.12), rgba(0,0,0,0.12)) !important;
     border-radius: calc(var(--nebula-border-radius) + 1px) !important;
-    margin: 0px !important;
+    margin: 0 !important;
     order: -1 !important;
     flex-grow: 1 !important;
     transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
   }
 
-  >toolbarbutton:not([id="tabs-newtab-button"]):hover,
-  >toolbaritem:hover {
+  #TabsToolbar-customization-target > toolbarbutton:not([id="tabs-newtab-button"]):hover,
+  #TabsToolbar-customization-target > toolbaritem:hover {
     background-color: var(--nebula-color-hover) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.95),rgba(0, 0, 0, 0.95)) !important; 
+    box-shadow: 0 0 3px light-dark(rgba(255,255,255,0.95), rgba(0,0,0,0.95)) !important;
   }
-}
 
-/* for collapsed toolbar */
-html:not([zen-sidebar-expanded="true"]):not([zen-single-toolbar="true"])
-#TabsToolbar-customization-target .unified-extensions-item {
-  width: 24px !important;
-  height: 32px !important;
-  margin-inline: 6px !important; /* fake side padding */
-  margin-block: 2px !important;  /* vertical spacing */
-}
-
-/* -------- Hover animation gradient (matching tab style) -------- */
-.unified-extensions-item {
-  position: relative !important;
-  border-radius: calc(var(--nebula-border-radius) + 1px) !important;
-}
-
-.unified-extensions-item::before {
-  content: "";
-  position: absolute;
-  inset: -0.1px; /* Shrinks the effect area like tab style */
-  background: linear-gradient(
-    45deg,
-    color-mix(in srgb, var(--zen-primary-color) 5%, black),
-    color-mix(in srgb, var(--zen-primary-color) 30%, black),
-    color-mix(in srgb, var(--zen-primary-color) 75%, black),
-    color-mix(in srgb, var(--zen-primary-color) 100%, black),
-    color-mix(in srgb, var(--zen-primary-color) 50%, black),
-    color-mix(in srgb, var(--zen-primary-color) 15%, black)
-  );
-  background-size: 200% 200%;
-  border-radius: calc(var(--nebula-border-radius) - 2px) !important;
-  clip-path: inset(0 round calc(var(--nebula-border-radius) - 2px));
-  animation: tab-hover-gradient 3.5s linear infinite;
-  animation-play-state: paused;
-  opacity: 0;
-  filter: blur(10px) brightness(0.6) contrast(120%);
-  transition: opacity 0.4s ease-in-out;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Glow on hover */
-.unified-extensions-item:hover::before {
-  animation-play-state: running;
-  opacity: 0.5;
-}
-
-/* Hide glow when hovering close/reset */
-.unified-extensions-item:has(.close-button:hover, .reset-button:hover)::before {
-  opacity: 0;
-}
-
-/* Style 0 - No gradient */
-@media (-moz-pref("nebula-glow-gradient", 0)) {
-  .unified-extensions-item::before {
-    display: none;
+  #TabsToolbar-customization-target toolbarbutton,
+  #TabsToolbar-customization-target stack {
+    --toolbarbutton-active-background: transparent !important;
+    --toolbarbutton-hover-background: transparent !important;
   }
-}
 
-/* Style 2 - Monochrome gradient (light-dark) */
-@media (-moz-pref("nebula-glow-gradient", 2)) {
-  .unified-extensions-item::before {
-    background: linear-gradient(
-      45deg,
-      light-dark(#dddddd, #ffffff),
-      light-dark(#eeeeee, #dddddd),
-      light-dark(#dddddd, #bbbbbb),
-      light-dark(#ffffff, #000000),
-      light-dark(#eeeeee, #dddddd),
-      light-dark(#dddddd, #ffffff)
-    );
-    background-size: 200% 200%;
-    animation: tab-hover-gradient 3.5s linear infinite;
-    animation-play-state: paused;
+  #TabsToolbar-customization-target .toolbarbutton-badge,
+  #TabsToolbar-customization-target .toolbarbutton-text {
+    display: none !important;
   }
-}
 
-/* Style 3 - RGB gradient */
-@media (-moz-pref("nebula-glow-gradient", 3)) {
-  .unified-extensions-item::before {
-    background: linear-gradient(
-      45deg,
-      #ff8a00, #e52e71, #7f00ff, #00c9ff, #ff8a00
-    );
-    background-size: 200% 200%;
-    animation: tab-hover-gradient 3.5s linear infinite;
-    animation-play-state: paused;
+  html:not([zen-sidebar-expanded="true"]):not([zen-single-toolbar="true"]) 
+  #TabsToolbar-customization-target .unified-extensions-item {
+    width: 24px !important;
+    height: 32px !important;
+    margin-inline: 6px !important;
+    margin-block: 2px !important;
   }
-}
 
-/* Gradient animation (same as tabs) */
-@keyframes tab-hover-gradient {
-  from { background-position: 0% 50%; }
-  to { background-position: 200% 50%; }
-}
+  /* -------- Hover Gradient -------- */
   
+  .unified-extensions-item {
+    position: relative !important;
+    border-radius: calc(var(--nebula-border-radius) + 1px) !important;
+  }
+
+  .unified-extensions-item::before {
+    content: "";
+    position: absolute;
+    inset: -0.1px;
+    background: linear-gradient(
+      45deg,
+      color-mix(in srgb, var(--zen-primary-color) 5%, black),
+      color-mix(in srgb, var(--zen-primary-color) 30%, black),
+      color-mix(in srgb, var(--zen-primary-color) 75%, black),
+      color-mix(in srgb, var(--zen-primary-color) 100%, black),
+      color-mix(in srgb, var(--zen-primary-color) 50%, black),
+      color-mix(in srgb, var(--zen-primary-color) 15%, black)
+    );
+    background-size: 200% 200%;
+    border-radius: calc(var(--nebula-border-radius) - 2px) !important;
+    clip-path: inset(0 round calc(var(--nebula-border-radius) - 2px));
+    animation: tab-hover-gradient 3.5s linear infinite;
+    animation-play-state: paused;
+    opacity: 0;
+    filter: blur(10px) brightness(0.6) contrast(120%);
+    transition: opacity 0.4s ease-in-out;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .unified-extensions-item:hover::before {
+    animation-play-state: running;
+    opacity: 0.5;
+  }
+
+  .unified-extensions-item:has(.close-button:hover, .reset-button:hover)::before {
+    opacity: 0;
+  }
+
+  @media (-moz-pref("nebula-glow-gradient", 0)) {
+    .unified-extensions-item::before {
+      display: none;
+    }
+  }
+
+  @media (-moz-pref("nebula-glow-gradient", 2)) {
+    .unified-extensions-item::before {
+      background: linear-gradient(
+        45deg,
+        light-dark(#dddddd, #ffffff),
+        light-dark(#eeeeee, #dddddd),
+        light-dark(#dddddd, #bbbbbb),
+        light-dark(#ffffff, #000000),
+        light-dark(#eeeeee, #dddddd),
+        light-dark(#dddddd, #ffffff)
+      );
+      background-size: 200% 200%;
+      animation: tab-hover-gradient 3.5s linear infinite;
+      animation-play-state: paused;
+    }
+  }
+
+  @media (-moz-pref("nebula-glow-gradient", 3)) {
+    .unified-extensions-item::before {
+      background: linear-gradient(
+        45deg,
+        #ff8a00, #e52e71, #7f00ff, #00c9ff, #ff8a00
+      );
+      background-size: 200% 200%;
+      animation: tab-hover-gradient 3.5s linear infinite;
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes tab-hover-gradient {
+    from { background-position: 0% 50%; }
+    to { background-position: 200% 50%; }
+  }
+
 }
