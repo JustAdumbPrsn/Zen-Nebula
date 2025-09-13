@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           nebula-core.uc.js
-// @description    Central engine for Nebula with all modules
+// @description    Central engine for Nebula with all modules (8)
 // @author         JustAdumbPrsn
 // @version        v3.3
 // @include        main
@@ -1265,5 +1265,6 @@
 
   // Start the core
   Nebula.init();
+
 
 })();
