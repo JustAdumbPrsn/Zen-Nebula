@@ -3,13 +3,13 @@
 .zen-essentials-container .tabbrowser-tab {
   .tab-background {
     background-color: var(--nebula-color) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0)) !important;
+    box-shadow: 0 0px 3px transparent !important;
     border-radius: calc(var(--nebula-border-radius) + 1px) !important;
   }
 
   &:hover .tab-background {
     background-color: var(--nebula-color-hover) !important;
-    box-shadow: 0 0px 3px light-dark(rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.95)) !important;
+    box-shadow: 0 0px 3px var(--nebula-color-shadow) !important;
   }
 
   @media (-moz-pref("zen.theme.essentials-favicon-bg")) {
@@ -35,7 +35,7 @@
     &[selected],
     &[visuallyselected] {
       .tab-icon-image {
-        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(0px 0px 4px var(--nebula-color-shadow));
       }
 
       > .tab-stack > .tab-background {
@@ -46,7 +46,7 @@
         }
 
         &::after {
-          filter: saturate(200%) blur(13.5px) !important;
+          filter: saturate(200%) blur(13.5px) contrast(110%) !important;
         }
       }
     }
@@ -93,6 +93,7 @@
 }
 
 /* -------------------------- ANIMATIONS FOR ESSENTIALS -------------------------- */
+
 #zen-main-app-wrapper {
   .tabbrowser-tab {
     scale: unset !important;

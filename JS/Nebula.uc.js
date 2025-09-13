@@ -2,7 +2,7 @@
 // @name           nebula-core.uc.js
 // @description    Central engine for Nebula with all modules
 // @author         JustAdumbPrsn
-// @version        v3.2
+// @version        v3.3
 // @include        main
 // @grant          none
 // ==/UserScript==
@@ -128,19 +128,40 @@
       this.root = document.documentElement;
       this.compactObserver = null;
       this.modeObserver = null;
+
+      this.updateFaviconColor = this.updateFaviconColor.bind(this);
     }
 
-    init() {
+    async init() {
+      // Wait until gBrowser is available
+      if (!window.gBrowser) {
+        await new Promise(resolve => {
+          const check = setInterval(() => {
+            if (window.gBrowser?.tabContainer) {
+              clearInterval(check);
+              resolve();
+            }
+          }, 50);
+        });
+      }
+
       // Compact mode detection
       this.compactObserver = Nebula.observePresence(
         '[zen-compact-mode="true"]',
-        'nebula-compact-mode'
+        "nebula-compact-mode"
       );
 
       // Toolbar mode detection
       this.modeObserver = new MutationObserver(() => this.updateToolbarModes());
       this.modeObserver.observe(this.root, { attributes: true });
       this.updateToolbarModes();
+
+      // Favicon color detection
+      gBrowser.tabContainer.addEventListener("TabSelect", this.updateFaviconColor);
+      gBrowser.tabContainer.addEventListener("TabAttrModified", this.updateFaviconColor);
+
+      // Initial run
+      this.updateFaviconColor();
 
       Nebula.logger.log("✅ [Polyfill] Detection active.");
     }
@@ -154,12 +175,140 @@
       this.root.toggleAttribute("nebula-collapsed-toolbar", !hasSidebar && !isSingle);
     }
 
+    async updateFaviconColor(e) {
+      if (e?.type === "TabAttrModified" && !e.detail.changed.includes("image")) return;
+
+      const tab = gBrowser.selectedTab;
+      const iconUrl = tab?.getAttribute("image");
+      if (!iconUrl) return;
+
+      // Debounce: delay update by 10ms
+      if (this._faviconTimeout) clearTimeout(this._faviconTimeout);
+      this._faviconTimeout = setTimeout(async () => {
+        try {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.src = iconUrl;
+          await new Promise(resolve => { img.onload = resolve; img.onerror = resolve; });
+
+          const size = 16; // smaller canvas
+          if (!this._faviconCanvas) {
+            this._faviconCanvas = document.createElement("canvas");
+            this._faviconCanvas.width = size;
+            this._faviconCanvas.height = size;
+            this._faviconCtx = this._faviconCanvas.getContext("2d");
+          }
+
+          const ctx = this._faviconCtx;
+          ctx.clearRect(0, 0, size, size);
+          ctx.drawImage(img, 0, 0, size, size);
+
+          const data = ctx.getImageData(0, 0, size, size).data;
+          const counts = [];
+
+          for (let i = 0; i < data.length; i += 4) {
+            const [r, g, b, a] = [data[i], data[i+1], data[i+2], data[i+3]];
+            if (a < 128) continue;
+            const key = `${r & 0xFC},${g & 0xFC},${b & 0xFC}`; // round to multiple of 4
+            const index = counts.findIndex(c => c.key === key);
+            if (index >= 0) counts[index].freq++;
+            else counts.push({ key, r, g, b, freq: 1 });
+          }
+
+          let best = null;
+          let brightCandidate = null;
+
+          for (let c of counts) {
+            const hsl = this.rgbToHsl(c.r, c.g, c.b);
+            const vibrancy = hsl.s * (1 - Math.abs(0.5 - hsl.l) * 2);
+            const brightness = (0.299*c.r + 0.587*c.g + 0.114*c.b) / 255;
+            const score = c.freq * vibrancy * brightness;
+
+            if (!best || score > best.score) best = { ...c, score, brightness, hsl };
+            if (brightness > 0.5) {
+              if (!brightCandidate || score > brightCandidate.score) brightCandidate = { ...c, score, brightness, hsl };
+            }
+          }
+
+          if (best && (best.r + best.g + best.b) < 300 && brightCandidate) best = brightCandidate;
+
+          if (best) {
+            let { r, g, b, hsl } = best;
+            const sum = r + g + b;
+            if (sum < 180) { // very dark
+              let newL = Math.max(hsl.l, 0.4);
+              newL = Math.min(newL * 1.6, 0.8);
+              let newS = Math.min(hsl.s * 1.2, 1);
+              ({ r, g, b } = this.hslToRgb(hsl.h, newS, newL));
+            }
+
+            const finalColor = `rgb(${r | 0}, ${g | 0}, ${b | 0})`;
+            this.root.style.setProperty("--nebula-selected-favicon-color", finalColor);
+          }
+
+        } catch(err) {
+          console.error("[NebulaPolyfill] Favicon color error:", err);
+        }
+      }, 100); // 10ms delay
+    }
+
+    // helper: convert HSL to RGB
+    hslToRgb(h, s, l) {
+      let r, g, b;
+      if (s === 0) {
+        r = g = b = l; // achromatic
+      } else {
+        const hue2rgb = (p, q, t) => {
+          if (t < 0) t += 1;
+          if (t > 1) t -= 1;
+          if (t < 1/6) return p + (q - p) * 6 * t;
+          if (t < 1/2) return q;
+          if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+          return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+      }
+      return { r: r*255, g: g*255, b: b*255 };
+    }
+
+    // helper: convert RGB to HSL
+    rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      return { h, s, l };
+    }
+
     destroy() {
       this.compactObserver?.disconnect();
       this.modeObserver?.disconnect();
+
+      if (window.gBrowser) {
+        gBrowser.tabContainer.removeEventListener("TabSelect", this.updateFaviconColor);
+        gBrowser.tabContainer.removeEventListener("TabAttrModified", this.updateFaviconColor);
+      }
+
       this.root.removeAttribute("nebula-single-toolbar");
       this.root.removeAttribute("nebula-multi-toolbar");
       this.root.removeAttribute("nebula-collapsed-toolbar");
+
       Nebula.logger.log("🧹 [Polyfill] Destroyed.");
     }
   }
@@ -169,83 +318,98 @@
     constructor() {
       this.root = document.documentElement;
       this.gradientSlider = null;
-      this.observer = null;
-      this._workspacePatched = false;
+      this._patched = false;
+      this._sliderHandler = this.sync.bind(this);
+
+      // Store original methods without polluting prototype
+      this._origMethods = new WeakMap();
     }
 
     init() {
-      this.waitForSlider(slider => {
-        this.setupGradientSlider(slider);
+      this._waitFor(() => document.querySelector("#PanelUI-zen-gradient-generator-opacity"), (slider) => {
+        this.gradientSlider = slider;
+        slider.min = 0.0; // force min opacity
+        slider.addEventListener("input", this._sliderHandler);
 
-        // Extra sync a bit later to catch Zen’s startup overwrite
-        setTimeout(() => this.sync(), 300);
-        requestIdleCallback(() => this.sync());
+        this.sync();
+        this._patchThemePicker();
       });
-
-      this.patchWorkspaceChanges();
-      Nebula.logger.log("✅ [GradientSlider] Initialized.");
     }
 
-    waitForSlider(callback, retries = 20) {
+    _waitFor(fn, callback, maxRetries = 40) {
+      let retries = maxRetries;
       const tryFind = () => {
-        const slider = document.querySelector("#PanelUI-zen-gradient-generator-opacity");
-        if (slider) {
-          callback(slider);
-        } else if (retries > 0) {
-          requestIdleCallback(() => tryFind(), { timeout: 200 });
+        const el = fn();
+        if (el) return callback(el);
+        if (retries-- > 0) {
+          Nebula.logger.debug?.(`[GradientSlider] Waiting… retries left: ${retries}`);
+          requestAnimationFrame(tryFind);
         } else {
-          Nebula.logger.warn("❌ [GradientSlider] Not found after retries.");
+          Nebula.logger.error("❌ [GradientSlider] Target not found.");
         }
       };
-      requestIdleCallback(tryFind);
-    }
-
-    setupGradientSlider(slider) {
-      if (this.gradientSlider === slider) return;
-
-      this.gradientSlider = slider;
-
-      // Clean up any old observer
-      this.observer?.disconnect();
-
-      // Watch for DOM value changes (user dragging)
-      this.observer = new MutationObserver(() => this.sync());
-      this.observer.observe(slider, { attributes: true, attributeFilter: ["value"] });
-
-      // Also catch real-time user input
-      slider.addEventListener("input", () => this.sync());
-
-      this.sync(); // initial sync
-    }
-
-    patchWorkspaceChanges() {
-      if (this._workspacePatched || !window.ZenWorkspacesStorage) return;
-
-      const original = ZenWorkspacesStorage._notifyWorkspacesChanged;
-      ZenWorkspacesStorage._notifyWorkspacesChanged = (...args) => {
-        // Let Zen apply its workspace settings first
-        requestIdleCallback(() => this.sync());
-        return original.apply(ZenWorkspacesStorage, args);
-      };
-
-      this._workspacePatched = true;
+      tryFind();
     }
 
     sync() {
       if (!this.gradientSlider) return;
-      const isMin = Number(this.gradientSlider.value) === Number(this.gradientSlider.min);
-      this.root.toggleAttribute("nebula-zen-gradient-contrast-zero", isMin);
+      const val = +this.gradientSlider.value;
+      this.root.style.setProperty("--nebula-gradient-opacity", val === 0 ? "0" : null);
+      Nebula.logger.debug?.(`[GradientSlider] Sync → ${val}`);
+    }
+
+    _patchThemePicker() {
+      if (this._patched) return;
+
+      this._waitFor(
+        () => window.nsZenThemePicker?.prototype || window.browser?.gZenThemePicker?.constructor?.prototype,
+        (proto) => {
+          if (!proto?.blendWithWhiteOverlay) return;
+
+          // Save original
+          this._origMethods.set(proto, proto.blendWithWhiteOverlay);
+
+          proto.blendWithWhiteOverlay = (baseColor, opacity) => {
+            const val = +this.gradientSlider?.value ?? opacity;
+            if (val === 0) {
+              if (Array.isArray(baseColor)) {
+                return `rgba(${baseColor.join(",")},0)`;
+              }
+              if (typeof baseColor === "string" && baseColor.startsWith("rgb")) {
+                return baseColor.replace(/rgb(a)?\(([^)]+)\)/, "rgba($2, 0)");
+              }
+              return "rgba(0,0,0,0)";
+            }
+            return this._origMethods.get(proto).call(this, baseColor, opacity);
+          };
+
+          this._patched = true;
+          Nebula.logger.log("✅ [GradientSlider] Patched blendWithWhiteOverlay");
+        }
+      );
     }
 
     destroy() {
-      this.observer?.disconnect();
-      this.gradientSlider?.removeEventListener("input", () => this.sync());
-      this.root.removeAttribute("nebula-zen-gradient-contrast-zero");
-      Nebula.logger.log("🧹 [GradientSlider] Destroyed.");
+      if (this.gradientSlider) {
+        this.gradientSlider.removeEventListener("input", this._sliderHandler);
+        this.gradientSlider = null;
+      }
+
+      if (this._patched) {
+        const proto = window.nsZenThemePicker?.prototype || window.browser?.gZenThemePicker?.constructor?.prototype;
+        if (proto && this._origMethods.has(proto)) {
+          proto.blendWithWhiteOverlay = this._origMethods.get(proto);
+          this._origMethods.delete(proto);
+        }
+        this._patched = false;
+      }
+
+      this.root.style.removeProperty("--nebula-gradient-opacity");
+      Nebula.logger.log("🧹 [GradientSlider] Destroyed");
     }
   }
-
- // ========== NebulaTitlebarBackgroundModule ==========
+  
+  // ========== NebulaTitlebarBackgroundModule ==========
   class NebulaTitlebarBackgroundModule {
     constructor() {
       this.root = document.documentElement;
@@ -790,119 +954,190 @@
   // ========== NebulaMenuModule ==========
   class NebulaMenuModule {
     constructor() {
-      this.NS_ITEM = "nebula-menu-anim";
-      this.NS_SEPARATOR = "nebula-menu-separator-anim";
-      this.STAGGER = 35;
-      this.MAX_DELAY = 400;
+      this.root = document.documentElement;
+      this.STAGGER_DELAY = 15;
+      this.MAX_DELAY = 200;
+      this.MENU_ITEM_SELECTORS = [
+        'menuitem',
+        'menuseparator',
+        '.subviewbutton',
+        '.panel-menuitem',
+        '.panel-list-item',
+        '.PanelUI-subView .subviewbutton',
+        '.panel-subview-body > *',
+        '.panel-subview .subviewbutton',
+        'toolbarbutton[class*="subviewbutton"]',
+        '.cui-widget-panel .subviewbutton',
+        'vbox.panel-subview-body > *',
+        '.panel-subview-body > toolbarbutton',
+        '.panel-subview-body > .subviewbutton'
+      ];
 
-      this.MAIN_MENU_SELECTORS = ["#appMenu-popup", "#PanelUI-popup"];
-      this.observedMenus = new WeakMap();
+      this.observers = new Map();
 
-      this.onPopupShowing = this.onPopupShowing.bind(this);
-      this.onPopupHidden = this.onPopupHidden.bind(this);
+      // Bind methods
+      this.handlePopupShowing = this.handlePopupShowing.bind(this);
+      this.handlePopupHidden = this.handlePopupHidden.bind(this);
     }
 
     init() {
-      if (window.NebulaMenuModule?.destroy) {
-        try { window.NebulaMenuModule.destroy(); } catch {}
-      }
+      document.addEventListener('popupshowing', this.handlePopupShowing, true);
+      document.addEventListener('popuphidden', this.handlePopupHidden, true);
+      document.addEventListener('ViewShowing', this.handlePopupShowing, true);
+      document.addEventListener('ViewHiding', this.handlePopupHidden, true);
 
-      document.addEventListener("popupshowing", this.onPopupShowing, true);
-      document.addEventListener("popuphidden", this.onPopupHidden, true);
-
-      window.NebulaMenuModule = this;
-      Nebula.logger.log("✅ [MenuModule] Initialized.");
+      Nebula.logger.log("✅ [MenuModule] Animations initialized.");
     }
 
     getMenuItems(popup) {
-      if (!popup) {
-        Nebula.logger.warn("⚠️ [MenuModule] getMenuItems called with null popup.");
-        return [];
+      if (!popup) return [];
+      let items = [];
+      // Cache selector string
+      const selectorString = this._cachedSelectorString || (this._cachedSelectorString = this.MENU_ITEM_SELECTORS.join(','));
+
+      if (popup.localName === 'menupopup') {
+        items = Array.from(popup.children);
+      } else {
+        const subviewBody = popup.querySelector('.panel-subview-body');
+        items = Array.from((subviewBody || popup).querySelectorAll(selectorString));
       }
 
-      const name = popup.localName?.toLowerCase();
-      if (name === "menupopup") {
-        return Array.from(popup.children).filter(el => !el.hidden);
-      } else {
-        const MAIN_ITEM_SELECTORS = [".subviewbutton", ".panel-menuitem"];
-        return Array.from(popup.querySelectorAll(MAIN_ITEM_SELECTORS.join(",")))
-                    .filter(el => !el.hidden);
+      // Flatten children only if needed
+      const flattenedItems = [];
+      for (const item of items) {
+        if (item.matches && item.matches('.panel-subview-body, .panel-subview')) {
+          for (const child of item.children) {
+            if (this.MENU_ITEM_SELECTORS.some(selector => child.matches(selector))) {
+              flattenedItems.push(child);
+            }
+          }
+        } else {
+          flattenedItems.push(item);
+        }
       }
+
+      // Filter visible elements efficiently
+      return flattenedItems.filter(item => {
+        if (!item || item.nodeType !== 1) return false;
+        const rect = item.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0 && getComputedStyle(item).display !== 'none';
+      });
     }
 
     animateMenuItems(popup) {
-      const children = this.getMenuItems(popup);
-      children.forEach((el, index) => {
-        const name = el.localName?.toLowerCase();
-        const targetClass = (name === "menuseparator" || name === "separator")
-                            ? this.NS_SEPARATOR
-                            : this.NS_ITEM;
-
-        const delay = Math.min(index * this.STAGGER, this.MAX_DELAY);
-        if (el.style.animationDelay !== `${delay}ms`) el.style.animationDelay = `${delay}ms`;
-        if (!el.classList.contains(targetClass)) el.classList.add(targetClass);
+      if (!popup) return;
+      const items = this.getMenuItems(popup);
+      // Batch DOM updates for animation
+      window.requestAnimationFrame(() => {
+        items.forEach((item, index) => this.animateItem(item, index));
       });
     }
 
-    cleanupMenu(popup) {
-      if (!popup?.children) return;
+    animateItem(item, index) {
+      const shouldAnimate = getComputedStyle(this.root)
+        .getPropertyValue('--nebula-menu-animation')
+        .trim() === 'true';
 
-      Array.from(popup.children).forEach(el => {
-        el.classList.remove(this.NS_ITEM, this.NS_SEPARATOR);
-        el.style.animationDelay = "";
-        el.style.opacity = "";
-      });
+      item.classList.remove('nebula-menu-anim');
+      item.style.animationDelay = '';
 
-      if (this.observedMenus.has(popup)) {
-        this.observedMenus.get(popup).disconnect();
-        this.observedMenus.delete(popup);
-      }
+      if (!shouldAnimate) return;
+
+      const delay = Math.min(index * this.STAGGER_DELAY, this.MAX_DELAY);
+      item.style.animationDelay = `${delay}ms`;
+      item.classList.add('nebula-menu-anim');
     }
 
-    onPopupShowing(e) {
-      const popup = e.target;
-      if (!popup) {
-        Nebula.logger.warn("⚠️ [MenuModule] popupshowing event without target.");
-        return;
-      }
+    cleanupMenuItems(popup) {
+      if (!popup) return;
+      // Batch DOM updates for cleanup
+      window.requestAnimationFrame(() => {
+        popup.querySelectorAll('.nebula-menu-anim').forEach(item => {
+          item.classList.remove('nebula-menu-anim');
+          item.style.animationDelay = '';
+        });
+      });
+    }
 
-      const isMenu = popup.localName === "menupopup" ||
-                    this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
-      if (!isMenu) return;
+    isTargetMenu(popup) {
+      if (!popup || !popup.localName) return false;
+      const menuTypes = [
+        'menupopup',
+        '#appMenu-popup',
+        '#PanelUI-popup',
+        '.panel-popup',
+        '.panel-subview',
+        '#PanelUI-history',
+        '#PanelUI-bookmarks',
+        '#PanelUI-downloads'
+      ];
+      return menuTypes.some(selector =>
+        selector.startsWith('#') || selector.startsWith('.') ?
+          (popup.matches && popup.matches(selector)) :
+          popup.localName === selector
+      ) || popup.classList.contains('panel-subview') ||
+        popup.classList.contains('PanelUI-subView') ||
+        popup.querySelector('.panel-subview-body');
+    }
 
+    setupMutationObserver(popup) {
+      if (this.observers.has(popup)) return;
+
+      const observer = new MutationObserver(mutations => {
+        if (mutations.some(m => m.type === 'childList' && m.addedNodes.length > 0 ||
+                              m.type === 'attributes' && ['hidden', 'collapsed'].includes(m.attributeName))) {
+          setTimeout(() => this.animateMenuItems(popup), 5);
+        }
+      });
+
+      observer.observe(popup, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['hidden', 'collapsed', 'disabled']
+      });
+
+      this.observers.set(popup, observer);
+    }
+
+    handlePopupShowing(event) {
+      const popup = event.target;
+      if (!this.isTargetMenu(popup)) return;
       this.animateMenuItems(popup);
+      this.setupMutationObserver(popup);
+    }
 
-      if (!this.observedMenus.has(popup)) {
-        const observer = new MutationObserver(() => this.animateMenuItems(popup));
-        observer.observe(popup, { childList: true, subtree: true });
-        this.observedMenus.set(popup, observer);
+    handlePopupHidden(event) {
+      const popup = event.target;
+      if (!this.isTargetMenu(popup)) return;
+      this.cleanupMenuItems(popup);
+
+      if (this.observers.has(popup)) {
+        this.observers.get(popup).disconnect();
+        this.observers.delete(popup);
       }
     }
 
-    onPopupHidden(e) {
-      const popup = e.target;
-      if (!popup) {
-        Nebula.logger.warn("⚠️ [MenuModule] popuphidden event without target.");
-        return;
-      }
+    stop() {
+      document.removeEventListener('popupshowing', this.handlePopupShowing, true);
+      document.removeEventListener('popuphidden', this.handlePopupHidden, true);
+      document.removeEventListener('ViewShowing', this.handlePopupShowing, true);
+      document.removeEventListener('ViewHiding', this.handlePopupHidden, true);
 
-      const isMenu = popup.localName === "menupopup" ||
-                    this.MAIN_MENU_SELECTORS.some(sel => popup.matches(sel));
-      if (!isMenu) return;
+      this.observers.forEach(observer => observer.disconnect());
+      this.observers.clear();
 
-      this.cleanupMenu(popup);
+      document.querySelectorAll('.nebula-menu-anim').forEach(item => {
+        item.classList.remove('nebula-menu-anim');
+        item.style.animationDelay = '';
+      });
+
+      Nebula.logger.log("🛑 [MenuModule] Animations disabled.");
     }
 
     destroy() {
-      document.removeEventListener("popupshowing", this.onPopupShowing, true);
-      document.removeEventListener("popuphidden", this.onPopupHidden, true);
-
-      const popups = Array.from(document.querySelectorAll("menupopup"))
-                          .concat(Array.from(document.querySelectorAll(this.MAIN_MENU_SELECTORS.join(","))));
-      popups.forEach(popup => this.cleanupMenu(popup));
-
-      try { delete window.NebulaMenuModule; } catch { window.NebulaMenuModule = undefined; }
-      Nebula.logger.log("🧹 [MenuModule] Destroyed.");
+      this.stop();
+      Nebula.logger.log("🧹 [MenuModule] Module destroyed.");
     }
   }
 
@@ -1032,36 +1267,3 @@
   Nebula.init();
 
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

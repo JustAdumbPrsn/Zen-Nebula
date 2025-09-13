@@ -7,13 +7,11 @@
   pointer-events: none !important;
   border-radius: inherit !important;
   overflow: hidden !important;
-
   background-size: 100% 100% !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-blend-mode: darken !important;
   filter: blur(24px) saturate(140%) contrast(120%) !important;
-
   opacity: 0 !important;
   transition: opacity 0.4s ease-in-out !important;
 }
@@ -25,7 +23,7 @@
 :root[zen-sidebar-expanded="true"] #zen-media-controls-toolbar {
   align-self: center !important;
   width: calc(100% - var(--zen-element-separation)) !important;
-  margin: 5px 0 !important;
+  margin-top: 8px !important;
   height: 38px !important;
   position: relative !important;
 }
@@ -43,12 +41,12 @@
   border-radius: var(--nebula-border-radius) !important;
   backdrop-filter: saturate(1) !important;
   transition: border-radius 0.3s ease, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
-  background: light-dark(rgba(235, 235, 235, 0.3), rgba(20, 20, 20, 0.3)) !important;
+  background-color: var(--nebula-color-min) !important;
 
   &:hover {
-    border-radius: 12px !important;
+    border-radius: var(--nebula-border-radius) !important;
     background: light-dark(rgba(235, 235, 235, 1), rgba(10, 10, 10, 1)) !important;
-    box-shadow: 0 0 15px light-dark(rgba(255,255,255,0.5), rgba(0,0,0,0.5));
+    box-shadow: 0 0 15px var(--nebula-color-shadow);
   }
 }
 

@@ -3,101 +3,52 @@ Here you can tweak the various settings like animations, features, etc. to your 
 by changing the variables or adding preferences in about:config
 without searching through the code directly */
 
-
-/* Tab Animations
-    1. Tab switch animations
-          Go to about:config and add a "number" "nebula-tab-switch-animation"
-                                                Set number to 0 (for no animation)
-                                                Set number to 2 (for style 2 which is more bouncy)
-                                                Set number to 3 (for style 3 which is more bounce than default but very light)
-                                                Set number to 4 (for style 4 which has no blur but instead smooth crossfade)
-                                                Set number to 5 (for style 5 for zoom out effect)
-                                                By default the style is set to 1 but no need to add its config
-
-    2. Tab loading animations
-          Go to about:config and add a "number" "nebula-tab-loading-animation"
-                                                Set number to 0 (for no animation)
-                                                Set number to 2 (for style 2 which is more prominant)
-                                                Set number to 3 (for style 3 which has see through window)
-                                                Set number to 4 (for style 4 which has no blur but grayscale when loading)
-                                                Set number to 5 (for style 5 which has blur + grayscale)
-                                                By default the style is set to 1 but no need to add its config
-*/
-
-/* Glow Animations
-    1. Nebula hover glow animations
-          Go to about:config and add a "number" "nebula-glow-gradient"
-                                                Set number to 0 (for no animation)
-                                                Set number to 2 (for monochrome gradient)
-                                                Set number to 3 (for RGB gradient)
-                                                By default the style is set to 1 but no need to add its config
-                                                Note: these gradient presets apply to: tabs, Essentials, urlbar, miniplayer, extensions, and links when hovering over
-*/
-
-/* URLbar Animations
-    1. URLbar opening animations
-         Go to about:config and add a "number" "nebula-urlbar-animation"
-                                               Set number to 0 (for no animation)
-                                               Set number to 2 (for style 2 which has zoom out)
-                                               Set number to 3 (for style 3 which has no blur but instead grayscale for background)
-                                               By default the style is set to 1 but no need to add its config
-
-/* Workspace button styling
-    1. Workspace button style
-         Go to about:config and add a "number" "nebula-workspace-style"
-                                               Set number to 0 (for style 0 with no background but with style 2 animations)
-                                               Set number to 2 (for style 2 which has more minimal look with smooth animations)
-                                               By default the style is set to 1 but no need to add its config 
-
-/* Customize Zen Nebula more! */
-
-    /* 1. If you want no shadow around tabs:
-        Go to about:config and add a "boolean" "nebula-tabs-no-shadow" and set it to true */
-
-    /* 2. If you want NoGaps mod (ONLY for single toolbar mode):
-        Go to about:config and add a "boolean" "nebula-nogaps-mod" and set it to true */
-
-    /* 3. If you want marginless compact mode without NoGaps mod on default:
-        Go to about:config and add a "boolean" "nebula-nogaps-compact-mod" and set it to true */
-
-    /* 5. If you want to remove the background on Pinned tabs:
-        Go to about:config and add a "boolean" "nebula-pinned-tabs-bg" and set it to true */
-
-    /* 6. If you want to remove the workspace indicator:
-        Go to about:config and add a "boolean" "nebula-remove-workspace-indicator" and set it to true */
-
-    /* 7. If you want Pinned Extensions mod:
-        Go to about:config and add a "boolean" "nebula-pinned-extensions-mod" and set it to true, then read the instructions
-        on Github to pin extensions above essentials */
-
-    /* 8. If you want to make icons of essential tabs gray:
-        Go to about:config and add a "boolean" "nebula-essentials-gray-icons" and set it to true */
-
-    /* 9. If you want to disable nebula's container styling:
-        Go to about:config and add a "boolean" "nebula-disable-container-styling" and set it to true */
-
-    /* 10. If you want to disable nebula's audio indicator styling:
-        Go to about:config and add a "boolean" "nebula-default-sound-indicator" and set it to true */
-    
-    /* 11. If you want to have MacOS style window controls on Windows 11 (IDK about Linux):
-        Go to about:config and add a "boolean" "nebula-macos-style-buttons" and set it to true */
-
-    /* 12. If you want to disable the Context Menu Animations:
-        Go to about:config and add a "boolean" "nebula-disable-menu-animations" and set it to true */
-
 :root {
-    --nebula-glass: blur(32px) saturate(140%); /* the blur which Nebula uses */
-    --nebula-border-radius: 13px; /* This will change roundness of everything in Nebula (DEFAULT: 13px) */
-    --nebula-website-tint: light-dark(rgba(255,255,255,0),rgba(0,0,0,0)); /* Edit the color values to change the tint on transparent websites */
-    --nebula-ui-tint: light-dark(rgba(255,255,255,0.2),rgba(0,0,0,0.2)); /* Edit the color values to change the tint of sidebar and etc. */
-    --nebula-workspace-grayscale: 100%; /* Edit the % to make non active workspace icons more colored */
-    --nebula-essentials-width: 60px !important; /* Edit the "60px" to something less to make width of essentials smaller */
-    
-/* Tabs color */
-    --nebula-color: light-dark(rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.35)); /* default color */
-    --nebula-color-hover: light-dark(rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.45)); /* color when hovered */
-    --nebula-color-selected: light-dark(rgba(255, 255, 255, 0.45), rgba(0, 0, 0, 0.55)); /* color when selected */
+  /* ✨ Glass & Blur */
+  --nebula-glass: blur(var(--var-nebula-glass-blur)) saturate(var(--var-nebula-glass-saturation)) !important;
+  --nebula-color-glass: light-dark(var(--var-nebula-color-glass-light), var(--var-nebula-color-glass-dark)) !important;
+
+  /* 🖼️ Layout */
+  --nebula-border-radius: var(--var-nebula-border-radius) !important;
+  --nebula-essentials-width: var(--var-nebula-essentials-width) !important;
+  --nebula-workspace-grayscale: var(--var-nebula-workspace-grayscale) !important;
+
+  /* 🎨 UI & Website Tint */
+  --nebula-ui-tint: light-dark(var(--var-nebula-ui-tint-light), var(--var-nebula-ui-tint-dark)) !important;
+  --nebula-website-tint: light-dark(var(--var-nebula-website-tint-light), var(--var-nebula-website-tint-dark)) !important;
+
+  /* 🔮 Colors */
+  --nebula-color-min: light-dark(var(--var-nebula-tabs-minimum-light), var(--var-nebula-tabs-minimum-dark)) !important;
+  --nebula-color: light-dark(var(--var-nebula-tabs-default-light), var(--var-nebula-tabs-default-dark)) !important;
+  --nebula-color-hover: light-dark(var(--var-nebula-tabs-hover-light), var(--var-nebula-tabs-hover-dark)) !important;
+  --nebula-color-selected: light-dark(var(--var-nebula-tabs-selected-light), var(--var-nebula-tabs-selected-dark)) !important;
+  
+  --nebula-color-shadow: light-dark(var(--var-nebula-color-shadow-light), var(--var-nebula-color-shadow-dark)) !important;
 }
 
 /* DO NOT ADD OTHER CSS BELOW */
 /* More styles and options will come soon here! */
+
+/* Pre-defined backup values */
+:root {
+  /* ✨ Glass & Blur */
+  --nebula-glass: blur(32px) saturate(140%);
+  --nebula-color-glass: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4));
+  
+  /* 🖼️ Layout */
+  --nebula-border-radius: 13px;
+  --nebula-essentials-width: 60px;
+  --nebula-workspace-grayscale: 100%;
+  
+  /* 🎨 UI & Website Tint */
+  --nebula-ui-tint: light-dark(rgba(255,255,255,0.2), rgba(0,0,0,0.2));
+  --nebula-website-tint: light-dark(rgba(255,255,255,0), rgba(0,0,0,0));
+  
+  /* 🔮 Colors */
+  --nebula-color-min: light-dark(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
+  --nebula-color: light-dark(rgba(255,255,255,0.25), rgba(0,0,0,0.35));
+  --nebula-color-hover: light-dark(rgba(255,255,255,0.35), rgba(0,0,0,0.45));
+  --nebula-color-selected: light-dark(rgba(255,255,255,0.45), rgba(0,0,0,0.55));
+  
+  --nebula-color-shadow: light-dark(rgba(255, 255, 255, 0.055), rgba(0, 0, 0, 0.55));
+}

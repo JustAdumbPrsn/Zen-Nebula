@@ -1,32 +1,18 @@
 :root {
-    --nebula-glass: blur(32px) saturate(140%); /* the blur which Nebula uses */
-    --nebula-border-radius: 13px; /* This will change roundness of everything in Nebula (DEFAULT: 13px) */
-    --nebula-website-tint: light-dark(rgba(255,255,255,0),rgba(0,0,0,0)); /* Edit the color values to change the tint on transparent websites */
-    --nebula-ui-tint: light-dark(rgba(255,255,255,0.2),rgba(0,0,0,0.2)); /* Edit the color values to change the tint of sidebar and etc. */
-    --nebula-workspace-grayscale: 100%; /* Edit the % to make non active workspace icons more colored */
-    --nebula-essentials-width: 60px !important; /* Edit the "60px" to something less to make width of essentials smaller */
-    
-/* Tabs color */
-    --nebula-color: light-dark(rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.35)); /* default color */
-    --nebula-color-hover: light-dark(rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.45)); /* color when hovered */
-    --nebula-color-selected: light-dark(rgba(255, 255, 255, 0.45), rgba(0, 0, 0, 0.55)); /* color when selected */
-}
-
-:root {
   --zen-colors-tertiary: transparent !important;
   --zen-settings-secondary-background: transparent !important;
 }
 
 groupbox:not(#sineInstallationGroup:popover-open) {
 /*   background: var(--zen-colors-tertiary) !important; */
-  background: var(--nebula-color) !important;
+  background: light-dark(rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.35)) !important;
   border: none;
 }
 
 @-moz-document url-prefix("about:") {
   table,
   .action-box {
-    background-color: var(--nebula-color) !important;
+    background-color: light-dark(rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.35)) !important;
     border-radius: 13px !important;
   }
 }
