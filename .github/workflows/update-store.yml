@@ -20,8 +20,17 @@ jobs:
       - name: 📝 Get commit message
         id: commit
         run: |
-          echo "subject=$(git log -1 --pretty=%s)" >> $GITHUB_OUTPUT
-          echo "full=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+          {
+            echo 'subject<<EOF'
+            git log -1 --pretty=%s
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+      
+          {
+            echo 'full<<EOF'
+            git log -1 --pretty=%B
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
 
       # Configure git identity
       - name: ⚙️ Setup Git
