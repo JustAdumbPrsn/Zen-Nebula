@@ -74,5 +74,5 @@ jobs:
             --repo sineorg/store \
             --head JustAdumbPrsn:auto-update-nebula \
             --base main \
-            --title "${{ steps.commit.outputs.subject }}" \
+            --title "Nebula.uc.js ${{ steps.commit.outputs.subject }}" \
             --body-file pr_body.txt
