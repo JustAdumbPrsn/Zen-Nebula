@@ -1,5 +1,4 @@
 /* ------------------------- BUTTONS ABOVE URLBAR ------------------------- */
-
 /* Remove padding & adjust scale for top sidebar buttons */
 #zen-sidebar-top-buttons,
 #zen-sidebar-top-buttons-customization-target {
@@ -17,7 +16,6 @@
     list-style-image: url("chrome://branding/content/about-logo.svg") !important;
     filter: grayscale(1) brightness(1.6);
   }
-
   toolbarbutton#PanelUI-menu-button image {
     scale: 1.7;
   }
@@ -26,51 +24,94 @@
 /* ------------------------------ ANIMATIONS ------------------------------ */
 
 /* Keyframes */
-@keyframes spin-once { to   { transform: rotate(180deg); } }
-
+@keyframes spin-once {
+  to   {
+    transform: rotate(180deg);
+  }
+}
 @keyframes rotate-bounce-right {
-  0%   { transform: rotate(0deg); }
-  40%  { transform: rotate(25deg); }
-  60%  { transform: rotate(-10deg); }
-  100% { transform: rotate(0deg); }
+  0%   {
+    transform: rotate(0deg);
+  }
+  40%  {
+    transform: rotate(25deg);
+  }
+  60%  {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
-
 @keyframes rotate-bounce-left {
-  0%   { transform: rotate(0deg); }
-  40%  { transform: rotate(-25deg); }
-  60%  { transform: rotate(10deg); }
-  100% { transform: rotate(0deg); }
+  0%   {
+    transform: rotate(0deg);
+  }
+  40%  {
+    transform: rotate(-25deg);
+  }
+  60%  {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
-
 @keyframes wiggle-left {
-  0%   { transform: translateX(0); }
-  30%  { transform: translateX(-2px); }
-  60%  { transform: translateX(1px); }
-  100% { transform: translateX(0); }
+  0%   {
+    transform: translateX(0);
+  }
+  30%  {
+    transform: translateX(-2px);
+  }
+  60%  {
+    transform: translateX(1px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
-
 @keyframes wiggle-right {
-  0%   { transform: translateX(0); }
-  30%  { transform: translateX(2px); }
-  60%  { transform: translateX(-1px); }
-  100% { transform: translateX(0); }
+  0%   {
+    transform: translateX(0);
+  }
+  30%  {
+    transform: translateX(2px);
+  }
+  60%  {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
-
 @keyframes bounce-down {
-  0%   { transform: translateY(0); }
-  30%  { transform: translateY(2px); }
-  60%  { transform: translateY(-1px); }
-  100% { transform: translateY(0); }
+  0%   {
+    transform: translateY(0);
+  }
+  30%  {
+    transform: translateY(2px);
+  }
+  60%  {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
-
 @keyframes scale-pop {
-  0%   { transform: scale(1); }
-  45%  { transform: scale(1.15); }
-  100% { transform: scale(1); }
+  0%   {
+    transform: scale(1);
+  }
+  45%  {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* ------------------ BUTTONS IN SINGLE TOOLBAR MODE ------------------ */
-
 html[zen-single-toolbar="true"] {
   /* Base styling */
   #preferences-button,
@@ -103,15 +144,15 @@ html[zen-single-toolbar="true"] {
 
   /* Clear background on icon hover */
   :is(
-    #preferences-button,
-    #reload-button,
-    #back-button,
-    #forward-button,
-    #history-panelmenu,
-    #panic-button,
-    #new-tab-button,
-    #zen-create-new-button,
-    #bookmarks-menu-button
+  #preferences-button,
+  #reload-button,
+  #back-button,
+  #forward-button,
+  #history-panelmenu,
+  #panic-button,
+  #new-tab-button,
+  #zen-create-new-button,
+  #bookmarks-menu-button
   ):hover .toolbarbutton-icon,
   #downloads-button:hover .toolbarbutton-badge-stack {
     background-color: transparent !important;
@@ -121,54 +162,54 @@ html[zen-single-toolbar="true"] {
   #preferences-button:hover .toolbarbutton-icon {
     animation: spin-once 1s cubic-bezier(0.35, 0.15, 0.12, 1) forwards;
   }
-
-  :is(#reload-button, #panic-button):hover .toolbarbutton-icon {
+  :is(#reload-button,
+  #panic-button):hover .toolbarbutton-icon {
     animation: rotate-bounce-right 0.7s cubic-bezier(0.4, 0.2, 0.55, 1) forwards;
     transform-origin: center;
   }
-
   #history-panelmenu:hover .toolbarbutton-icon {
     animation: rotate-bounce-left 0.7s cubic-bezier(0.4, 0.2, 0.55, 1) forwards;
     transform-origin: center;
   }
-
   #back-button:hover .toolbarbutton-icon {
     animation: wiggle-left 0.5s ease-out;
   }
-
   #forward-button:hover .toolbarbutton-icon {
     animation: wiggle-right 0.5s ease-out;
   }
-
-  :is(#downloads-button, #bookmarks-menu-button):hover :is(.toolbarbutton-badge-stack, .toolbarbutton-icon) {
+  :is(#downloads-button,
+  #bookmarks-menu-button):hover :is(.toolbarbutton-badge-stack,
+  .toolbarbutton-icon) {
     animation: bounce-down 0.5s ease-out;
   }
-
-  :is(#new-tab-button, #zen-create-new-button):hover .toolbarbutton-icon {
+  :is(#new-tab-button,
+  #zen-create-new-button):hover .toolbarbutton-icon {
     animation: scale-pop 0.5s ease-out;
   }
-
-  :is(#new-tab-button, #zen-create-new-button) .toolbarbutton-icon {
+  :is(#new-tab-button,
+  #zen-create-new-button) .toolbarbutton-icon {
     transition: transform 0.15s ease-in-out;
     transform-origin: center;
   }
-
-  :is(#new-tab-button, #zen-create-new-button):active .toolbarbutton-icon {
+  :is(#new-tab-button,
+  #zen-create-new-button):active .toolbarbutton-icon {
     transform: scale(0.65);
   }
 
   /* Button border radius */
-  #zen-sidebar-bottom-buttons .toolbarbutton-1 > :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack) {
+  #zen-sidebar-bottom-buttons .toolbarbutton-1 > :is(.toolbarbutton-icon,
+  .toolbarbutton-text,
+  .toolbarbutton-badge-stack) {
     border-radius: 11px !important;
   }
-
-  #zen-sidebar-top-buttons-customization-target .toolbarbutton-1 > :is(.toolbarbutton-icon, .toolbarbutton-text, .toolbarbutton-badge-stack) {
+  #zen-sidebar-top-buttons-customization-target .toolbarbutton-1 > :is(.toolbarbutton-icon,
+  .toolbarbutton-text,
+  .toolbarbutton-badge-stack) {
     border-radius: 9.5px !important;
   }
 }
 
 /* ------------------------- WINDOWS BUTTONS ------------------------- */
-
 .titlebar-close {
   transition: background-color 0.3s ease-out, transform 0.2s ease-in-out;
 }
@@ -176,7 +217,6 @@ html[zen-single-toolbar="true"] {
   background-color: rgba(255, 0, 0, 0.8);
   transform: scale(1);
 }
-
 .titlebar-min,
 .titlebar-max {
   transition: background-color 0.3s ease-out, transform 0.2s ease-out;
@@ -224,45 +264,49 @@ html[zen-single-toolbar="true"] {
     opacity: 0 !important;
     transition: all 150ms ease-out !important;
   }
-
   .titlebar-button:hover::after {
     opacity: 1 !important;
   }
 
   /* Hover colors */
-  .titlebar-min:hover { background-color: #FDC92D !important; }
+  .titlebar-min:hover {
+    background-color: #FDC92D !important;
+  }
   .titlebar-max:hover,
-  .titlebar-restore:hover { background-color: #28D33F !important; }
-  .titlebar-close:hover { background-color: #FE6254 !important; }
+  .titlebar-restore:hover {
+    background-color: #28D33F !important;
+  }
+  .titlebar-close:hover {
+    background-color: #FE6254 !important;
+  }
 
   /* Inactive window colors */
-  .titlebar-close:not(:hover):-moz-window-inactive { background-color: #FE6254 !important; }
-  .titlebar-min:not(:hover):-moz-window-inactive { background-color: #FDC92D !important; }
-  .titlebar-max:not(:hover):-moz-window-inactive { background-color: #28D33F !important; }
+  .titlebar-close:not(:hover):-moz-window-inactive {
+    background-color: #FE6254 !important;
+  }
+  .titlebar-min:not(:hover):-moz-window-inactive {
+    background-color: #FDC92D !important;
+  }
+  .titlebar-max:not(:hover):-moz-window-inactive {
+    background-color: #28D33F !important;
+  }
 
   /* Hide images inside buttons */
   .titlebar-button > image {
     visibility: collapse !important;
   }
-
-
   .titlebar-close::after {
-
     background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8' standalone='no'%3F%3E%3C!-- Created with Inkscape (http://www.inkscape.org/) --%3E%3Csvg width='16' height='16' id='svg4428' version='1.1' inkscape:version='1.4 (e7c3feb100, 2024-10-09)' sodipodi:docname='close.svg' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns='http://www.w3.org/2000/svg' xmlns:svg='http://www.w3.org/2000/svg' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/'%3E%3Cdefs id='defs4430' /%3E%3Csodipodi:namedview id='base' pagecolor='%23eff0f1' bordercolor='%23666666' borderopacity='1.0' inkscape:pageopacity='1' inkscape:pageshadow='2' inkscape:zoom='17.309043' inkscape:cx='-7.7416179' inkscape:cy='4.0152421' inkscape:document-units='px' inkscape:current-layer='g8-5-3' showgrid='true' inkscape:snap-bbox='true' inkscape:window-width='1920' inkscape:window-height='1010' inkscape:window-x='0' inkscape:window-y='0' inkscape:window-maximized='1' showborder='true' inkscape:showpageshadow='false' inkscape:snap-nodes='false' inkscape:bbox-nodes='true' inkscape:snap-bbox-edge-midpoints='false' inkscape:snap-global='false' inkscape:pagecheckerboard='0' inkscape:deskcolor='%23d1d1d1'%3E%3Cinkscape:grid type='xygrid' id='grid4436' empspacing='5' visible='true' enabled='true' snapvisiblegridlinesonly='true' originx='-4.28505' originy='-4.0117826' spacingx='1.0666667' spacingy='1.0666667' units='px' /%3E%3C/sodipodi:namedview%3E%3Cmetadata id='metadata4433'%3E%3Crdf:RDF%3E%3Ccc:Work rdf:about=''%3E%3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E%3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage' /%3E%3C/cc:Work%3E%3C/rdf:RDF%3E%3C/metadata%3E%3Cg inkscape:label='Layer 1' inkscape:groupmode='layer' id='layer1' transform='translate(-4.28505,-1102.5315)'%3E%3Cg id='4' inkscape:label='%23g3842' transform='translate(86.4,-3.2)' /%3E%3Cg transform='translate(-288.71495,1319.1693)' style='display:inline' id='hover-center' inkscape:label='%23hover-center'%3E%3Crect ry='1.6930764e-05' y='-216.63782' x='293' height='16' width='16' id='rect1577-8-3' style='opacity:0;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:0.474321;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill' /%3E%3Cg inkscape:label='%23g879' transform='translate(294,-215.63782)' id='titlebutton-close-hover-1-4-0' style='enable-background:new'%3E%3Cg transform='translate(-4.9999997,-1033.3622)' id='g8-5-3'%3E%3Cpath style='opacity:0.5;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;enable-background:new' d='m 9.1715729,1037.5338 c -0.3917372,0.3917 -0.3917372,1.0224 0,1.4142 l 1.4142131,1.4142 -1.4142131,1.4142 c -0.3917372,0.3918 -0.3917372,1.0225 0,1.4142 0.3917371,0.3918 1.0224761,0.3918 1.4142131,0 L 12,1041.7764 l 1.414214,1.4142 c 0.391737,0.3918 1.022476,0.3918 1.414213,0 0.391737,-0.3917 0.391737,-1.0224 0,-1.4142 l -1.414213,-1.4142 1.414213,-1.4142 c 0.391737,-0.3918 0.391737,-1.0225 0,-1.4142 -0.391737,-0.3918 -1.022476,-0.3918 -1.414213,0 L 12,1038.948 l -1.414214,-1.4142 c -0.391737,-0.3918 -1.022476,-0.3918 -1.4142131,0 z' id='path6-36-9' inkscape:connector-curvature='0' /%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
   }
-
   .titlebar-min::after {
     background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8' standalone='no'%3F%3E%3C!-- Created with Inkscape (http://www.inkscape.org/) --%3E%3Csvg width='16' height='16' id='svg4428' version='1.1' inkscape:version='1.4 (e7c3feb100, 2024-10-09)' sodipodi:docname='minimize.svg' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' xmlns:svg='http://www.w3.org/2000/svg' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/'%3E%3Cdefs id='defs4430'%3E%3ClinearGradient id='linearGradient3868'%3E%3Cstop style='stop-color:%235a5a5a;stop-opacity:1;' offset='0' id='stop3870' /%3E%3Cstop style='stop-color:%23646464;stop-opacity:1;' offset='1' id='stop3872' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3813'%3E%3Cstop style='stop-color:%23666666;stop-opacity:1;' offset='0' id='stop3815' /%3E%3Cstop style='stop-color:%23636363;stop-opacity:1;' offset='1' id='stop3817' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3787'%3E%3Cstop style='stop-color:%23e5e5df;stop-opacity:1;' offset='0' id='stop3789' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:1;' offset='1' id='stop3791' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3806-3-5-6'%3E%3Cstop style='stop-color:%23303030;stop-opacity:1;' offset='0' id='stop3808-6-9-1' /%3E%3Cstop style='stop-color:%23232323;stop-opacity:1;' offset='1' id='stop3810-4-6-3' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3793' x1='40' y1='1044.3622' x2='40' y2='1032.3622' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3828' gradientUnits='userSpaceOnUse' x1='40' y1='1044.3622' x2='40' y2='1032.3622' gradientTransform='matrix(1.1666666,0,0,1.0769231,-6.5,-80.335554)' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835-4' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient id='linearGradient3787-8'%3E%3Cstop style='stop-color:%23f5f5ee;stop-opacity:1;' offset='0' id='stop3789-2' /%3E%3Cstop style='stop-color:%23e6e6df;stop-opacity:1;' offset='1' id='stop3791-6' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835-3' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient id='linearGradient3787-7'%3E%3Cstop style='stop-color:%23f5f5ee;stop-opacity:1;' offset='0' id='stop3789-3' /%3E%3Cstop style='stop-color:%23e6e6e0;stop-opacity:1;' offset='1' id='stop3791-3' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3807' x1='11' y1='15.75' x2='11' y2='8.25' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3813' id='linearGradient3819' x1='29.5' y1='15.2' x2='29.5' y2='8.8000002' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231' id='linearGradient3807-1' x1='10' y1='7.0000038' x2='10' y2='15.888954' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231'%3E%3Cstop id='stop4233' offset='0' style='stop-color:%23e7e7e1;stop-opacity:1;' /%3E%3Cstop id='stop4239' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-1' id='linearGradient3807-1-1' x1='10' y1='15.888976' x2='10' y2='7.0000262' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231-1'%3E%3Cstop id='stop4233-6' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-7' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4363'%3E%3Cstop style='stop-color:%23979791;stop-opacity:1;' offset='0' id='stop4365' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:0;' offset='1' id='stop4367' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4363-7'%3E%3Cstop style='stop-color:%23f5f5ef;stop-opacity:1;' offset='0' id='stop4365-9' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:0;' offset='1' id='stop4367-8' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient4361' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-41.25,0)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7'%3E%3Cstop id='stop4233-4' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3127' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3154' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3159' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-249.25,-54.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7-9' id='linearGradient3159-0' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7-9'%3E%3Cstop id='stop4233-4-2' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8-9' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4231-5'%3E%3Cstop id='stop4233-41' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-73' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7-7' id='linearGradient3159-1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7-7'%3E%3Cstop id='stop4233-4-7' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8-2' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-73' id='linearGradient3807-1-7' x1='10' y1='15.888976' x2='10' y2='7.0000262' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231-73'%3E%3Cstop id='stop4233-1' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-85' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3C/defs%3E%3Csodipodi:namedview id='base' pagecolor='%23eff0f1' bordercolor='%23666666' borderopacity='1.0' inkscape:pageopacity='1' inkscape:pageshadow='2' inkscape:zoom='23.025165' inkscape:cx='11.335424' inkscape:cy='11.444001' inkscape:document-units='px' inkscape:current-layer='g8-9-45-1' showgrid='false' inkscape:snap-bbox='true' inkscape:window-width='1920' inkscape:window-height='1010' inkscape:window-x='0' inkscape:window-y='0' inkscape:window-maximized='1' showborder='true' inkscape:showpageshadow='false' inkscape:pagecheckerboard='0' inkscape:deskcolor='%23d1d1d1'%3E%3Cinkscape:grid type='xygrid' id='grid4436' empspacing='5' visible='true' enabled='true' snapvisiblegridlinesonly='true' originx='-4.18573' originy='-4.4881125' spacingx='1.0666667' spacingy='1.0666667' units='px' /%3E%3C/sodipodi:namedview%3E%3Cmetadata id='metadata4433'%3E%3Crdf:RDF%3E%3Ccc:Work rdf:about=''%3E%3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E%3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage' /%3E%3C/cc:Work%3E%3C/rdf:RDF%3E%3C/metadata%3E%3Cg inkscape:label='Layer 1' inkscape:groupmode='layer' id='layer1' transform='translate(-4.18573,-1103.0078)'%3E%3Cg id='4' inkscape:label='%23g3842' transform='translate(86.4,-3.2)' /%3E%3Crect ry='1.6930764e-05' y='1103.0078' x='4.18573' height='16' width='16' id='rect1573-3-4' style='opacity:0;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:0.474321;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill' /%3E%3Cg transform='translate(0.1857303,70.6456)' id='g8-9-45-1'%3E%3Crect style='opacity:0.5;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1' width='8' height='2' x='8' y='1039.36' ry='1' id='rect6-5-8' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
   }
-
   .titlebar-max::after {
     background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8' standalone='no'%3F%3E%3C!-- Created with Inkscape (http://www.inkscape.org/) --%3E%3Csvg width='16' height='16' id='svg4428' version='1.1' inkscape:version='1.4 (e7c3feb100, 2024-10-09)' sodipodi:docname='maximize.svg' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' xmlns:svg='http://www.w3.org/2000/svg' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/'%3E%3Cdefs id='defs4430'%3E%3ClinearGradient id='linearGradient3868'%3E%3Cstop style='stop-color:%235a5a5a;stop-opacity:1;' offset='0' id='stop3870' /%3E%3Cstop style='stop-color:%23646464;stop-opacity:1;' offset='1' id='stop3872' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3813'%3E%3Cstop style='stop-color:%23666666;stop-opacity:1;' offset='0' id='stop3815' /%3E%3Cstop style='stop-color:%23636363;stop-opacity:1;' offset='1' id='stop3817' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3787'%3E%3Cstop style='stop-color:%23e5e5df;stop-opacity:1;' offset='0' id='stop3789' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:1;' offset='1' id='stop3791' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3806-3-5-6'%3E%3Cstop style='stop-color:%23303030;stop-opacity:1;' offset='0' id='stop3808-6-9-1' /%3E%3Cstop style='stop-color:%23232323;stop-opacity:1;' offset='1' id='stop3810-4-6-3' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3793' x1='40' y1='1044.3622' x2='40' y2='1032.3622' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3828' gradientUnits='userSpaceOnUse' x1='40' y1='1044.3622' x2='40' y2='1032.3622' gradientTransform='matrix(1.1666666,0,0,1.0769231,-6.5,-80.335554)' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835-4' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient id='linearGradient3787-8'%3E%3Cstop style='stop-color:%23f5f5ee;stop-opacity:1;' offset='0' id='stop3789-2' /%3E%3Cstop style='stop-color:%23e6e6df;stop-opacity:1;' offset='1' id='stop3791-6' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835-3' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient id='linearGradient3787-7'%3E%3Cstop style='stop-color:%23f5f5ee;stop-opacity:1;' offset='0' id='stop3789-3' /%3E%3Cstop style='stop-color:%23e6e6e0;stop-opacity:1;' offset='1' id='stop3791-3' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3807' x1='11' y1='15.75' x2='11' y2='8.25' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3813' id='linearGradient3819' x1='29.5' y1='15.2' x2='29.5' y2='8.8000002' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231' id='linearGradient3807-1' x1='10' y1='7.0000038' x2='10' y2='15.888954' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231'%3E%3Cstop id='stop4233' offset='0' style='stop-color:%23e7e7e1;stop-opacity:1;' /%3E%3Cstop id='stop4239' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-1' id='linearGradient3807-1-1' x1='10' y1='15.888976' x2='10' y2='7.0000262' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231-1'%3E%3Cstop id='stop4233-6' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-7' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4363'%3E%3Cstop style='stop-color:%23979791;stop-opacity:1;' offset='0' id='stop4365' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:0;' offset='1' id='stop4367' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4363-7'%3E%3Cstop style='stop-color:%23f5f5ef;stop-opacity:1;' offset='0' id='stop4365-9' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:0;' offset='1' id='stop4367-8' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient4361' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-41.25,0)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7'%3E%3Cstop id='stop4233-4' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3127' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3154' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3159' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-249.25,-54.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7-9' id='linearGradient3159-0' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7-9'%3E%3Cstop id='stop4233-4-2' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8-9' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4231-5'%3E%3Cstop id='stop4233-41' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-73' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7-7' id='linearGradient3159-1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7-7'%3E%3Cstop id='stop4233-4-7' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8-2' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-73' id='linearGradient3807-1-7' x1='10' y1='15.888976' x2='10' y2='7.0000262' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231-73'%3E%3Cstop id='stop4233-1' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-85' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3C/defs%3E%3Csodipodi:namedview id='base' pagecolor='%23eff0f1' bordercolor='%23666666' borderopacity='1.0' inkscape:pageopacity='1' inkscape:pageshadow='2' inkscape:zoom='18.514422' inkscape:cx='7.7777205' inkscape:cy='5.3201769' inkscape:document-units='px' inkscape:current-layer='titlebutton-maximize-hover-1-6-4' showgrid='false' inkscape:snap-bbox='true' inkscape:window-width='1920' inkscape:window-height='1010' inkscape:window-x='0' inkscape:window-y='0' inkscape:window-maximized='1' showborder='true' inkscape:showpageshadow='false' inkscape:pagecheckerboard='0' inkscape:deskcolor='%23d1d1d1'%3E%3Cinkscape:grid type='xygrid' id='grid4436' empspacing='5' visible='true' enabled='true' snapvisiblegridlinesonly='true' originx='-4.40691' originy='-3.8175826' spacingx='1.0666667' spacingy='1.0666667' units='px' /%3E%3C/sodipodi:namedview%3E%3Cmetadata id='metadata4433'%3E%3Crdf:RDF%3E%3Ccc:Work rdf:about=''%3E%3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E%3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage' /%3E%3C/cc:Work%3E%3C/rdf:RDF%3E%3C/metadata%3E%3Cg inkscape:label='Layer 1' inkscape:groupmode='layer' id='layer1' transform='translate(-4.40691,-1102.3373)'%3E%3Cg id='4' inkscape:label='%23g3842' transform='translate(86.4,-3.2)' /%3E%3Cg transform='translate(-268.59309,1318.9751)' style='display:inline' id='hover-center' inkscape:label='%23hover-center'%3E%3Crect style='opacity:0;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:0.474321;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill' id='rect1575-0-9' width='16' height='16' x='273' y='-216.63782' ry='1.6930764e-05' /%3E%3Cg inkscape:label='%23g929' transform='translate(274,-215.63782)' id='titlebutton-maximize-hover-1-6-4' style='enable-background:new'%3E%3Cpath style='opacity:0.5;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1' d='M 5.4140633,4 10,8.5859 V 5 C 10,4.5845 9.4155003,4 9.0000003,4 Z M 4.0000003,5.4141 V 9 c 0,0.4155 0.5845,1 1,1 h 3.585938 z' id='path6-0-54-2' inkscape:connector-curvature='0' /%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
   }
-
   .titlebar-restore::after {
     background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8' standalone='no'%3F%3E%3C!-- Created with Inkscape (http://www.inkscape.org/) --%3E%3Csvg width='16' height='16' id='svg4428' version='1.1' inkscape:version='1.4 (e7c3feb100, 2024-10-09)' sodipodi:docname='restore.svg' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' xmlns:svg='http://www.w3.org/2000/svg' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/'%3E%3Cdefs id='defs4430'%3E%3ClinearGradient id='linearGradient3868'%3E%3Cstop style='stop-color:%235a5a5a;stop-opacity:1;' offset='0' id='stop3870' /%3E%3Cstop style='stop-color:%23646464;stop-opacity:1;' offset='1' id='stop3872' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3813'%3E%3Cstop style='stop-color:%23666666;stop-opacity:1;' offset='0' id='stop3815' /%3E%3Cstop style='stop-color:%23636363;stop-opacity:1;' offset='1' id='stop3817' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3787'%3E%3Cstop style='stop-color:%23e5e5df;stop-opacity:1;' offset='0' id='stop3789' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:1;' offset='1' id='stop3791' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient3806-3-5-6'%3E%3Cstop style='stop-color:%23303030;stop-opacity:1;' offset='0' id='stop3808-6-9-1' /%3E%3Cstop style='stop-color:%23232323;stop-opacity:1;' offset='1' id='stop3810-4-6-3' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3793' x1='40' y1='1044.3622' x2='40' y2='1032.3622' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3828' gradientUnits='userSpaceOnUse' x1='40' y1='1044.3622' x2='40' y2='1032.3622' gradientTransform='matrix(1.1666666,0,0,1.0769231,-6.5,-80.335554)' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835-4' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient id='linearGradient3787-8'%3E%3Cstop style='stop-color:%23f5f5ee;stop-opacity:1;' offset='0' id='stop3789-2' /%3E%3Cstop style='stop-color:%23e6e6df;stop-opacity:1;' offset='1' id='stop3791-6' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787-8' id='linearGradient3835-3' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1666666,0,0,1.0769231,-35.5,-1105.6978)' x1='40' y1='1044.3622' x2='40' y2='1032.3622' /%3E%3ClinearGradient id='linearGradient3787-7'%3E%3Cstop style='stop-color:%23f5f5ee;stop-opacity:1;' offset='0' id='stop3789-3' /%3E%3Cstop style='stop-color:%23e6e6e0;stop-opacity:1;' offset='1' id='stop3791-3' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3787' id='linearGradient3807' x1='11' y1='15.75' x2='11' y2='8.25' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient3813' id='linearGradient3819' x1='29.5' y1='15.2' x2='29.5' y2='8.8000002' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231' id='linearGradient3807-1' x1='10' y1='7.0000038' x2='10' y2='15.888954' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231'%3E%3Cstop id='stop4233' offset='0' style='stop-color:%23e7e7e1;stop-opacity:1;' /%3E%3Cstop id='stop4239' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-1' id='linearGradient3807-1-1' x1='10' y1='15.888976' x2='10' y2='7.0000262' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231-1'%3E%3Cstop id='stop4233-6' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-7' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4363'%3E%3Cstop style='stop-color:%23979791;stop-opacity:1;' offset='0' id='stop4365' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:0;' offset='1' id='stop4367' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4363-7'%3E%3Cstop style='stop-color:%23f5f5ef;stop-opacity:1;' offset='0' id='stop4365-9' /%3E%3Cstop style='stop-color:%23dadad4;stop-opacity:0;' offset='1' id='stop4367-8' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient4361' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-41.25,0)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7'%3E%3Cstop id='stop4233-4' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3127' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3154' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7' id='linearGradient3159' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-249.25,-54.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7-9' id='linearGradient3159-0' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7-9'%3E%3Cstop id='stop4233-4-2' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8-9' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient id='linearGradient4231-5'%3E%3Cstop id='stop4233-41' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-73' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-7-7' id='linearGradient3159-1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(1.1875,0,0,1,-262.25,-55.99998)' x1='248.63158' y1='79' x2='248.63158' y2='58' /%3E%3ClinearGradient id='linearGradient4231-7-7'%3E%3Cstop id='stop4233-4-7' offset='0' style='stop-color:%23e6e6df;stop-opacity:1;' /%3E%3Cstop id='stop4239-8-2' offset='1' style='stop-color:%23d1d1ca;stop-opacity:1;' /%3E%3C/linearGradient%3E%3ClinearGradient inkscape:collect='always' xlink:href='%23linearGradient4231-73' id='linearGradient3807-1-7' x1='10' y1='15.888976' x2='10' y2='7.0000262' gradientUnits='userSpaceOnUse' /%3E%3ClinearGradient id='linearGradient4231-73'%3E%3Cstop id='stop4233-1' offset='0' style='stop-color:%23e5e5de;stop-opacity:1;' /%3E%3Cstop id='stop4239-85' offset='1' style='stop-color:%23dadad3;stop-opacity:1;' /%3E%3C/linearGradient%3E%3C/defs%3E%3Csodipodi:namedview id='base' pagecolor='%23eff0f1' bordercolor='%23666666' borderopacity='1.0' inkscape:pageopacity='1' inkscape:pageshadow='2' inkscape:zoom='5.756291' inkscape:cx='-47.773818' inkscape:cy='36.568686' inkscape:document-units='px' inkscape:current-layer='layer1' showgrid='false' inkscape:snap-bbox='true' inkscape:window-width='1920' inkscape:window-height='1010' inkscape:window-x='0' inkscape:window-y='0' inkscape:window-maximized='1' showborder='true' inkscape:showpageshadow='false' inkscape:pagecheckerboard='0' inkscape:deskcolor='%23d1d1d1'%3E%3Cinkscape:grid type='xygrid' id='grid4436' empspacing='5' visible='true' enabled='true' snapvisiblegridlinesonly='true' originx='-4.5055799' originy='-4.3198996' spacingx='1.0666667' spacingy='1.0666667' units='px' /%3E%3C/sodipodi:namedview%3E%3Cmetadata id='metadata4433'%3E%3Crdf:RDF%3E%3Ccc:Work rdf:about=''%3E%3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E%3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage' /%3E%3C/cc:Work%3E%3C/rdf:RDF%3E%3C/metadata%3E%3Cg inkscape:label='Layer 1' inkscape:groupmode='layer' id='layer1' transform='translate(-4.5055799,-1102.8396)'%3E%3Cg id='4' inkscape:label='%23g3842' transform='translate(86.4,-3.2)' /%3E%3Crect style='opacity:0;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:0.474321;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill' id='rect1579-4-9' width='16' height='16' x='4.5055799' y='1102.8396' ry='1.6930764e-05' /%3E%3Cg id='g1846-43-8' transform='translate(-313.7087,1328.3351)'%3E%3Cpath sodipodi:nodetypes='csscc' style='opacity:0.5;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1' d='m 326.21372,-222.08576 v 3.5859 c 0,0.4155 0.5845,1 1,1 h 3.58594 z' id='path1031-0-0' inkscape:connector-curvature='0' /%3E%3Cpath inkscape:connector-curvature='0' id='path1838-7-2' d='m 326.21484,-212.90509 v -3.5859 c 0,-0.4155 -0.5845,-1 -1,-1 h -3.58594 z' style='opacity:0.5;fill:%23000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1' sodipodi:nodetypes='csscc' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
   }
-
   .titlebar-min,
   .titlebar-max,
   .titlebar-close {
@@ -275,8 +319,7 @@ html[zen-single-toolbar="true"] {
   .titlebar-buttonbox-container {
     order: -1 !important;
     margin-left: 8px !important;
-  } 
-  
+  }
   .titlebar-close {
     content: none !important;
     order: -1 !important;
@@ -298,7 +341,6 @@ html[zen-single-toolbar="true"] {
       margin-right: 8px !important;
       margin-top: 0px !important;
     }
-    
     .titlebar-close {
       content: none !important;
       order: 1 !important;

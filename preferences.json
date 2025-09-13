@@ -18,12 +18,12 @@
         "default": 1,
         "placeholder": false,
         "options": [
-          { "label": "No animation", "value": 0 },
+          { "label": "No Animation", "value": 0 },
           { "label": "Default", "value": 1 },
-          { "label": "Slightly bouncy", "value": 3 },
-          { "label": "More bouncy", "value": 2 },
-          { "label": "Crossfade (no blur)", "value": 4 },
-          { "label": "Zoom out", "value": 5 }
+          { "label": "Bounce Up", "value": 3 },
+          { "label": "Bounce Smooth", "value": 2 },
+          { "label": "Crossfade", "value": 4 },
+          { "label": "Zoom Out", "value": 5 }
         ]
       },
       {
@@ -34,13 +34,32 @@
         "default": 1,
         "placeholder": false,
         "options": [
-          { "label": "No animation", "value": 0 },
+          { "label": "No Animation", "value": 0 },
           { "label": "Default", "value": 1 },
-          { "label": "Lighter", "value": 3 },
-          { "label": "Heavier", "value": 2 },
-          { "label": "Grayscale (no blur)", "value": 4 },
-          { "label": "Blur + grayscale", "value": 5 },
-          { "label": "Just blur (Old Default)", "value": 6 }
+          { "label": "Scale Blur", "value": 3 },
+          { "label": "More Blur", "value": 2 },
+          { "label": "Grayscale", "value": 4 },
+          { "label": "Grayscale + Blur", "value": 5 },
+          { "label": "Blur (Old Default)", "value": 6 }
+        ]
+      },
+    {
+      "type": "separator",
+      "label": "🛰️ URL Bar Animations",
+      "margin": "15px 0 15px 0"
+    },
+      {
+        "type": "dropdown",
+        "property": "nebula-urlbar-animation",
+        "label": "URL Bar Animation",
+        "value": "number",
+        "default": 1,
+        "placeholder": false,
+        "options": [
+          { "label": "No Animation", "value": 0 },
+          { "label": "Default", "value": 1 },
+          { "label": "Scale Down", "value": 2 },
+          { "label": "Grayscale", "value": 3 }
         ]
       },
     {
@@ -56,30 +75,25 @@
         "default": 1,
         "placeholder": false,
         "options": [
-          { "label": "No animation", "value": 0 },
-          { "label": "Default", "value": 1 },
+          { "label": "None", "value": 0 },
+          { "label": "Zen Color", "value": 1 },
           { "label": "Monochrome", "value": 2 },
           { "label": "RGB", "value": 3 }
         ]
       },
-    {
-      "type": "separator",
-      "label": "🛰️ URL Bar Animations",
-      "margin": "15px 0 15px 0"
-    },
       {
         "type": "dropdown",
-        "property": "nebula-urlbar-animation",
-        "label": "URLBar Animation Style",
+        "property": "nebula-active-tab-glow",
+        "label": "Active Tab Glow",
         "value": "number",
-        "default": 1,
+        "default": 0,
         "placeholder": false,
         "options": [
-          { "label": "No animation", "value": 0 },
-          { "label": "Default", "value": 1 },
-          { "label": "Scale Down", "value": 2 },
-          { "label": "Grayscale (no blur)", "value": 3 }
-        ]
+          { "label": "None", "value": 0 },
+          { "label": "Zen color", "value": 1 },
+          { "label": "Tab Icon Color", "value": 2 }
+        ],
+        "margin": "12px 0"
       },
     {
       "type": "separator",
@@ -96,7 +110,7 @@
         "options": [
           { "label": "No background", "value": 0 },
           { "label": "Default", "value": 1 },
-          { "label": "Minimal (smooth animations)", "value": 2 }
+          { "label": "MacOS Dock Inspired", "value": 2 }
         ]
       },
     {
@@ -112,9 +126,9 @@
         "default": 1,
         "placeholder": false,
         "options": [
-          { "label": "Disable Nebula styling", "value": 0 },
+          { "label": "Disable", "value": 0 },
           { "label": "Default", "value": 1 },
-          { "label": "Floating (top-right of favicon, smaller size)", "value": 2 }
+          { "label": "Floating", "value": 2 }
         ]
       },
     {
@@ -185,12 +199,6 @@
     "type": "checkbox",
     "property": "nebula-essentials-gray-icons",
     "label": "Enable gray out essentials icons when idle",
-    "margin": "12px 0"
-  },
-  {
-    "type": "checkbox",
-    "property": "nebula-active-tab-glow",
-    "label": "Enable subtle glow on active tab",
     "margin": "12px 0"
   },
   {

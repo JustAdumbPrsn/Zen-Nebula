@@ -25,9 +25,9 @@ browser[transparent='true'] {
   --zen-main-browser-background: transparent !important;
 }
 
-/* Ensure blur rendering works (Linux) */
+/* Required for blur rendering */
 browser {
-  will-change: transform;
+    transform: translateZ(0);
 }
 
 /* ---------------------- TABS: NO SHADOW ---------------------- */

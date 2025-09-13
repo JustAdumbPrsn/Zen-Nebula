@@ -111,7 +111,7 @@ button.zen-workspace-creation-profile,
             (-moz-pref("nebula-workspace-style", 2))) {
   
   #zen-workspaces-button {
-    background-color: var(--nebula-color) !important;
+    background-color: var(--nebula-color-min) !important;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0) !important;
   }
 
@@ -263,7 +263,7 @@ button.zen-workspace-creation-profile,
 
 @media (-moz-pref("nebula-workspace-style", 2)) {
   #zen-workspaces-button {
-    background-color: var(--nebula-color) !important;
+    background-color: var(--nebula-color-min) !important;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0) !important;
   }
 

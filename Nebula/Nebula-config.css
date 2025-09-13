@@ -5,26 +5,50 @@ without searching through the code directly */
 
 :root {
   /* ✨ Glass & Blur */
-  --nebula-glass: blur(var(--var-nebula-glass-blur)) saturate(var(--var-nebula-glass-saturation));
-  --nebula-color-glass: light-dark(var(--var-nebula-color-glass-light), var(--var-nebula-color-glass-dark));
+  --nebula-glass: blur(var(--var-nebula-glass-blur)) saturate(var(--var-nebula-glass-saturation)) !important;
+  --nebula-color-glass: light-dark(var(--var-nebula-color-glass-light), var(--var-nebula-color-glass-dark)) !important;
 
   /* 🖼️ Layout */
-  --nebula-border-radius: var(--var-nebula-border-radius);
+  --nebula-border-radius: var(--var-nebula-border-radius) !important;
   --nebula-essentials-width: var(--var-nebula-essentials-width) !important;
-  --nebula-workspace-grayscale: var(--var-nebula-workspace-grayscale);
+  --nebula-workspace-grayscale: var(--var-nebula-workspace-grayscale) !important;
 
   /* 🎨 UI & Website Tint */
-  --nebula-ui-tint: light-dark(var(--var-nebula-ui-tint-light), var(--var-nebula-ui-tint-dark));
-  --nebula-website-tint: light-dark(var(--var-nebula-website-tint-light), var(--var-nebula-website-tint-dark));
+  --nebula-ui-tint: light-dark(var(--var-nebula-ui-tint-light), var(--var-nebula-ui-tint-dark)) !important;
+  --nebula-website-tint: light-dark(var(--var-nebula-website-tint-light), var(--var-nebula-website-tint-dark)) !important;
 
   /* 🔮 Colors */
-  --nebula-color-min: light-dark(var(--var-nebula-tabs-minimum-light), var(--var-nebula-tabs-minimum-dark));
-  --nebula-color: light-dark(var(--var-nebula-tabs-default-light), var(--var-nebula-tabs-default-dark));
-  --nebula-color-hover: light-dark(var(--var-nebula-tabs-hover-light), var(--var-nebula-tabs-hover-dark));
-  --nebula-color-selected: light-dark(var(--var-nebula-tabs-selected-light), var(--var-nebula-tabs-selected-dark));
+  --nebula-color-min: light-dark(var(--var-nebula-tabs-minimum-light), var(--var-nebula-tabs-minimum-dark)) !important;
+  --nebula-color: light-dark(var(--var-nebula-tabs-default-light), var(--var-nebula-tabs-default-dark)) !important;
+  --nebula-color-hover: light-dark(var(--var-nebula-tabs-hover-light), var(--var-nebula-tabs-hover-dark)) !important;
+  --nebula-color-selected: light-dark(var(--var-nebula-tabs-selected-light), var(--var-nebula-tabs-selected-dark)) !important;
   
-  --nebula-color-shadow: light-dark(var(--var-nebula-color-shadow-light), var(--var-nebula-color-shadow-dark));
+  --nebula-color-shadow: light-dark(var(--var-nebula-color-shadow-light), var(--var-nebula-color-shadow-dark)) !important;
 }
 
 /* DO NOT ADD OTHER CSS BELOW */
 /* More styles and options will come soon here! */
+
+/* Pre-defined backup values */
+:root {
+  /* ✨ Glass & Blur */
+  --nebula-glass: blur(32px) saturate(140%);
+  --nebula-color-glass: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4));
+  
+  /* 🖼️ Layout */
+  --nebula-border-radius: 13px;
+  --nebula-essentials-width: 60px;
+  --nebula-workspace-grayscale: 100%;
+  
+  /* 🎨 UI & Website Tint */
+  --nebula-ui-tint: light-dark(rgba(255,255,255,0.2), rgba(0,0,0,0.2));
+  --nebula-website-tint: light-dark(rgba(255,255,255,0), rgba(0,0,0,0));
+  
+  /* 🔮 Colors */
+  --nebula-color-min: light-dark(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
+  --nebula-color: light-dark(rgba(255,255,255,0.25), rgba(0,0,0,0.35));
+  --nebula-color-hover: light-dark(rgba(255,255,255,0.35), rgba(0,0,0,0.45));
+  --nebula-color-selected: light-dark(rgba(255,255,255,0.45), rgba(0,0,0,0.55));
+  
+  --nebula-color-shadow: light-dark(rgba(255, 255, 255, 0.055), rgba(0, 0, 0, 0.55));
+}

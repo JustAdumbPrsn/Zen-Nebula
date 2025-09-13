@@ -41,7 +41,7 @@
   border-radius: var(--nebula-border-radius) !important;
   backdrop-filter: saturate(1) !important;
   transition: border-radius 0.3s ease, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
-  background-color: var(--nebula-color) !important;
+  background-color: var(--nebula-color-min) !important;
 
   &:hover {
     border-radius: var(--nebula-border-radius) !important;
