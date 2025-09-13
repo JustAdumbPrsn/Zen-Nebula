@@ -65,5 +65,5 @@ jobs:
             --repo sineorg/store \
             --head JustAdumbPrsn:auto-update-nebula \
             --base main \
-            --title "Nebula.uc.js PR => ${{ steps.commit.outputs.subject }}" \
-            --body "### Commit message from Zen-Nebula:\n\n${{ steps.commit.outputs.full }}"
+            --title "Nebula.uc.js PR ${{ steps.commit.outputs.subject }}" \
+            --body "${{ steps.commit.outputs.full }}"
