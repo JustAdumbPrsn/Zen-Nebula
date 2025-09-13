@@ -20,17 +20,11 @@ jobs:
       - name: 📝 Get commit message
         id: commit
         run: |
-          {
-            echo 'subject<<EOF'
-            git log -1 --pretty=%s
-            echo 'EOF'
-          } >> $GITHUB_OUTPUT
+          subject=$(git log -1 --pretty=%s | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')
+          full=$(git log -1 --pretty=%B | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')
       
-          {
-            echo 'full<<EOF'
-            git log -1 --pretty=%B
-            echo 'EOF'
-          } >> $GITHUB_OUTPUT
+          echo "subject=$subject" >> "$GITHUB_OUTPUT"
+          echo "full=$full" >> "$GITHUB_OUTPUT"
 
       # Configure git identity
       - name: ⚙️ Setup Git
