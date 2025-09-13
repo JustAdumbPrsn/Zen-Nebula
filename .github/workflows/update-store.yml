@@ -20,11 +20,16 @@ jobs:
       - name: 📝 Get commit message
         id: commit
         run: |
+          # Subject (escaped, one-line safe)
           subject=$(git log -1 --pretty=%s | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')
-          full=$(git log -1 --pretty=%B | sed 's/%/%25/g; s/\r/%0D/g; s/\n/%0A/g')
-      
           echo "subject=$subject" >> "$GITHUB_OUTPUT"
-          echo "full=$full" >> "$GITHUB_OUTPUT"
+      
+          # Full message (multiline-safe with heredoc)
+          {
+            echo 'full<<EOF'
+            git log -1 --pretty=%B
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
 
       # Configure git identity
       - name: ⚙️ Setup Git
