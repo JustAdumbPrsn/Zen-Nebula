@@ -369,8 +369,10 @@
           // Save original
           this._origMethods.set(proto, proto.blendWithWhiteOverlay);
 
-          proto.blendWithWhiteOverlay = (baseColor, opacity) => {
-            const val = +this.gradientSlider?.value ?? opacity;
+          const moduleInstance = this;
+
+          proto.blendWithWhiteOverlay = function(baseColor, opacity) {
+            const val = +moduleInstance.gradientSlider?.value ?? opacity;
             if (val === 0) {
               if (Array.isArray(baseColor)) {
                 return `rgba(${baseColor.join(",")},0)`;
@@ -380,7 +382,8 @@
               }
               return "rgba(0,0,0,0)";
             }
-            return this._origMethods.get(proto).call(this, baseColor, opacity);
+            // Call the original method with the correct context
+            return moduleInstance._origMethods.get(proto).call(this, baseColor, opacity);
           };
 
           this._patched = true;
@@ -408,7 +411,7 @@
       Nebula.logger.log("🧹 [GradientSlider] Destroyed");
     }
   }
-  
+
   // ========== NebulaTitlebarBackgroundModule ==========
   class NebulaTitlebarBackgroundModule {
     constructor() {
@@ -812,7 +815,7 @@
     constructor() {
       this.OVERLAY_ID = 'Nebula-media-cover-art';
       this.TOOLBAR_ITEM_SELECTOR = '#zen-media-controls-toolbar > toolbaritem';
-      
+
       this.lastArtworkUrl = null;
       this.originalSetupMediaController = null;
       this.overlay = null;
@@ -1265,8 +1268,4 @@
 
   // Start the core
   Nebula.init();
-
-
 })();
-
-
