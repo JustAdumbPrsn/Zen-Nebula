@@ -162,7 +162,7 @@
 
 
 @media (-moz-pref("nebula-tab-switch-animation", 5)) {
-  #tabbrowser-tabpanels > hbox:not(:has(.zen-glance-background)):not([zen-split]) {
+  #tabbrowser-tabpanels > hbox:not(:has(.zen-glance-background)):not([zen-split="true"]) {
     transform: scale(1.05);
     filter: blur(15px);
     opacity: 1;
@@ -170,7 +170,7 @@
     will-change: transform, filter, opacity;
   }
 
-  #tabbrowser-tabpanels > hbox.deck-selected:not(:has(.zen-glance-background)):not([zen-split]) {
+  #tabbrowser-tabpanels > hbox.deck-selected:not(:has(.zen-glance-background)):not([zen-split="true"]) {
     transform: scale(1);
     opacity: 1 !important;
     filter: none !important;
