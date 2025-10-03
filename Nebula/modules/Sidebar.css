@@ -312,13 +312,13 @@ findbar {
     width: 90.05%;
 }
           
-findbar:not([hidden="true"]) {
+findbar:not([hidden]) {
     visibility: visible !important;
     animation: findbar-show-animation 0.3s ease-out forwards !important;
 }
 
 
-findbar[hidden="true"] {
+findbar[hidden] {
     opacity: 0 !important;
     transform: scale(0.95) !important;
     pointer-events: none !important;
