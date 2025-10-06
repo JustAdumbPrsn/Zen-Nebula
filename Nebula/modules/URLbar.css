@@ -156,8 +156,9 @@
 
 /* Open URL Bar State */
 #urlbar[open] .urlbarView {
-  min-height: 280px !important;
-  max-height: 73px !important;
+  min-height: 73px !important;
+  max-height: 280px !important;
+  overflow-y: auto !important;
   transition: min-height 0.2s ease, max-height 0.2s ease !important;
 }
 
