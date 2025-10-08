@@ -307,7 +307,7 @@ findbar {
     transition: opacity 0.2s ease, width 0.5s ease !important;
 }
 
-:has(.browserSidebarContainer.deck-selected > .browserContainer > findbar:not([hidden="true"])) #zen-tabbox-wrapper::before {
+:has(.browserSidebarContainer.deck-selected > .browserContainer > findbar:not([hidden])) #zen-tabbox-wrapper::before {
     opacity: 1 !important;
     width: 90.05%;
 }
