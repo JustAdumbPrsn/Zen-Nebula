@@ -95,8 +95,7 @@
   background-color: var(--nebula-color) !important;
 }
 
-/* Limit to 5 visible results & hide reader mode button */
-#urlbar[open] #urlbar-results > :nth-child(n+6),
+/* Hide reader mode button */
 #urlbar[open] #reader-mode-button {
   display: none !important;
 }
@@ -156,8 +155,8 @@
 
 /* Open URL Bar State */
 #urlbar[open] .urlbarView {
-  min-height: 280px !important;
-  max-height: 73px !important;
+  min-height: 73px !important;
+  max-height: 280px !important;
   transition: min-height 0.2s ease, max-height 0.2s ease !important;
 }
 
