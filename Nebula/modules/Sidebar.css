@@ -6,7 +6,7 @@ html[nebula-collapsed-toolbar] {
     padding-right: 2px;
     transform: none;
     width: 60px;
- }
+  }
 
   #navigator-toolbox {
     max-width: calc(var(--zen-toolbox-max-width) + 5px);
@@ -65,12 +65,18 @@ html[nebula-collapsed-toolbar] {
 
 /* --- Titlebar theming --- */
 
+/* Normal compact mode with blur */
 html[nebula-compact-mode] #titlebar {
   padding: 8px;
   border-radius: 11px;
-  scale: 1;
-  background: light-dark(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4));
+  background: light-dark(rgba(255,255,255,0.4), rgba(0,0,0,0.4));
   backdrop-filter: var(--nebula-glass);
+}
+
+/* When urlbar is open */
+html[nebula-compact-mode]:has(#urlbar[open]) #titlebar {
+  backdrop-filter: none !important;
+  background: light-dark(rgba(200,200,200,1), rgba(20,20,20,1)) !important;
 }
 
 :root[zen-right-side="true"][nebula-compact-mode] #titlebar {
@@ -282,6 +288,7 @@ findbar {
     z-index: 1000 !important;
     min-width: 90% !important;
     display: flex !important;
+    border: none !important;
     align-items: center !important;
     gap: 6px !important;
     padding: 6px 10px !important;

@@ -17,7 +17,7 @@
 /* ------------------ URLBar styling ------------------ */
 
 /* URL bar background - default state */
-#urlbar-background {
+.urlbar-background {
     background: var(--nebula-color) !important;
     box-shadow: 0 0px 3px transparent !important;
     border-radius: var(--nebula-border-radius) !important;
@@ -25,13 +25,13 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-#urlbar:hover:not([open]) #urlbar-background {
+#urlbar:hover:not([open]) .urlbar-background {
     background-color: var(--nebula-color-hover) !important;
     box-shadow: 0 0 3px var(--nebula-color-shadow) !important;
 }
 
 /* When URL bar is open - smooth visual effect */
-#urlbar[open] #urlbar-background {
+#urlbar[open] .urlbar-background {
     border-radius: 15px !important;
     background: light-dark(rgba(255,255,255,0.85), rgba(0,0,0,0.4)) !important;
     outline: none !important;
@@ -95,12 +95,6 @@
   background-color: var(--nebula-color) !important;
 }
 
-/* Limit to 5 visible results & hide reader mode button */
-#urlbar[open] #urlbar-results > :nth-child(n+6),
-#urlbar[open] #reader-mode-button {
-  display: none !important;
-}
-
 /* Center text in URL bar */
 /*#urlbar .urlbar-input,
 .urlbar-input-container {
@@ -138,36 +132,6 @@
 #urlbar-results .urlbarView-row:nth-child(3) { animation-delay: 0.1s; }
 #urlbar-results .urlbarView-row:nth-child(4) { animation-delay: 0.15s; }
 #urlbar-results .urlbarView-row:nth-child(5) { animation-delay: 0.2s; }
-
-/* ------------------ Dynamic Background Height ------------------ */
-
-:root {
-  --nebula-url-rows: 0; /* Default dynamic variable */
-}
-
-/* Dynamic Row Counting (only when not animating background) */
-:root:not([animating-background="true"]) {
-  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(1)) { --nebula-url-rows: 1 !important; }
-  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(2)) { --nebula-url-rows: 2 !important; }
-  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(3)) { --nebula-url-rows: 3 !important; }
-  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(4)) { --nebula-url-rows: 4 !important; }
-  #zen-main-app-wrapper:has(#urlbar-results > .urlbarView-row:first-child:nth-last-child(5)) { --nebula-url-rows: 5 !important; }
-}
-
-/* Open URL Bar State */
-#urlbar[open] .urlbarView {
-  min-height: 280px !important;
-  max-height: 73px !important;
-  transition: min-height 0.2s ease, max-height 0.2s ease !important;
-}
-
-/* URL Bar with Results (User Typing) */
-#zen-main-app-wrapper:has(#urlbar[open=""][focused=""][usertyping=""]) #urlbar .urlbarView {
-  --Auxiliar-Row-Height: calc(45px + 10px);
-  --min-height-view: calc(var(--Auxiliar-Row-Height) * var(--nebula-url-rows) + 8px);
-  min-height: var(--min-height-view) !important;
-  transition: min-height 0.5s ease !important;
-}
 
 /* ------------------ URLBar Website Animation ------------------ */
 
