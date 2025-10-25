@@ -6,7 +6,7 @@
   pointer-events: none;
   border-radius: 15px;
   opacity: 0;
-  background-color: light-dark(rgba(200, 200, 200, 1), rgba(20, 20, 20, 1));
+  background-color: light-dark(rgba(200, 200, 200, 1), rgba(30, 30, 30, 1));
   display: none;
 }
 
@@ -76,7 +76,7 @@
 /* Invert search icon for dark mode */
 @media (prefers-color-scheme: dark) {
   .urlbarView-favicon[src="chrome://global/skin/icons/search-glass.svg"] {
-    filter: invert(1);
+    filter: invert(0);
   }
 }
 

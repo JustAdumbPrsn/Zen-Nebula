@@ -78,47 +78,6 @@ browser {
   }
 }
 
-/* ------------------ MARGINLESS COMPACT MOD ------------------ */
-
-@media (-moz-pref("nebula-nogaps-compact-mod")) {
-  
-  html[nebula-compact-mode]:not([customizing]) {
-    /* scope everything to the wrapper */
-    #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), 
-                           :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
-                             
-      margin: 0 !important;
-
-      #zen-tabbox-wrapper {
-        margin: 0 !important;
-
-        .browserSidebarContainer,
-        browser {
-          margin: 0 !important;
-        }
-      }
-
-      /* single-toolbar case */
-      &[nebula-single-toolbar] {
-        position: relative;
-      }
-    }
-
-    /* navbar wrapper for single-toolbar */
-    &[nebula-single-toolbar] #zen-appcontent-navbar-wrapper {
-      position: absolute;
-      width: 100% !important;
-      height: 55px;
-      backdrop-filter: var(--nebula-glass);
-      background: var(--zen-main-browser-background) !important;
-      border-bottom: 0px solid light-dark(
-        rgba(0, 0, 0, 0.2),
-        rgba(255, 255, 255, 0.1)
-      );
-    }
-  }
-}
-
 /* ------------------- FLOATING STATUSBAR ------------------- */
 
 #statuspanel {

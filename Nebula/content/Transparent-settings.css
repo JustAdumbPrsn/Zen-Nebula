@@ -9,17 +9,56 @@ groupbox:not(#sineInstallationGroup:popover-open) {
   border: none;
 }
 
+#preferences-root{
+  background-color: transparent !important;
+}
+
+/* ---------------- Transparent backgrounds for all about: pages ---------------- */
+
 @-moz-document url-prefix("about:") {
+
+  /* General page background */
+  html, body, #toolbar, .App, .sticky-container, .main-search, .main-heading {
+    background-color: transparent !important;
+  }
+
+  /* Tables and action boxes */
   table,
+  tr,
   .action-box {
     background-color: light-dark(rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.35)) !important;
     border-radius: 13px !important;
+    border: none !important;
+  }
+
+  /* Table rows outline */
+  tr {
+    outline: solid 1px #88888822 !important;
+  }
+
+  /* Top sites / personalize buttons on home/newtab */
+  .top-sites-list,
+  .personalizeButtonWrapper {
+    opacity: 0 !important;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .top-sites-list:hover,
+  .personalizeButtonWrapper:hover {
+    opacity: 1 !important;
+  }
+
+  /* Hide default background elements */
+  .App > div:nth-child(2),
+  .wallpaper {
+    display: none !important;
   }
 }
 
+/*
 @-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing) {
   body, .App{
-    background-color: #00000070 !important;
+    background-color: transparent !important;
   }
 
   .top-sites-list, .personalizeButtonWrapper{
@@ -36,27 +75,10 @@ groupbox:not(#sineInstallationGroup:popover-open) {
   }
 }
 
-@-moz-document url(addons.mozilla.org) {
-  /* transparency */
-html, body, nav, header{
-  background-color: transparent !important;
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* darkreader */
-:root{
-  --darkreader-background-ffffff: transparent !important;
-}
-
-/* no footer */
-footer{
-  display: none !important;
-}
-}
-
-@-moz-document url(about:config){
+@-moz-document url(about:config), url(about:support), url(about:profiles) {
+  html, #toolbar{
+    background-color: transparent !important;
+  }
   tr, table{
     background-color: transparent !important;
     border: none !important;
@@ -65,6 +87,7 @@ footer{
     outline: solid 1px #88888822 !important;
   }
 }
+*/
 
 /* Fixes the transparent dialogs. */
 .dialogFrame {

@@ -92,8 +92,7 @@
     --toolbarbutton-hover-background: transparent !important;
   }
 
-  #TabsToolbar-customization-target .toolbarbutton-badge,
-  #TabsToolbar-customization-target .toolbarbutton-text {
+  #TabsToolbar-customization-target .toolbarbutton-badge {
     display: none !important;
   }
 

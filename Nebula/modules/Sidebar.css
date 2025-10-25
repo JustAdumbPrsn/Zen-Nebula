@@ -1,5 +1,5 @@
 /* -------------------------- COLLAPSED FIX -------------------------- */
-
+/*
 html[nebula-collapsed-toolbar] {
   #titlebar #TabsToolbar {
     padding-left: 2px;
@@ -18,7 +18,7 @@ html[nebula-collapsed-toolbar] {
       justify-content: center;
     }
   }
-}
+}*/
 
 /* -------------------------- COMPACT SIDEBAR -------------------------- */
 
@@ -65,16 +65,22 @@ html[nebula-collapsed-toolbar] {
 
 /* --- Titlebar theming --- */
 
+/* Disable outline */
+.zen-toolbar-background::before,
+.zen-toolbar-background::after {
+  outline: none !important;
+}
+
 /* Normal compact mode with blur */
-html[nebula-compact-mode] #titlebar {
+html[nebula-compact-mode] #titlebar > .zen-browser-generic-background {
   padding: 8px;
-  border-radius: 11px;
-  background: light-dark(rgba(255,255,255,0.4), rgba(0,0,0,0.4));
-  backdrop-filter: var(--nebula-glass);
+  border-radius: 13px !important;
+  background-color: light-dark(rgba(255,255,255,0.4), rgba(0,0,0,0.4)) !important;
+  backdrop-filter: var(--nebula-glass) !important;
 }
 
 /* When urlbar is open */
-html[nebula-compact-mode]:has(#urlbar[open]) #titlebar {
+html[nebula-compact-mode]:has(#urlbar[open]) > .zen-browser-generic-background {
   backdrop-filter: none !important;
   background: light-dark(rgba(200,200,200,1), rgba(20,20,20,1)) !important;
 }
@@ -191,68 +197,10 @@ scrollbox {
     display: none !important;
 }
 
-/* -------------------------- COMPACT TOPBAR --------------------------- */
-
-@media (-moz-pref("zen.view.compact.hide-toolbar")) {
-  /* Visible only when in Compact Mode */
-  html[nebula-compact-mode] #Nebula-navbar-background {
-    opacity: 0;
-    pointer-events: none;
-    z-index: -1;
-    border-radius: 13px;
-    transition: opacity 0.15s ease-out;
-    background-color: light-dark(rgba(200, 200, 200, 1), rgba(40, 40, 40, 1));
-  }
-
-  html[nebula-compact-mode] #Nebula-navbar-background.visible {
-    opacity: 1;
-  }
-
-  /* NavBar wrapper & layout */
-  html[nebula-compact-mode][nebula-multi-toolbar] #zen-appcontent-navbar-wrapper,
-  html[nebula-compact-mode][nebula-collapsed-toolbar] #zen-appcontent-navbar-wrapper {
-    #zen-appcontent-navbar-container {
-      display: block !important;
-      height: fit-content !important;
-      max-height: fit-content !important;
-      background: transparent !important;
-      box-shadow: none !important;
-
-      #nav-bar {
-        position: relative !important;
-        width: calc(100% - 28px) !important;
-        margin: 14px !important;
-        border-radius: 13px !important;
-        background: var(--nebula-color-glass) !important;
-        backdrop-filter: var(--nebula-glass) !important;
-        overflow: hidden;
-      }
-    }
-  }
-
-  html[nebula-compact-mode][nebula-multi-toolbar] #browser:has(#urlbar[open]) #nav-bar,
-  html[nebula-compact-mode][nebula-collapsed-toolbar] #browser:has(#urlbar[open]) #nav-bar {
-    backdrop-filter: none !important;
-  }
-
-  /* Personal Toolbar styling */
-  :root[nebula-compact-mode][nebula-multi-toolbar] #PersonalToolbar,
-  :root[nebula-compact-mode][nebula-collapsed-toolbar] #PersonalToolbar {
-    transform: translateX(10px) translateY(-12px) !important;
-    position: relative !important;
-    z-index: 3 !important;
-  }
-
-  :root[nebula-compact-mode][nebula-multi-toolbar] #PersonalToolbar toolbarbutton,
-  :root[nebula-compact-mode][nebula-collapsed-toolbar] #PersonalToolbar toolbarbutton {
-    background-color: var(--nebula-color) !important;
-    border-radius: 10px !important;
-    transition: background-color 0.3s ease, box-shadow 0.2s ease-out !important;
-  }
-}
+/* -------------------------- Personal Toolbar --------------------------- */
 
 /* Only apply when NOT in single toolbar */
-html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed="true"]) {
+html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed=""]) {
   padding-bottom: 3px !important;
 }
 
