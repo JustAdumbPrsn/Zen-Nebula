@@ -2,7 +2,7 @@
 // @name           nebula-core.uc.js
 // @description    Central engine for Nebula with all modules
 // @author         JustAdumbPrsn
-// @version        v3.3
+// @version        v3.4
 // @include        main
 // @grant          none
 // ==/UserScript==
@@ -1260,7 +1260,7 @@
   Nebula.register(NebulaPolyfillModule);
   Nebula.register(NebulaGradientSliderModule);
   Nebula.register(NebulaTitlebarBackgroundModule);
-  Nebula.register(NebulaNavbarBackgroundModule);
+  //Nebula.register(NebulaNavbarBackgroundModule); NOT NEEDED ANYMORE
   Nebula.register(NebulaURLBarBackgroundModule);
   Nebula.register(NebulaMediaCoverArtModule);
   Nebula.register(NebulaMenuModule);
