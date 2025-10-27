@@ -64,6 +64,25 @@
       },
     {
       "type": "separator",
+      "label": "🔖 Bookmark bar",
+      "margin": "15px 0 15px 0"
+    }, 
+      {
+        "type": "dropdown",
+        "value": "number",
+        "property": "cmi-Auto-Hide-BookmarkBar",
+        "label": "[Bookmark Toolbar Style] Automatically hide the bookmark bar ",
+        "default": 0,
+        "placeholder": false,
+        "options": [
+          {"label": "Disable","value": 0},  
+          {"label": "Display while hover the toolbar","value": 1},           
+          {"label": "Display while search","value": 2},
+          {"label": "Display in both cases","value": 3}
+        ]
+      },
+    {
+      "type": "separator",
       "label": "🛸 Glow Effects",
       "margin": "15px 0 15px 0"
     },
