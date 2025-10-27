@@ -71,7 +71,7 @@
         "type": "dropdown",
         "value": "number",
         "property": "cmi-Auto-Hide-BookmarkBar",
-        "label": "[Bookmark Toolbar Style] Automatically hide the bookmark bar ",
+        "label": "Automatically hide the bookmark bar ",
         "default": 0,
         "placeholder": false,
         "options": [
