@@ -59,10 +59,6 @@
     /* 关键：使用绝对定位脱离文档流 */
     position: absolute !important;
 
-  @media (-moz-pref("cmi-AHB-Firefox")) {
-    top: 100% !important; 
-  }      
-    
     left: 0 !important;
     right: 0 !important;
     z-index: 1 !important;
