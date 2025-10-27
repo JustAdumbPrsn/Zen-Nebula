@@ -18,8 +18,10 @@
   }
 
   /* Adapt for Zen (Since zen v1.17.1) */
+  @media (-moz-pref("zen.view.compact.enable-at-startup")) {
   #navigator-toolbox {
     height: calc(100% - (var(--zen-element-separation) * 4.5)) !important;
+  }
   }
   /* Bookmark bar Style */  
   #personal-bookmarks
