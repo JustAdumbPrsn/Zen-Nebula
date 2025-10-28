@@ -1,0 +1,118 @@
+/* Auto Hide Bookmark-bar */
+@media (not (-moz-pref("cmi-Auto-Hide-BookmarkBar", 0))) {
+  @media (not ((-moz-pref("zen.view.use-single-toolbar")))) {
+  /* Disabled in the compact mode (hide toolbar) to prevent conflicts. */
+  @media (not ((-moz-pref("zen.view.compact.hide-toolbar")) and (-moz-pref("zen.view.compact.enable-at-startup"))))  {
+  /* Bookmark bar color style */
+  @media (-moz-pref("cmi-bookmarks-theme-transparent")) {
+    #PersonalToolbar:not([customizing]) {
+      background-color: var(--zen-colors-tertiary) !important;
+    }
+  }
+
+  @media (not (-moz-pref("cmi-bookmarks-theme-transparent"))) {
+    #personal-bookmarks toolbarbutton.bookmark-item:not(#OtherBookmarks) {
+      border-radius: 11px !important;
+      background-color: light-dark(rgba(255,255,255,0.45), rgba(0,0,0,0.55)) !important;
+      height: 24px;
+    }
+  }
+
+  /* Adapt for Zen (Since zen v1.17.1) */
+  @media (-moz-pref("zen.view.compact.enable-at-startup")) {
+  #navigator-toolbox {
+    height: calc(100% - (var(--zen-element-separation) * 4.5)) !important;
+  }
+  }
+  /* Bookmark bar Style */  
+  #personal-bookmarks
+    #PlacesToolbarItems
+    > toolbarbutton.bookmark-item:not(
+      .subviewbutton,
+      [disabled="true"],
+      [open]
+    ):hover {
+      border-radius: 11px !important;
+      scale: 1.05 !important;
+  }
+
+  #personal-bookmarks
+    #PlacesToolbarItems
+    > toolbarbutton.bookmark-item:not(
+      .subviewbutton,
+      [disabled="true"]
+    ):hover:active {
+      border-radius: 11px !important;
+      scale: 1.05 !important;  
+      filter: brightness(1.5);
+  }
+
+  #personal-bookmarks
+    #PlacesToolbarItems
+    > toolbarbutton.bookmark-item[open="true"] {
+      border-radius: 11px !important;
+      scale: 1.05 !important;  
+      filter: brightness(1.5);
+  }
+  
+
+  /* 常态下隐藏书签栏,并禁止书签栏影响网页交互 */
+  /* By default, the bookmark bar is hidden and its influence on web page interaction is prevented */
+  #PersonalToolbar {
+    /* 关键：使用绝对定位脱离文档流 */
+    position: absolute !important;
+
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1 !important;
+  
+     /* 初始隐藏状态 */
+    opacity: 0 !important;
+    transform: translateY(-10px) !important;
+    pointer-events: none !important; /* 允许穿透点击到网页 */
+    transition:
+      opacity 300ms ease-out,
+      transform 300ms ease-out !important;
+  }
+
+  #PersonalToolbar:has([open]),
+  #PersonalToolbar:has([aria-expanded="true"]),
+  #PersonalToolbar:has(menupopup[open]),
+  #PersonalToolbar:has(menu[open]),
+  #PersonalToolbar:has(.bookmark-item[open]),
+  #nav-bar:hover + #PersonalToolbar,
+  #PersonalToolbar:hover,
+  #PersonalToolbar:focus-within {
+  /* 同时恢复可见性与交互，兼容 translateY / rotateX 两种动画变换 */
+  opacity: 1 !important;
+  transform: translateY(0) rotateX(0deg) !important;
+  pointer-events: auto !important;
+  /* 立即恢复交互，避免面板在重新进入时失去事件响应 */
+  transition-delay: 0s !important;
+  }
+    
+  /* 恢复书签栏 */
+  /* Expand the bookmarks-bar by hovering */
+  @media (-moz-pref("cmi-Auto-Hide-BookmarkBar", 1)) or (-moz-pref("cmi-Auto-Hide-BookmarkBar", 3)) {
+    #nav-bar:hover + #PersonalToolbar,
+    #PersonalToolbar:hover {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important; /* 恢复交互能力 */
+      
+      /* 添加轻微延迟避免误触发 */
+      transition-delay: 0.1s !important;
+    }
+  }
+}
+
+  /* Expand the bookmarks-bar when search */
+  @media (-moz-pref("cmi-Auto-Hide-BookmarkBar", 2)) or (-moz-pref("cmi-Auto-Hide-BookmarkBar", 3)) {
+    #nav-bar:focus-within + #PersonalToolbar {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+    }
+  }
+}
+}
