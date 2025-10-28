@@ -1,5 +1,6 @@
 /* Auto Hide Bookmark-bar */
 @media (not (-moz-pref("cmi-Auto-Hide-BookmarkBar", 0))) {
+  @media (not ((-moz-pref("zen.view.use-single-toolbar")))) {
   /* Disabled in the compact mode (hide toolbar) to prevent conflicts. */
   @media (not ((-moz-pref("zen.view.compact.hide-toolbar")) and (-moz-pref("zen.view.compact.enable-at-startup"))))  {
   /* Bookmark bar color style */
@@ -113,4 +114,5 @@
       pointer-events: auto !important;
     }
   }
+}
 }
