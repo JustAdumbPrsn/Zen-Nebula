@@ -1,7 +1,36 @@
 /* ------------------------ Glance Animation ----------------------- */
 
 .browserSidebarContainer.zen-glance-background.deck-selected {
-  filter: blur(5px) contrast(120%);
+  filter: blur(8px) contrast(120%);
+}
+
+.browserSidebarContainer.zen-glance-overlay {
+  & .browserContainer {
+		& .browserStack { 
+      box-shadow: none !important;
+     }
+  }
+}
+
+.zen-glance-sidebar-container {
+	transform: translate(-15%, 15%) !important;
+}
+
+/* Floating Glance window */
+.browserStack > browser[zen-glance-selected="true"] {
+  position: absolute !important;
+  background: light-dark(rgba(255,255,255,0.4), rgba(0,0,0,0.4)) !important;
+  top: 5% !important;
+  left: 1% !important;
+  width: 98% !important;
+  height: 90% !important;
+  border-radius: 13px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+  transition: box-shadow 0.3s ease-out !important;
+}
+
+.browserStack > browser[zen-glance-selected="true"]:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* ---------------------- Tab Loading Animation ---------------------- */

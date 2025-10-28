@@ -56,7 +56,7 @@ html[nebula-collapsed-toolbar] {
   pointer-events: none;
   border-radius: 11px;
   opacity: 0;
-  background-color: light-dark(rgba(200, 200, 200, 1), rgba(40, 40, 40, 1));
+  background-color: light-dark(rgba(200, 200, 200, 1), rgba(30, 30, 30, 1));
 }
 
 #Nebula-titlebar-background.visible {
@@ -69,20 +69,15 @@ html[nebula-collapsed-toolbar] {
 .zen-toolbar-background::before,
 .zen-toolbar-background::after {
   outline: none !important;
+  background-color: light-dark(rgba(255,255,255,0.4), rgba(0,0,0,0.4)) !important;
 }
 
-/* Normal compact mode with blur */
+/* Titlebar styling */
 html[nebula-compact-mode] #titlebar > .zen-browser-generic-background {
   padding: 8px;
   border-radius: 13px !important;
-  background-color: light-dark(rgba(255,255,255,0.4), rgba(0,0,0,0.4)) !important;
+  background-color: transparent !important;
   backdrop-filter: var(--nebula-glass) !important;
-}
-
-/* When urlbar is open */
-html[nebula-compact-mode]:has(#urlbar[open]) > .zen-browser-generic-background {
-  backdrop-filter: none !important;
-  background: light-dark(rgba(200,200,200,1), rgba(20,20,20,1)) !important;
 }
 
 :root[zen-right-side="true"][nebula-compact-mode] #titlebar {
@@ -200,15 +195,80 @@ scrollbox {
 /* -------------------------- Personal Toolbar --------------------------- */
 
 /* Only apply when NOT in single toolbar */
-html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed=""]) {
+/*html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed=""]) {
   padding-bottom: 3px !important;
-}
+}*/
 
 #PersonalToolbar toolbarbutton:hover {
   background-color: var(--nebula-color-hover) !important;
   box-shadow: 0 0px 3px var(--nebula-color-shadow) !important;
   border-radius: 10px !important;
   transition: background-color 0.3s ease, box-shadow 0.2s ease-out !important;
+}
+
+/* Auto Hide Bookmark-bar */
+
+@media (not (-moz-pref("nebula-bookmarks-autohide", 0))) {
+  /* Disabled in the compact mode (hide toolbar) to prevent conflicts. */
+  @media (not ((-moz-pref("zen.view.compact.hide-toolbar")) and 
+  (-moz-pref("zen.view.compact.enable-at-startup"))))  {
+
+    #personal-bookmarks toolbarbutton.bookmark-item:not(#OtherBookmarks), #import-button {
+      background-color: light-dark(rgba(255,255,255,0.45), rgba(0,0,0,0.55)) !important;
+       border-radius: 13px !important;
+    }
+  
+  /* Adapt for Zen (Since zen v1.17.1) */
+  @media (-moz-pref("zen.view.compact.enable-at-startup")) {
+    #navigator-toolbox {
+      height: calc(100% - (var(--zen-element-separation) * 4.5)) !important;
+    }
+  }
+
+  html:not([nebula-single-toolbar]) #PersonalToolbar {
+    position: absolute !important;
+    z-index: 1 !important;
+    opacity: 0 !important;
+    transform: translateY(-10px) !important;
+    transition:
+      opacity 200ms ease-out,
+      transform 200ms ease-out !important;
+    transition-delay: 0.35s !important;
+  }
+
+  #PersonalToolbar:has([open]),
+  #PersonalToolbar:has([aria-expanded="true"]),
+  #PersonalToolbar:has(menupopup[open]),
+  #PersonalToolbar:has(menu[open]),
+  #PersonalToolbar:has(.bookmark-item[open]),
+  #nav-bar:hover + #PersonalToolbar,
+  #PersonalToolbar:hover,
+  #PersonalToolbar:focus-within {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition-delay: 0s !important;
+  }
+    
+  /* Expand the bookmarks-bar by hovering */
+  @media (-moz-pref("nebula-bookmarks-autohide", 1)) or (-moz-pref("nebula-bookmarks-autohide", 3)) {
+    #nav-bar:hover + #PersonalToolbar,
+    #PersonalToolbar:hover {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+      transition-delay: 0.15s !important;
+    }
+  }
+}
+
+  /* Expand the bookmarks-bar when search */
+  @media (-moz-pref("nebula-bookmarks-autohide", 2)) or (-moz-pref("nebula-bookmarks-autohide", 3)) {
+    #nav-bar:focus-within + #PersonalToolbar {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+    }
+  }
 }
 
 /* -------------------------- FINDBAR -------------------------- */
@@ -250,7 +310,7 @@ findbar {
     position: absolute !important;
     z-index: 0 !important;
     content: "" !important;
-    background-color: light-dark(rgba(255, 255, 255, 1), rgba(40, 40, 40, 1)) !important;
+    background-color: light-dark(rgba(200, 200, 200, 1), rgba(30, 30, 30, 1)) !important;
     opacity: 0;
     width: 89%;
     top: 29px !important;

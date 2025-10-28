@@ -70,14 +70,14 @@
       {
         "type": "dropdown",
         "value": "number",
-        "property": "cmi-Auto-Hide-BookmarkBar",
-        "label": "Automatically hide the bookmark bar ",
+        "property": "nebula-bookmarks-autohide",
+        "label": "Automatically hide the bookmarks bar ",
         "default": 0,
         "placeholder": false,
         "options": [
           {"label": "Disable","value": 0},  
-          {"label": "Display while hover the toolbar","value": 1},           
-          {"label": "Display while search","value": 2},
+          {"label": "Display if hovered over topbar","value": 1},           
+          {"label": "Display when search","value": 2},
           {"label": "Display in both cases","value": 3}
         ]
       },
@@ -229,7 +229,7 @@
   {
     "type": "checkbox",
     "property": "nebula-nogaps-mod",
-    "label": "Enable NoGaps mod (single toolbar only)",
+    "label": "Enable NoGaps mod",
     "margin": "12px 0"
   },
   {

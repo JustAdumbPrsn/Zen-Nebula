@@ -108,7 +108,7 @@
   
   .unified-extensions-item {
     position: relative !important;
-    border-radius: calc(var(--nebula-border-radius) + 1px) !important;
+    border-radius: calc(var(--nebula-border-radius) - 2px) !important;
   }
 
   .unified-extensions-item::before {

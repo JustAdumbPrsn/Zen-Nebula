@@ -42,40 +42,90 @@ browser {
 /* ---------------------- NOGAPS MOD ---------------------- */
 
 @media (-moz-pref("nebula-nogaps-mod")) {
+	
+  :root[zen-single-toolbar="true"] .browserSidebarContainer {
+		border-top-left-radius: 0.1px !important;
+		border-top-right-radius: 0.1px !important;
+	}
 
-  html[nebula-single-toolbar]:not(:has(tab-group[split-view-group] .tabbrowser-tab:is([selected="true"], [visuallyselected="true"]))) {
+	:root[zen-compact-mode="true"]:not([customizing]) .browserSidebarContainer {
+		border-top-left-radius: 0.1px !important;
+		border-top-right-radius: 0.1px !important;
+	}
+	
+	:root[zen-right-side="true"]:not([zen-single-toolbar="true"]) .browserSidebarContainer{
+		border-top-left-radius: 0.1px !important;
+	}
+	
+	:root:not([zen-right-side="true"]):not([zen-single-toolbar="true"]) .browserSidebarContainer{
+		border-top-right-radius: 0.1px !important;
+	}
 
-    #zen-appcontent-wrapper {
-      position: relative;
-    }
+	.browserSidebarContainer {
+		border-bottom-left-radius: 0.1px !important;
+		border-bottom-right-radius: 0.1px !important;
+	}
 
-    #zen-appcontent-navbar-wrapper {
-      position: absolute;
-      width: 100% !important;
-      height: 55px;
-      backdrop-filter: var(--nebula-glass);
-      background: var(--zen-main-browser-background) !important;
-      border-bottom: 0px solid light-dark(
-        rgba(0, 0, 0, 0.2),
-        rgba(255, 255, 255, 0.1)
-      );
-    }
+	#zen-tabbox-wrapper {
+		margin: 0px !important;
+	}
 
-    #zen-tabbox-wrapper {
-      margin: 0 !important;
-    }
+	:root[zen-single-toolbar="true"] {
+		#zen-appcontent-navbar-wrapper {
+			min-height: 0.1px !important;
+			height: 0.1px !important;
+		}
 
-    .browserSidebarContainer {
-      border-radius: 0.1px !important;
-      box-shadow: none !important;
-    }
-  }
+		#zen-appcontent-navbar-wrapper[zen-has-hover="true"] {
+			height: 34px !important;
+		}
+	}
+	
+	@media -moz-pref("zen.view.compact.hide-toolbar") {
+		:root[zen-compact-mode="true"]{
+			#zen-appcontent-navbar-wrapper {
+				min-height: 0.1px !important;
+				height: 0.1px !important;
+			}
 
-  html[nebula-single-toolbar][zen-right-side="true"]:not([nebula-compact-mode]):not(:has(tab-group[split-view-group] .tabbrowser-tab:is([selected="true"], [visuallyselected="true"]))) 
-    #zen-appcontent-navbar-wrapper {
-      opacity: 0 !important;       /* invisible but still occupies space */
-      pointer-events: none !important;
-  }
+			#zen-appcontent-navbar-wrapper[zen-has-hover="true"] {
+				height: 38px !important;
+			}
+		}			
+	}
+
+	/* Tab Edits for split tab view */
+	.browserSidebarContainer[zen-split="true"] {
+		margin: 0px !important;
+	}
+
+	#tabbrowser-tabbox[zen-split-view="true"] #tabbrowser-tabpanels {
+		margin: 0px !important;
+		position: relative;
+	}
+
+	.deck-selected {
+		z-index: 1 !important;
+	}
+
+	.browserSidebarContainer:not(.deck-selected) {
+		z-index: 0 !important;
+	}
+
+	.zen-split-view-splitter:hover {
+		background: var(--zen-primary-color) !important;
+		filter: brightness(0.5);
+	}
+
+	.zen-split-view-splitter[orient="vertical"] {
+		width: 5px !important;
+		margin-left: -3px !important;
+	}
+
+	.zen-split-view-splitter[orient="horizontal"] {
+		height: 5px !important;
+		margin-top: 3px !important;
+	}
 }
 
 /* ------------------- FLOATING STATUSBAR ------------------- */
@@ -128,7 +178,7 @@ browser {
 
 #ctrlTab-panel {
   --panel-background: var(--nebula-color-glass) !important;
-  border-radius: var(--nebula-border-radius);
+  border-radius: calc(var(--nebula-border-radius) + 4px) !important;
   scale: 0.7;
   box-shadow: 0 4px 20px var(--nebula-color-shadow) !important;
 }
