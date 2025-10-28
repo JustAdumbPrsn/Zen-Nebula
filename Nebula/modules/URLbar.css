@@ -60,7 +60,7 @@
 
 /* Highlight selected row */
 .urlbarView-row[selected] {
-  background-color: rgba(100, 100, 100, 1) !important;
+  background-color: light-dark(rgba(100, 100, 100, 1), rgba(255,255,255,0.1)) !important;
 }
 
 /* Rounded corners for all rows */
