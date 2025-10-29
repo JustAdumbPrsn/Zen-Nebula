@@ -127,7 +127,19 @@ Follow these steps to install and apply the **Nebula** theme to Zen Browser:
 ###
 
 <div align="center">
-  <img height="300" src="https://github.com/user-attachments/assets/8a19fcdd-acf9-4540-9833-ae0be3cce363"  />
+  <img height="500" src="https://github.com/user-attachments/assets/8a19fcdd-acf9-4540-9833-ae0be3cce363"  />
+</div>
+
+###
+
+<h3 align="left">3. Install BlurMyShell (FOR GNOME LINUX)</h3>
+
+<p align="left">• First, make Zen transparent by setting <code>zen.widget.linux.transparency</code> to <code>true</code> in <code>about:config</code>.<br><br>• Next, install the <b>Blur My Shell</b> extension, open its settings, go to the <b>Application</b> tab, and enable <b>Application Blur</b>.<br><br>• Turn off <b>Opaque focused window</b> and set the <b>Opacity</b> slider to maximum to avoid weird artifacts.<br><br>• Add <code>zen</code> to the whitelist and you’re done — you now have a smooth, blurred Zen interface!<br><br>• (Optional) If you want the same look as my setup, you can copy my Blur My Shell configuration shown in the screenshot.</p>
+
+###
+
+<div align="center">
+  <img height="500" src="https://github.com/user-attachments/assets/9c624537-9612-4373-9d36-a558000ef8e6"  />
 </div>
 
 ###
