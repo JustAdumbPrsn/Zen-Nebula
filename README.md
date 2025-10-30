@@ -246,6 +246,7 @@ Here are some awesome projects that inspired or contributed to this project:
 - 🧠 [My Internet by sameerasw](https://github.com/sameerasw/my-internet)
 - 🍍 [Pineapple Fried by TheBigWazz](https://github.com/TheBigWazz/Pineapple-Fried)
 - 🧩 [Advanced Tab Groups by TFFC-Anoms12](https://github.com/TFFC-Anoms12/Advanced-Tab-Groups)
+- 💻 [NoGaps by Comp-Tech-Guy](https://github.com/Comp-Tech-Guy/No-Gaps)
 
 ---
 If I missed anyone, kindly let me know! 😊
