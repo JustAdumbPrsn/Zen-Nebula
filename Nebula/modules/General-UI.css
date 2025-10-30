@@ -42,6 +42,11 @@ browser {
 /* ---------------------- NOGAPS MOD ---------------------- */
 
 @media (-moz-pref("nebula-nogaps-mod")) {
+
+  hbox.browserSidebarContainer,
+  #zen-tabbox-wrapper {
+    box-shadow: none !important;
+  }
 	
   :root[zen-single-toolbar="true"] .browserSidebarContainer {
 		border-top-left-radius: 0.1px !important;
