@@ -34,9 +34,9 @@
   .tab-group-container::after {
     content: "";
     position: absolute;
-    top: 2px;
-    left: 7px;
-    bottom: 8px;
+    top: 5px;
+    left: 6px;
+    bottom: 5px;
     width: 4px;
     opacity: 0.5;
     border-radius: 5px;
