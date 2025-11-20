@@ -191,7 +191,6 @@
   #tabbrowser-tabpanels > hbox.deck-selected:not([zen-split="true"]):not(.zen-glance-background):not(:has(.zen-glance-background)) {
     opacity: 1 !important;
     pointer-events: auto !important;
-    position: relative !important;
     z-index: 1;
   }
 }
