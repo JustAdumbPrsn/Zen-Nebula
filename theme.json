@@ -1,6 +1,5 @@
 {
   "id": "Nebula",
-  "js": true,
   "homepage": "https://github.com/JustADumbPrsn/Zen-Nebula",
   "author": "JustADumbPrsn",
   "name": "Nebula",
@@ -10,6 +9,19 @@
   "updatedAt": "2025-10-28",
   "readme": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/README.md",
   "image": "https://i.ibb.co/Lqk4krw/Screenshot-2025-09-03-232353.png",
+  "style": {
+    "chrome": "userChrome.css",
+    "content": "userContent.css"
+  },
+  "scripts": {
+    "JS/Nebula.uc.js": {
+      "name": "Core script",
+      "description": "Central script for Nebula.",
+      "include": [
+        "chrome://browser/content/browser.xhtml"
+      ]
+    }
+  },
   "tags": [
     "content",
     "chrome",
