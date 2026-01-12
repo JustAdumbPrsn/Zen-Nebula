@@ -15,7 +15,7 @@
         "property": "nebula-tab-switch-animation",
         "label": "Tab Switch Animation",
         "value": "number",
-        "default": 1,
+        "defaultValue": 1,
         "placeholder": false,
         "options": [
           { "label": "No Animation", "value": 0 },
@@ -31,7 +31,7 @@
         "property": "nebula-tab-loading-animation",
         "label": "Tab Loading Animation",
         "value": "number",
-        "default": 1,
+        "defaultValue": 1,
         "placeholder": false,
         "options": [
           { "label": "No Animation", "value": 0 },
@@ -53,7 +53,7 @@
         "property": "nebula-urlbar-animation",
         "label": "URL Bar Animation",
         "value": "number",
-        "default": 1,
+        "defaultValue": 1,
         "placeholder": false,
         "options": [
           { "label": "No Animation", "value": 0 },
@@ -72,7 +72,7 @@
         "value": "number",
         "property": "nebula-bookmarks-autohide",
         "label": "Automatically hide the bookmarks bar ",
-        "default": 0,
+        "defaultValue": 0,
         "placeholder": false,
         "options": [
           {"label": "Disable","value": 0},  
@@ -91,7 +91,7 @@
         "property": "nebula-glow-gradient",
         "label": "Hover Glow Animations",
         "value": "number",
-        "default": 1,
+        "defaultValue": 1,
         "placeholder": false,
         "options": [
           { "label": "None", "value": 0 },
@@ -105,7 +105,7 @@
         "property": "nebula-active-tab-glow",
         "label": "Active Tab Glow",
         "value": "number",
-        "default": 0,
+        "defaultValue": 0,
         "placeholder": false,
         "options": [
           { "label": "None", "value": 0 },
@@ -124,7 +124,7 @@
         "property": "nebula-workspace-style",
         "label": "Workspace Button Style",
         "value": "number",
-        "default": 1,
+        "defaultValue": 1,
         "placeholder": false,
         "options": [
           { "label": "No background", "value": 0 },
@@ -142,7 +142,7 @@
         "property": "nebula-default-sound-style",
         "label": "Audio Button Style",
         "value": "number",
-        "default": 1,
+        "defaultValue": 1,
         "placeholder": false,
         "options": [
           { "label": "Disable", "value": 0 },
@@ -260,28 +260,28 @@
       "type": "string",
       "property": "var-nebula-glass-blur",
       "label": "Nebula Glass Blur",
-      "default": "32px",
+      "defaultValue": "32px",
       "placeholder": "e.g. 32px"
     },
     {
       "type": "string",
       "property": "var-nebula-glass-saturation",
       "label": "Nebula Glass Saturation",
-      "default": "140%",
+      "defaultValue": "140%",
       "placeholder": "e.g. 140%"
     },
     {
       "type": "string",
       "property": "var-nebula-color-glass-light",
       "label": "Nebula Glass Color (light)",
-      "default": "rgba(255, 255, 255, 0.4)",
+      "defaultValue": "rgba(255, 255, 255, 0.4)",
       "placeholder": "rgba(255, 255, 255, 0.4)"
     },
     {
       "type": "string",
       "property": "var-nebula-color-glass-dark",
       "label": "Nebula Glass Color (dark)",
-      "default": "rgba(0, 0, 0, 0.4)",
+      "defaultValue": "rgba(0, 0, 0, 0.4)",
       "placeholder": "rgba(0, 0, 0, 0.4)"
     },
   {
@@ -293,28 +293,28 @@
       "type": "string",
       "property": "var-nebula-ui-tint-light",
       "label": "UI Tint (light)",
-      "default": "rgba(255,255,255,0.2)",
+      "defaultValue": "rgba(255,255,255,0.2)",
       "placeholder": "rgba(255,255,255,0.2)"
     },
     {
       "type": "string",
       "property": "var-nebula-ui-tint-dark",
       "label": "UI Tint (dark)",
-      "default": "rgba(0,0,0,0.2)",
+      "defaultValue": "rgba(0,0,0,0.2)",
       "placeholder": "rgba(0,0,0,0.2)"
     },
     {
       "type": "string",
       "property": "var-nebula-website-tint-light",
       "label": "Website Tint (light)",
-      "default": "rgba(255,255,255,0)",
+      "defaultValue": "rgba(255,255,255,0)",
       "placeholder": "rgba(255,255,255,0)"
     },
     {
       "type": "string",
       "property": "var-nebula-website-tint-dark",
       "label": "Website Tint (dark)",
-      "default": "rgba(0,0,0,0)",
+      "defaultValue": "rgba(0,0,0,0)",
       "placeholder": "rgba(0,0,0,0)"
     },
   {
@@ -326,70 +326,70 @@
       "type": "string",
       "property": "var-nebula-tabs-minimum-light",
       "label": "Pinned Tabs (light)",
-      "default": "rgba(255, 255, 255, 0.1)",
+      "defaultValue": "rgba(255, 255, 255, 0.1)",
       "placeholder": "rgba(255, 255, 255, 0.1)"
     },
     {
       "type": "string",
       "property": "var-nebula-tabs-minimum-dark",
       "label": "Pinned Tabs (dark)",
-      "default": "rgba(0, 0, 0, 0.2)",
+      "defaultValue": "rgba(0, 0, 0, 0.2)",
       "placeholder": "rgba(0, 0, 0, 0.2)"
     },
     {
       "type": "string",
       "property": "var-nebula-tabs-default-light",
       "label": "Tab Default (light)",
-      "default": "rgba(255,255,255,0.25)",
+      "defaultValue": "rgba(255,255,255,0.25)",
       "placeholder": "rgba(255,255,255,0.25)"
     },
     {
       "type": "string",
       "property": "var-nebula-tabs-default-dark",
       "label": "Tab Default (dark)",
-      "default": "rgba(0,0,0,0.35)",
+      "defaultValue": "rgba(0,0,0,0.35)",
       "placeholder": "rgba(0,0,0,0.35)"
     },
     {
       "type": "string",
       "property": "var-nebula-tabs-hover-light",
       "label": "Tab Hover (light)",
-      "default": "rgba(255,255,255,0.35)",
+      "defaultValue": "rgba(255,255,255,0.35)",
       "placeholder": "rgba(255,255,255,0.35)"
     },
     {
       "type": "string",
       "property": "var-nebula-tabs-hover-dark",
       "label": "Tab Hover (dark)",
-      "default": "rgba(0,0,0,0.45)",
+      "defaultValue": "rgba(0,0,0,0.45)",
       "placeholder": "rgba(0,0,0,0.45)"
     },
     {
       "type": "string",
       "property": "var-nebula-tabs-selected-light",
       "label": "Tab Selected (light)",
-      "default": "rgba(255,255,255,0.45)",
+      "defaultValue": "rgba(255,255,255,0.45)",
       "placeholder": "rgba(255,255,255,0.45)"
     },
     {
       "type": "string",
       "property": "var-nebula-tabs-selected-dark",
       "label": "Tab Selected (dark)",
-      "default": "rgba(0,0,0,0.55)",
+      "defaultValue": "rgba(0,0,0,0.55)",
       "placeholder": "rgba(0,0,0,0.55)"
     },
     {
       "type": "string",
       "property": "var-nebula-color-shadow-light",
       "label": "Color of Shadows (light)",
-      "default": "rgba(255, 255, 255, 0.055)",
+      "defaultValue": "rgba(255, 255, 255, 0.055)",
       "placeholder": "rgba(255, 255, 255, 0.055)"
     },
     {
       "type": "string",
       "property": "var-nebula-color-shadow-dark",
       "label": "Color of Shadows (dark)",
-      "default": "rgba(0, 0, 0, 0.55)",
+      "defaultValue": "rgba(0, 0, 0, 0.55)",
       "placeholder": "rgba(0, 0, 0, 0.55)"
     },
   {
@@ -401,21 +401,21 @@
       "type": "string",
       "property": "var-nebula-border-radius",
       "label": "Border Radius (Roundness of UI)",
-      "default": "13px",
+      "defaultValue": "13px",
       "placeholder": "e.g. 13px"
     },
     {
       "type": "string",
       "property": "var-nebula-essentials-width",
       "label": "Essential Tabs Width",
-      "default": "60px",
+      "defaultValue": "60px",
       "placeholder": "e.g. 60px"
     },
     {
       "type": "string",
       "property": "var-nebula-workspace-grayscale",
       "label": "Workspace Buttons Grayscale",
-      "default": "100%",
+      "defaultValue": "100%",
       "placeholder": "e.g. 100%"
     }
 ]
