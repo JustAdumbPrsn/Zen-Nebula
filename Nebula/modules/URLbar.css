@@ -266,3 +266,102 @@
         background-position: -300% 50%;
     }
 }
+
+/* ------------------ URLBar Loading Animation (Integrated from chrome.css) ------------------ */
+/* Gradient color variable (can be overridden by preferences) */
+:root {
+    --w-urlbar-bg_color: #ff6b6b66, #4ecdc466, #ff6b6b66;
+}
+
+/* Loading gradient overlay inside the input container */
+#urlbar .urlbar-input-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--w-urlbar-bg_color));
+    background-size: 200% 100%;
+    animation: urlbar-loading-gradient 1s linear reverse infinite;
+    animation-play-state: paused;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+    /* Match upper URL bar rounded corners */
+    border-radius: 15px;
+}
+
+/* Activate animation when selected tab is busy */
+#main-window:has(.tabbrowser-tab[selected][busy]) .urlbar-input-container::before {
+    animation-play-state: running;
+    opacity: 1;
+}
+
+@keyframes urlbar-loading-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* ------------------ Sidebar Load Bar Progress ------------------ */
+/* Load bar always active (removed pref media query) */
+:root {
+    --bar-colour: transparent;
+    --bar-pcent: 0%;
+}
+
+.browserSidebarContainer.deck-selected { position: relative; }
+
+.browserSidebarContainer.deck-selected::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: var(--bar-pcent, 0%);
+    max-width: 100%;
+    background-color: var(--bar-colour, transparent);
+    border-radius: 0 2px 2px 0;
+    z-index: 999;
+    transition: width 0.5s ease-in-out, background 0.2s ease;
+}
+
+/* Glance variants */
+.browserSidebarContainer.deck-selected:has([zen-glance-selected])::before,
+.browserSidebarContainer.deck-selected.zen-glance-overlay::before {
+    max-width: 85%;
+    left: calc(15%/2);
+    border-radius: 6px;
+}
+
+.browserSidebarContainer.deck-selected.zen-glance-background::before {
+    background: transparent;
+    height: 0;
+}
+
+/* Progress states */
+:root:has(.tabbrowser-tab[selected][busy]) {
+    --bar-colour: var(--zen-primary-color);
+    --bar-pcent: 15%;
+}
+:root:has(.tabbrowser-tab[selected][busy][pendingicon]) {
+    --bar-colour: var(--zen-primary-color);
+    --bar-pcent: 45%;
+}
+:root:has(.tabbrowser-tab[selected][busy][pendingicon][progress]) {
+    --bar-colour: var(--zen-primary-color);
+    --bar-pcent: 85%;
+}
+:root:has(.tabbrowser-tab[selected][busy][progress]) {
+    --bar-colour: var(--zen-primary-color);
+    --bar-pcent: 95%;
+}
+/* Muted (complete) state */
+:root:has(.tabbrowser-tab[selected][muted]:not([busy])) {
+    --bar-colour: orangered;
+    --bar-pcent: 100%;
+}
+
+/* Muted state wants squared ends */
+:root:has(.tabbrowser-tab[selected][muted]:not([busy])) .browserSidebarContainer.deck-selected::before {
+    border-radius: 0;
+}
+
