@@ -18,26 +18,26 @@ html[nebula-collapsed-toolbar] {
       justify-content: center;
     }
   }
-} */
+}*/
 
 /* -------------------------- COMPACT SIDEBAR -------------------------- */
 
-#navigator-toolbox:not([animate="true"]) {
+#navigator-toolbox:not([animate='true']) {
   #titlebar {
     position: relative;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       pointer-events: none;
-      outline: 0 !important;
+      outline: 0px !important;
       z-index: -1;
       border-radius: 11px !important;
       background: transparent !important;
     }
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       pointer-events: none;
       z-index: 0;
@@ -56,7 +56,7 @@ html[nebula-collapsed-toolbar] {
   pointer-events: none;
   border-radius: 11px;
   opacity: 0;
-  background-color: light-dark(rgb(200 200 200 / 100%), rgb(30 30 30 / 100%));
+  background-color: light-dark(rgba(200, 200, 200, 1), rgba(30, 30, 30, 1));
 }
 
 #Nebula-titlebar-background.visible {
@@ -69,10 +69,7 @@ html[nebula-collapsed-toolbar] {
 .zen-toolbar-background::before,
 .zen-toolbar-background::after {
   outline: none !important;
-  background-color: light-dark(
-    rgb(255 255 255 / 40%),
-    rgb(0 0 0 / 40%)
-  ) !important;
+  background-color: light-dark(rgba(255,255,255,0.4), rgba(0,0,0,0.4)) !important;
 }
 
 /* Titlebar styling */
@@ -116,14 +113,12 @@ html[nebula-single-toolbar][nebula-compact-mode] #titlebar {
   }
 
   /* Right-side adjustments */
-  html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode]
-    #titlebar {
+  html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
     left: auto !important;
     right: var(--zen-element-separation) !important;
   }
 
-  html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode]
-    #titlebar {
+  html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
     left: auto !important;
     right: calc(var(--zen-element-separation) * 1.75) !important;
   }
@@ -139,10 +134,8 @@ html[nebula-single-toolbar][nebula-compact-mode] #titlebar {
       backdrop-filter: none !important;
     }
 
-    html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode]
-      #titlebar,
-    html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode]
-      #titlebar {
+    html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar,
+    html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
       left: auto !important;
       right: unset !important;
     }
@@ -157,14 +150,12 @@ html[nebula-single-toolbar][nebula-compact-mode] #titlebar {
     height: calc(100% - (var(--zen-element-separation) * 3)) !important;
   }
 
-  html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode]
-    #titlebar {
+  html[nebula-multi-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
     left: auto !important;
     right: var(--zen-element-separation) !important;
   }
 
-  html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode]
-    #titlebar {
+  html[nebula-collapsed-toolbar]:root[zen-right-side="true"][nebula-compact-mode] #titlebar {
     left: auto !important;
     right: calc(var(--zen-element-separation) * 1.75) !important;
   }
@@ -190,32 +181,29 @@ scrollbox {
 
 /* Hide the overflow background gradient */
 .workspace-arrowscrollbox[overflowing] {
-  --zen-scrollbar-overflow-background: transparent !important;
-
-  background: transparent !important;
+    --zen-scrollbar-overflow-background: transparent !important;
+    background: transparent !important;
 }
 
 /* Also remove any visual overlay pseudo-elements */
 .workspace-arrowscrollbox[overflowing]::before,
 .workspace-arrowscrollbox[overflowing]::after {
-  content: none !important;
-  display: none !important;
+    content: none !important;
+    display: none !important;
 }
 
 /* -------------------------- Personal Toolbar --------------------------- */
 
 /* Only apply when NOT in single toolbar */
-/* html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed=""]) {
+/*html:not([nebula-single-toolbar]) #PersonalToolbar:not([collapsed=""]) {
   padding-bottom: 3px !important;
-} */
+}*/
 
 #PersonalToolbar toolbarbutton:hover {
   background-color: var(--nebula-color-hover) !important;
-  box-shadow: 0 0 3px var(--nebula-color-shadow) !important;
+  box-shadow: 0 0px 3px var(--nebula-color-shadow) !important;
   border-radius: 10px !important;
-  transition:
-    background-color 0.3s ease,
-    box-shadow 0.2s ease-out !important;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease-out !important;
 }
 
 /* Auto Hide Bookmark-bar */
@@ -223,58 +211,55 @@ scrollbox {
 @media (not (-moz-pref("nebula-bookmarks-autohide", 0))) {
   /* Disabled in the compact mode (hide toolbar) to prevent conflicts. */
   @media (not ((-moz-pref("zen.view.compact.hide-toolbar")) and 
- (-moz-pref("zen.view.compact.enable-at-startup")))) {
-    #personal-bookmarks toolbarbutton.bookmark-item:not(#OtherBookmarks),
-    #import-button {
-      background-color: light-dark(
-        rgb(255 255 255 / 45%),
-        rgb(0 0 0 / 55%)
-      ) !important;
-      border-radius: 13px !important;
-    }
+  (-moz-pref("zen.view.compact.enable-at-startup"))))  {
 
-    /* Adapt for Zen (Since zen v1.17.1) */
-    @media (-moz-pref("zen.view.compact.enable-at-startup")) {
-      #navigator-toolbox {
-        height: calc(100% - (var(--zen-element-separation) * 4.5)) !important;
-      }
+    #personal-bookmarks toolbarbutton.bookmark-item:not(#OtherBookmarks), #import-button {
+      background-color: light-dark(rgba(255,255,255,0.45), rgba(0,0,0,0.55)) !important;
+       border-radius: 13px !important;
     }
-
-    html:not([nebula-single-toolbar]) #PersonalToolbar {
-      position: absolute !important;
-      z-index: 1 !important;
-      opacity: 0 !important;
-      transform: translateY(-10px) !important;
-      transition:
-        opacity 200ms ease-out,
-        transform 200ms ease-out !important;
-      transition-delay: 0.35s !important;
-    }
-
-    #PersonalToolbar:has([open]),
-    #PersonalToolbar:has([aria-expanded="true"]),
-    #PersonalToolbar:has(menupopup[open]),
-    #PersonalToolbar:has(menu[open]),
-    #PersonalToolbar:has(.bookmark-item[open]),
-    #nav-bar:hover + #PersonalToolbar,
-    #PersonalToolbar:hover,
-    #PersonalToolbar:focus-within {
-      opacity: 1 !important;
-      pointer-events: auto !important;
-      transition-delay: 0s !important;
-    }
-
-    /* Expand the bookmarks-bar by hovering */
-    @media (-moz-pref("nebula-bookmarks-autohide", 1)) or (-moz-pref("nebula-bookmarks-autohide", 3)) {
-      #nav-bar:hover + #PersonalToolbar,
-      #PersonalToolbar:hover {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-        pointer-events: auto !important;
-        transition-delay: 0.15s !important;
-      }
+  
+  /* Adapt for Zen (Since zen v1.17.1) */
+  @media (-moz-pref("zen.view.compact.enable-at-startup")) {
+    #navigator-toolbox {
+      height: calc(100% - (var(--zen-element-separation) * 4.5)) !important;
     }
   }
+
+  html:not([nebula-single-toolbar]) #PersonalToolbar {
+    position: absolute !important;
+    z-index: 1 !important;
+    opacity: 0 !important;
+    transform: translateY(-10px) !important;
+    transition:
+      opacity 200ms ease-out,
+      transform 200ms ease-out !important;
+    transition-delay: 0.35s !important;
+  }
+
+  #PersonalToolbar:has([open]),
+  #PersonalToolbar:has([aria-expanded="true"]),
+  #PersonalToolbar:has(menupopup[open]),
+  #PersonalToolbar:has(menu[open]),
+  #PersonalToolbar:has(.bookmark-item[open]),
+  #nav-bar:hover + #PersonalToolbar,
+  #PersonalToolbar:hover,
+  #PersonalToolbar:focus-within {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition-delay: 0s !important;
+  }
+    
+  /* Expand the bookmarks-bar by hovering */
+  @media (-moz-pref("nebula-bookmarks-autohide", 1)) or (-moz-pref("nebula-bookmarks-autohide", 3)) {
+    #nav-bar:hover + #PersonalToolbar,
+    #PersonalToolbar:hover {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+      transition-delay: 0.15s !important;
+    }
+  }
+}
 
   /* Expand the bookmarks-bar when search */
   @media (-moz-pref("nebula-bookmarks-autohide", 2)) or (-moz-pref("nebula-bookmarks-autohide", 3)) {
@@ -297,7 +282,6 @@ scrollbox {
     opacity: 0;
     transform: scale(0.95);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
@@ -305,163 +289,145 @@ scrollbox {
 }
 
 findbar {
-  position: fixed !important;
-  top: 30px !important;
-  right: 30px !important;
-  height: 42px !important;
-  z-index: 1000 !important;
-  min-width: 90% !important;
-  display: flex !important;
-  border: none !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 6px 10px !important;
-  background: var(--nebula-color-glass) !important;
-  backdrop-filter: var(--nebula-glass) !important;
-  border-radius: 13px !important;
-  box-shadow: 0 4px 14px var(--nebula-color-shadow) !important;
+    position: fixed !important;
+    top: 30px !important;
+    right: 30px !important;
+    height: 42px !important;
+    z-index: 1000 !important;
+    min-width: 90% !important;
+    display: flex !important;
+    border: none !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 10px !important;
+    background: var(--nebula-color-glass) !important;
+    backdrop-filter: var(--nebula-glass) !important;
+    border-radius: 13px !important;
+    box-shadow: 0 4px 14px var(--nebula-color-shadow) !important;
 }
 
 #zen-tabbox-wrapper::before {
-  position: absolute !important;
-  z-index: 0 !important;
-  content: "" !important;
-  background-color: light-dark(
-    rgb(200 200 200 / 100%),
-    rgb(30 30 30 / 100%)
-  ) !important;
-  opacity: 0;
-  width: 89%;
-  top: 29px !important;
-  right: 30px;
-  height: 43px !important;
-  bottom: auto !important;
-  border-radius: 13px;
-  visibility: visible !important;
-  transition:
-    opacity 0.2s ease,
-    width 0.5s ease !important;
+    position: absolute !important;
+    z-index: 0 !important;
+    content: "" !important;
+    background-color: light-dark(rgba(200, 200, 200, 1), rgba(30, 30, 30, 1)) !important;
+    opacity: 0;
+    width: 89%;
+    top: 29px !important;
+    right: 30px;
+    height: 43px !important;
+    bottom: auto !important;
+    border-radius: 13px;
+    visibility: visible !important;
+    transition: opacity 0.2s ease, width 0.5s ease !important;
 }
 
-:has(
-    .browserSidebarContainer.deck-selected
-      > .browserContainer
-      > findbar:not([hidden])
-  )
-  #zen-tabbox-wrapper::before {
-  opacity: 1 !important;
-  width: 90.05%;
+:has(.browserSidebarContainer.deck-selected > .browserContainer > findbar:not([hidden])) #zen-tabbox-wrapper::before {
+    opacity: 1 !important;
+    width: 90.05%;
 }
-
+          
 findbar:not([hidden]) {
-  visibility: visible !important;
-  animation: findbar-show-animation 0.3s ease-out forwards !important;
+    visibility: visible !important;
+    animation: findbar-show-animation 0.3s ease-out forwards !important;
 }
+
 
 findbar[hidden] {
-  opacity: 0 !important;
-  transform: scale(0.95) !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    visibility 0s linear 0.2s !important;
+    opacity: 0 !important;
+    transform: scale(0.95) !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s !important;
 }
 
 .findbar-textbox {
-  flex-grow: 1 !important;
-  min-width: 230px !important;
-  background: transparent !important;
-  color: inherit !important;
-  border: none !important;
-  outline: none !important;
-  font-size: 14px !important;
-  padding: 4px 10px !important;
-  box-shadow: none !important;
+    flex-grow: 1 !important;
+    min-width: 230px !important;
+    background: transparent !important;
+    color: inherit !important;
+    border: none !important;
+    outline: none !important;
+    font-size: 14px !important;
+    padding: 4px 10px !important;
+    box-shadow: none !important;
 }
 
+
 findbar toolbarbutton {
-  background: light-dark(rgb(255 255 255 / 15%), rgb(0 0 0 / 15%)) !important;
-  border-radius: 6.5px !important;
-  transition:
-    background 0.2s ease,
-    transform 0.1s ease-out !important;
+    background: light-dark(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.15)) !important;
+    border-radius: 6.5px !important;
+    transition: background 0.2s ease, transform 0.1s ease-out !important;
 }
 
 findbar .findbar-find-previous,
 findbar .findbar-find-next {
   align-self: center;
-  width: 20px !important;
-  height: 20px !important;
-  padding: 2px !important;
-  font-size: 10px !important;
+    width: 20px !important;
+    height: 20px !important;
+    padding: 2px !important;
+    font-size: 10px !important;
 }
 
 .findbar-find-previous {
-  margin-right: 4px !important;
+    margin-right: 4px !important;
 }
 
 findbar .findbar-close {
-  width: 18px !important;
-  height: 18px !important;
-  padding: 2px !important;
-  font-size: 10px !important;
-  margin-left: auto !important;
+    width: 18px !important;
+    height: 18px !important;
+    padding: 2px !important;
+    font-size: 10px !important;
+    margin-left: auto !important;
 }
 
 findbar toolbarbutton:hover {
-  background: light-dark(rgb(255 255 255 / 60%), rgb(0 0 0 / 60%)) !important;
-  transform: scale(1.05) !important;
+    background: light-dark(rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.6)) !important;
+    transform: scale(1.05) !important;
 }
 
 findbar toolbarbutton:active {
-  transform: scale(0.92) !important;
+    transform: scale(0.92) !important;
 }
 
 /* -------------------------- BOOKMARKS -------------------------- */
 
 /* Transparent Sidebar Items */
 .sidebar-panel {
-  background: transparent !important;
-  font-weight: 600 !important;
-  opacity: 0.7 !important;
+    background: transparent !important;
+    font-weight: 600 !important;
+    opacity: 0.7 !important;
 }
 
 /* Clean & Transparent Sidebar Box */
 #sidebar-box {
-  background-color: light-dark(
-    rgb(255 255 255 / 11%),
-    rgb(0 0 0 / 20%)
-  ) !important;
-  border: none !important;
+    background-color: light-dark(rgba(255, 255, 255, 0.11), rgba(0, 0, 0, 0.2)) !important;
+    border: none !important;
 }
 
 #sidebar-box #sidebar-header {
-  border-bottom: none !important;
+    border-bottom: none !important;
 }
-
 #sidebar-search-container {
-  background-color: rgb(0 0 0 / 0%) !important;
+background-color: rgba(0,0,0,0) !important;
 }
-
 #sidebar-header {
-  background-color: rgb(0 0 0 / 0%) !important;
+  background-color: rgba(0,0,0,0) !important;
 }
 
 /* Transparent Sidebar Search Box & View Button */
 #sidebar-search-container > #search-box,
 #viewButton {
-  padding: 4px 8px !important;
-  appearance: none !important;
-  background-color: transparent !important;
-  border-radius: 10px !important;
-  border: none !important;
+    padding: 4px 8px !important;
+    appearance: none !important;
+    background-color: transparent !important;
+    border-radius: 10px !important;
+    border: none !important;
 }
 
 #sidebar-search-container > #search-box:hover,
 #viewButton:hover,
 #sidebar-search-container > #search-box:active,
 #viewButton:active {
-  background-color: rgb(255 255 255 / 10%) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
 }
