@@ -1,4 +1,12 @@
-/* Nebula */
-@import url("nebula/chrome.css");
+/* ============================================================================
+ * Zen-Nebula - userChrome.css
+ * Glassmorphism-based theme for Zen Browser
+ * ============================================================================
+ * This is the main entry point. It imports all theme modules.
+ * 
+ * Installation: Copy nebula/chrome.css to ~/.zen/your-profile/userChrome.css
+ *              Restart browser
+ * ========================================================================== */
 
-/* Add additional CSS below */
+/* The actual theme is in nebula/chrome.css - import it after your custom CSS */
+@import url("nebula/chrome.css");

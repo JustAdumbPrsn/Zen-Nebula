@@ -11,6 +11,10 @@ without searching through the code directly */
     var(--var-nebula-color-glass-light),
     var(--var-nebula-color-glass-dark)
   ) !important;
+  /* Fallback for Firefox < 123 */
+  @supports not (color: light-dark(red, blue)) {
+    --nebula-color-glass: var(--var-nebula-color-glass-light);
+  }
 
   /* 🖼️ Layout */
   --nebula-border-radius: var(--var-nebula-border-radius) !important;

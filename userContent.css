@@ -1,4 +1,10 @@
-/* Nebula */
-@import url("nebula/content.css");
+/* ============================================================================
+ * Zen-Nebula - userContent.css
+ * Website styling overrides for Zen Browser's content area
+ * ============================================================================
+ * Installation: Copy nebula/content.css to ~/.zen/your-profile/userContent.css
+ *              Restart browser
+ * ========================================================================== */
 
-/* Add additional CSS below */
+/* The actual content styling is in nebula/content.css */
+@import url("nebula/content.css");

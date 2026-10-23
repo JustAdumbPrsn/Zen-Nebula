@@ -6,8 +6,8 @@
     "createdAt": "2000-01-01",
     "updatedAt": "2000-01-01",
     "homepage": "https://github.com/JustADumbPrsn/Zen-Nebula",
-    "version": "1.0.0",
-    "style": { "chrome": "userChrome.css", "content": "userContent.css" },
+    "version": "3.5.0",
+    "style": { "chrome": "nebula/chrome.css", "content": "nebula/content.css" },
     "scripts": {
       "js/nebula.uc.js": {
         "include": ["chrome://browser/content/browser.xhtml"]

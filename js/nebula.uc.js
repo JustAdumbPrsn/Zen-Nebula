@@ -115,6 +115,26 @@
         }
       });
       this.logger.log("🧹 All modules destroyed.");
+
+      // Cleanup event listeners and intervals to prevent memory leaks
+      if (gBrowser?.tabContainer) {
+        gBrowser.tabContainer.removeEventListener("TabSelect", this.updateFaviconColor);
+        gBrowser.tabContainer.removeEventListener("TabAttrModified", this.updateFaviconColor);
+      }
+      if (this.compactObserver) {
+        this.compactObserver.disconnect();
+      }
+      if (this.modeObserver) {
+        this.modeObserver.disconnect();
+      }
+      if (this._faviconTimeout) {
+        clearTimeout(this._faviconTimeout);
+      }
+      if (this._gBrowserCheckInterval) {
+        clearInterval(this._gBrowserCheckInterval);
+        this._gBrowserCheckInterval = null;
+      }
+
       delete window.Nebula;
     },
 
@@ -151,9 +171,9 @@
       // Wait until gBrowser is available
       if (!window.gBrowser) {
         await new Promise((resolve) => {
-          const check = setInterval(() => {
+          this._gBrowserCheckInterval = setInterval(() => {
             if (window.gBrowser?.tabContainer) {
-              clearInterval(check);
+              clearInterval(this._gBrowserCheckInterval);
               resolve();
             }
           }, 50);
