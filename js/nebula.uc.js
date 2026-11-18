@@ -1436,6 +1436,10 @@
     static WALLPAPER_PREF = "nebula-fullscreen-wallpaper";
     static DISABLE_PREF = "nebula-fullscreen-glass-disable";
     static CACHE_WIDTH = 1600;
+    // Played as-is: videos in a <video>, animated images straight from disk
+    // (converting them to JPEG would freeze them).
+    static VIDEO_EXT = /\.(mp4|m4v|mov|webm)$/i;
+    static ANIMATED_EXT = /\.(gif|webp|apng)$/i;
 
     constructor() {
       this.root = document.documentElement;
@@ -1473,6 +1477,28 @@
       const image = document.createElement("div");
       image.id = "nebula-fullscreen-glass-image";
       this.layer.appendChild(image);
+      this.video = document.createElementNS(
+        "http://www.w3.org/1999/xhtml",
+        "video",
+      );
+      this.video.id = "nebula-fullscreen-glass-video";
+      Object.assign(this.video, {
+        muted: true,
+        loop: true,
+        playsInline: true,
+        disablePictureInPicture: true,
+      });
+      this.video.setAttribute("aria-hidden", "true");
+      this.video.addEventListener("error", () => {
+        if (!this.video.getAttribute("src")) return;
+        // A file Gecko can't decode (e.g. some HEVC/ProRes .mov) falls back
+        // to the gradient instead of an empty layer.
+        Nebula.logger.warn(
+          `⚠️ [FullscreenGlass] Can't play ${this.video.src} (code ${this.video.error?.code}).`,
+        );
+        this.clearWallpaper();
+      });
+      this.layer.appendChild(this.video);
       wrapper.prepend(this.layer);
 
       this.observer = new MutationObserver(this.onAttributesChanged);
@@ -1490,7 +1516,12 @@
     }
 
     onAttributesChanged() {
-      if (this.inNativeFullscreen) this.refreshWallpaper();
+      if (this.inNativeFullscreen) {
+        this.refreshWallpaper();
+      } else {
+        // Don't keep decoding a video nobody can see.
+        this.video?.pause();
+      }
     }
 
     onPrefChanged() {
@@ -1528,15 +1559,39 @@
       const source = override || (await this.detectWallpaper());
       if (!source || !(await IOUtils.exists(source))) {
         // Drop any previous image so a bad path visibly falls back.
-        this.root.style.removeProperty("--nebula-fullscreen-wallpaper");
-        this.lastSource = null;
+        this.clearWallpaper();
         Nebula.logger.warn(`⚠️ [FullscreenGlass] No wallpaper at "${source}".`);
         return;
       }
 
       const { lastModified } = await IOUtils.stat(source);
       const key = `${source}:${lastModified}`;
-      if (key === this.lastSource) return;
+      if (key === this.lastSource) {
+        if (this.layer.getAttribute("media") === "video") this.playVideo();
+        return;
+      }
+
+      if (NebulaFullscreenGlassModule.VIDEO_EXT.test(source)) {
+        this.root.style.removeProperty("--nebula-fullscreen-wallpaper");
+        this.video.src = PathUtils.toFileURI(source);
+        this.layer.setAttribute("media", "video");
+        this.lastSource = key;
+        this.playVideo();
+        Nebula.logger.log(`✅ [FullscreenGlass] Using video ${source}`);
+        return;
+      }
+      this.stopVideo();
+      this.layer.setAttribute("media", "image");
+
+      if (NebulaFullscreenGlassModule.ANIMATED_EXT.test(source)) {
+        this.root.style.setProperty(
+          "--nebula-fullscreen-wallpaper",
+          `url("${PathUtils.toFileURI(source)}")`,
+        );
+        this.lastSource = key;
+        Nebula.logger.log(`✅ [FullscreenGlass] Using animated ${source}`);
+        return;
+      }
 
       // Convert to a small JPEG: Gecko can't decode HEIC (most built-in macOS
       // wallpapers), and a heavy blur doesn't need full resolution anyway.
@@ -1566,8 +1621,7 @@
         else await IOUtils.remove(cache, { ignoreAbsent: true });
       }
       if (!(await IOUtils.exists(cache))) {
-        this.root.style.removeProperty("--nebula-fullscreen-wallpaper");
-        this.lastSource = null;
+        this.clearWallpaper();
         throw new Error(
           `Could not read "${source}". If it lives in another app's folder, ` +
             `allow Zen to access data from other apps, or set ` +
@@ -1583,6 +1637,27 @@
       );
       this.lastSource = key;
       Nebula.logger.log(`✅ [FullscreenGlass] Using wallpaper ${source}`);
+    }
+
+    playVideo() {
+      if (!this.inNativeFullscreen) return;
+      // Decode failures are handled by the "error" listener; this only
+      // catches play() being interrupted (e.g. leaving fullscreen).
+      this.video.play().catch(() => {});
+    }
+
+    stopVideo() {
+      if (!this.video?.getAttribute("src")) return;
+      this.video.pause();
+      this.video.removeAttribute("src");
+      this.video.load(); // releases the decoder
+    }
+
+    clearWallpaper() {
+      this.stopVideo();
+      this.layer?.removeAttribute("media");
+      this.root.style.removeProperty("--nebula-fullscreen-wallpaper");
+      this.lastSource = null;
     }
 
     // Reads the wallpaper of the screen the window is on via AppKit, which
@@ -1630,8 +1705,8 @@
           this.onPrefChanged,
         );
       }
+      this.clearWallpaper();
       this.layer?.remove();
-      this.root.style.removeProperty("--nebula-fullscreen-wallpaper");
       Nebula.logger.log("🧹 [FullscreenGlass] Destroyed.");
     }
   }

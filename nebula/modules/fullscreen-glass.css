@@ -4,8 +4,9 @@
  * In macOS native fullscreen the window sits in its own Space, so the
  * system blur has nothing behind it and the glass turns solid.
  * nebula.uc.js (NebulaFullscreenGlassModule) exposes a downscaled copy of
- * the desktop wallpaper as --nebula-fullscreen-wallpaper; this paints it
- * blurred behind the UI to fake the same glass.
+ * the desktop wallpaper as --nebula-fullscreen-wallpaper (or plays a video
+ * wallpaper in #nebula-fullscreen-glass-video); this paints it blurred behind
+ * the UI to fake the same glass.
  */
 
 #nebula-fullscreen-glass {
@@ -45,19 +46,44 @@
         }
       }
 
-      & #nebula-fullscreen-glass-image {
+      & #nebula-fullscreen-glass {
+        --nebula-fullscreen-glass-brightness: 1.05;
+
+        @media (prefers-color-scheme: dark) {
+          --nebula-fullscreen-glass-brightness: 0.75;
+        }
+      }
+
+      & #nebula-fullscreen-glass-image,
+      & #nebula-fullscreen-glass-video {
         position: absolute;
 
         /* Overscan so the blur doesn't fade at the screen edges. */
         inset: calc(var(--var-nebula-fullscreen-glass-blur, 60px) * -2);
-        background: var(--nebula-fullscreen-wallpaper, none) center / cover
-          no-repeat;
         filter: blur(var(--var-nebula-fullscreen-glass-blur, 60px))
           saturate(var(--var-nebula-fullscreen-glass-saturation, 1.6))
-          brightness(var(--nebula-fullscreen-glass-brightness, 1.05));
+          brightness(var(--nebula-fullscreen-glass-brightness));
+      }
 
-        @media (prefers-color-scheme: dark) {
-          --nebula-fullscreen-glass-brightness: 0.75;
+      & #nebula-fullscreen-glass-image {
+        background: var(--nebula-fullscreen-wallpaper, none) center / cover
+          no-repeat;
+      }
+
+      & #nebula-fullscreen-glass-video {
+        display: none;
+        width: calc(100% + var(--var-nebula-fullscreen-glass-blur, 60px) * 4);
+        height: calc(100% + var(--var-nebula-fullscreen-glass-blur, 60px) * 4);
+        object-fit: cover;
+      }
+
+      & #nebula-fullscreen-glass[media="video"] {
+        & #nebula-fullscreen-glass-image {
+          display: none;
+        }
+
+        & #nebula-fullscreen-glass-video {
+          display: block;
         }
       }
     }

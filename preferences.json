@@ -440,6 +440,6 @@
     "type": "string",
     "property": "nebula-fullscreen-wallpaper",
     "label": "Custom fullscreen wallpaper (blank = desktop wallpaper)",
-    "placeholder": "e.g. ~/Pictures/wallpaper.jpg"
+    "placeholder": "e.g. ~/Pictures/wallpaper.jpg or ~/Movies/loop.mp4"
   }
 ]
