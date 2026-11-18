@@ -417,5 +417,29 @@
     "label": "Workspace Buttons Grayscale",
     "defaultValue": "100%",
     "placeholder": "e.g. 100%"
+  },
+  {
+    "type": "separator",
+    "label": "🪟 macOS Fullscreen Glass",
+    "margin": "15px 0 15px 0"
+  },
+  {
+    "type": "checkbox",
+    "property": "nebula-fullscreen-glass-disable",
+    "label": "Disable the blurred-wallpaper glass in macOS fullscreen",
+    "margin": "12px 0"
+  },
+  {
+    "type": "string",
+    "property": "var-nebula-fullscreen-glass-blur",
+    "label": "Fullscreen Glass Blur",
+    "defaultValue": "60px",
+    "placeholder": "e.g. 60px"
+  },
+  {
+    "type": "string",
+    "property": "nebula-fullscreen-wallpaper",
+    "label": "Custom fullscreen wallpaper (blank = desktop wallpaper)",
+    "placeholder": "e.g. ~/Pictures/wallpaper.jpg"
   }
 ]

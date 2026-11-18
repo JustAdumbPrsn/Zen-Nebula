@@ -13,6 +13,7 @@
 @import url("modules/tab-animations.css");
 @import url("modules/tab-folders.css");
 @import url("modules/workspace-buttons.css");
+@import url("modules/fullscreen-glass.css");
 
 /* config import */
 @import url("config.css");
