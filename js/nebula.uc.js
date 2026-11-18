@@ -523,7 +523,13 @@
       });
       this.browser.appendChild(this.overlay);
 
-      gZenCompactModeManager.addEventListener(this._compactCallback);
+      // gZenCompactModeManager.addEventListener no longer exists in Zen, so
+      // watch the attribute NebulaPolyfillModule keeps in sync instead.
+      this.compactObserver = new MutationObserver(this._compactCallback);
+      this.compactObserver.observe(this.root, {
+        attributes: true,
+        attributeFilter: ["nebula-compact-mode"],
+      });
 
       if (this.root.hasAttribute("nebula-compact-mode")) {
         this.startLiveTracking();
@@ -622,7 +628,8 @@
     }
 
     destroy() {
-      gZenCompactModeManager.removeEventListener(this._compactCallback);
+      this.compactObserver?.disconnect();
+      this.compactObserver = null;
       this.stopLiveTracking();
       this.hideOverlay();
       this.overlay?.remove();
@@ -662,7 +669,13 @@
       });
       this.browser.appendChild(this.overlay);
 
-      gZenCompactModeManager.addEventListener(this._compactCallback);
+      // gZenCompactModeManager.addEventListener no longer exists in Zen, so
+      // watch the attribute NebulaPolyfillModule keeps in sync instead.
+      this.compactObserver = new MutationObserver(this._compactCallback);
+      this.compactObserver.observe(this.root, {
+        attributes: true,
+        attributeFilter: ["nebula-compact-mode"],
+      });
 
       if (this.root.hasAttribute("nebula-compact-mode")) {
         this.startLiveTracking();
@@ -760,7 +773,8 @@
     }
 
     destroy() {
-      gZenCompactModeManager.removeEventListener(this._compactCallback);
+      this.compactObserver?.disconnect();
+      this.compactObserver = null;
       this.stopLiveTracking();
       this.hideOverlay();
       this.overlay?.remove();
