@@ -1,0 +1,91 @@
+/* ------------------- MACOS FULLSCREEN GLASS ------------------- */
+
+/*
+ * In macOS native fullscreen the window sits in its own Space, so the
+ * system blur has nothing behind it and the glass turns solid.
+ * nebula.uc.js (NebulaFullscreenGlassModule) exposes a downscaled copy of
+ * the desktop wallpaper as --nebula-fullscreen-wallpaper (or plays a video
+ * wallpaper in #nebula-fullscreen-glass-video); this paints it blurred behind
+ * the UI to fake the same glass.
+ */
+
+#nebula-fullscreen-glass {
+  display: none;
+}
+
+@media (-moz-platform: macos) {
+  @media not (-moz-pref("nebula-fullscreen-glass-disable")) {
+    :root[inFullscreen]:not([inDOMFullscreen="true"]) {
+      /* The layer below carries the tint instead, so it stays on top. */
+      & #zen-main-app-wrapper {
+        background: transparent !important;
+      }
+
+      & #nebula-fullscreen-glass {
+        display: block;
+        position: fixed;
+        inset: 0;
+
+        /* Zen gives every other wrapper child z-index 1. */
+        z-index: 0 !important;
+        overflow: hidden;
+        pointer-events: none;
+
+        /*
+         * Stand-in when no wallpaper can be read: the workspace's own Zen
+         * gradient (ignored if it is a plain color), over a neutral base.
+         */
+        background-color: light-dark(rgb(236 236 236), rgb(30 30 30));
+        background-image: var(--zen-main-browser-background);
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: var(--nebula-ui-tint);
+        }
+      }
+
+      & #nebula-fullscreen-glass {
+        --nebula-fullscreen-glass-brightness: 1.05;
+
+        @media (prefers-color-scheme: dark) {
+          --nebula-fullscreen-glass-brightness: 0.75;
+        }
+      }
+
+      & #nebula-fullscreen-glass-image,
+      & #nebula-fullscreen-glass-video {
+        position: absolute;
+
+        /* Overscan so the blur doesn't fade at the screen edges. */
+        inset: calc(var(--var-nebula-fullscreen-glass-blur, 60px) * -2);
+        filter: blur(var(--var-nebula-fullscreen-glass-blur, 60px))
+          saturate(var(--var-nebula-fullscreen-glass-saturation, 1.6))
+          brightness(var(--nebula-fullscreen-glass-brightness));
+      }
+
+      & #nebula-fullscreen-glass-image {
+        background: var(--nebula-fullscreen-wallpaper, none) center / cover
+          no-repeat;
+      }
+
+      & #nebula-fullscreen-glass-video {
+        display: none;
+        width: calc(100% + var(--var-nebula-fullscreen-glass-blur, 60px) * 4);
+        height: calc(100% + var(--var-nebula-fullscreen-glass-blur, 60px) * 4);
+        object-fit: cover;
+      }
+
+      & #nebula-fullscreen-glass[media="video"] {
+        & #nebula-fullscreen-glass-image {
+          display: none;
+        }
+
+        & #nebula-fullscreen-glass-video {
+          display: block;
+        }
+      }
+    }
+  }
+}
